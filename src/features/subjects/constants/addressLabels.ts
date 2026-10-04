@@ -8,3 +8,5 @@ export const ADDRESS_TYPE_FLAGS: { key: AddressTypeFlag; label: string }[] = [
   { key: 'isBranch', label: 'pobočka' },
   { key: 'isBilling', label: 'fakturační' },
 ];
+
+export const CZECH_COUNTRY_CODE = 'CZ';

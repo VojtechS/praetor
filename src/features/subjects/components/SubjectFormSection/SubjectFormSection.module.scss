@@ -1,0 +1,17 @@
+@use '../../../../styles/variables' as *;
+
+.subjectFormSection {
+  position: relative;
+
+  padding: $space-5;
+
+  border: 1px solid $color-border;
+  border-radius: $radius-card;
+
+  &__title {
+    margin-bottom: $space-4;
+
+    font-size: 13px;
+    font-weight: 600;
+  }
+}

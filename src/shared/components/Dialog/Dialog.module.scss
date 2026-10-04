@@ -56,6 +56,10 @@
     font-weight: 600;
   }
 
+  &__headerExtra {
+    margin-left: auto;
+  }
+
   &__close {
     display: inline-flex;
     padding: $space-1;

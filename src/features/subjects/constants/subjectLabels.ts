@@ -13,6 +13,13 @@ const connectionTypeLabels: Record<ConnectionType, string> = {
   EMAIL: 'E-mail',
 };
 
+export const SUBJECT_TYPE_OPTIONS = (Object.keys(subjectTypeLabels) as SubjectType[]).map(
+  (type) => ({
+    value: type,
+    label: subjectTypeLabels[type],
+  }),
+);
+
 function isSubjectType(value: string): value is SubjectType {
   return value in subjectTypeLabels;
 }

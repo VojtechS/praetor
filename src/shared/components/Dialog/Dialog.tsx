@@ -10,6 +10,7 @@ export interface DialogProps {
   onClose: () => void;
   children: ReactNode;
   footer?: ReactNode;
+  headerExtra?: ReactNode;
 }
 
 export function Dialog({
@@ -19,6 +20,7 @@ export function Dialog({
   onClose,
   children,
   footer,
+  headerExtra,
 }: Readonly<DialogProps>) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const titleId = useId();
@@ -47,6 +49,7 @@ export function Dialog({
             <h2 id={titleId} className={styles.dialog__title}>
               {title}
             </h2>
+            {headerExtra && <div className={styles.dialog__headerExtra}>{headerExtra}</div>}
             <button
               type="button"
               className={styles.dialog__close}
