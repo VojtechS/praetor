@@ -3,13 +3,17 @@ import styles from './SubjectFormSection.module.scss';
 
 export interface SubjectFormSectionProps {
   title: string;
+  action?: ReactNode;
   children: ReactNode;
 }
 
-export function SubjectFormSection({ title, children }: Readonly<SubjectFormSectionProps>) {
+export function SubjectFormSection({ title, action, children }: Readonly<SubjectFormSectionProps>) {
   return (
     <section className={styles.subjectFormSection}>
-      <h3 className={styles.subjectFormSection__title}>{title}</h3>
+      <div className={styles.subjectFormSection__header}>
+        <h3 className={styles.subjectFormSection__title}>{title}</h3>
+        {action}
+      </div>
       {children}
     </section>
   );

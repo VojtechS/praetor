@@ -1,0 +1,16 @@
+@use '../../../../styles/variables' as *;
+
+.subjectDataBoxField {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-3;
+
+  & > :first-child {
+    flex: 1;
+  }
+
+  // Aligned with the input, below its label.
+  & > button {
+    margin-top: 18px;
+  }
+}

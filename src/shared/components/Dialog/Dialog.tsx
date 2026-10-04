@@ -1,6 +1,6 @@
 import { X } from 'lucide-react';
 import { useEffect, useId, useRef } from 'react';
-import type { ReactNode } from 'react';
+import type { ReactNode, SyntheticEvent } from 'react';
 import styles from './Dialog.module.scss';
 
 export interface DialogProps {
@@ -36,12 +36,19 @@ export function Dialog({
     }
   }, [isOpen]);
 
+  // React bubbles the close event of a nested dialog to its parents, only the own closing counts.
+  function handleClose(event: SyntheticEvent<HTMLDialogElement>) {
+    if (event.target === event.currentTarget) {
+      onClose();
+    }
+  }
+
   return (
     <dialog
       ref={dialogRef}
       className={`${styles.dialog} ${modifier}`}
       aria-labelledby={titleId}
-      onClose={onClose}
+      onClose={handleClose}
     >
       {isOpen && (
         <>

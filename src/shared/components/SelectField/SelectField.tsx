@@ -14,6 +14,7 @@ export interface SelectFieldProps {
   options: SelectOption[];
   error?: string;
   hasEmptyOption?: boolean;
+  isLabelHidden?: boolean;
   disabled?: boolean;
 }
 
@@ -23,6 +24,7 @@ export function SelectField({
   options,
   error,
   hasEmptyOption = false,
+  isLabelHidden = false,
   disabled = false,
 }: Readonly<SelectFieldProps>) {
   const id = useId();
@@ -30,7 +32,7 @@ export function SelectField({
 
   return (
     <div className={styles.selectField}>
-      <label htmlFor={id} className={styles.selectField__label}>
+      <label htmlFor={id} className={isLabelHidden ? 'visuallyHidden' : styles.selectField__label}>
         {label}
       </label>
       <select

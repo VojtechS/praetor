@@ -8,6 +8,7 @@ export interface CheckboxFieldProps {
   registration: UseFormRegisterReturn;
   value?: string;
   error?: string;
+  isLabelHidden?: boolean;
   disabled?: boolean;
 }
 
@@ -16,6 +17,7 @@ export function CheckboxField({
   registration,
   value,
   error,
+  isLabelHidden = false,
   disabled = false,
 }: Readonly<CheckboxFieldProps>) {
   const id = useId();
@@ -34,7 +36,10 @@ export function CheckboxField({
           disabled={disabled}
           {...registration}
         />
-        <label htmlFor={id} className={styles.checkboxField__label}>
+        <label
+          htmlFor={id}
+          className={isLabelHidden ? 'visuallyHidden' : styles.checkboxField__label}
+        >
           {label}
         </label>
       </div>

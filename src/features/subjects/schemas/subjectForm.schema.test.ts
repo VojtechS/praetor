@@ -55,6 +55,7 @@ describe('subjectFormSchema', () => {
     const input = {
       type: 'PHYSICAL_NON_ENTREPRENEUR',
       ...common,
+      dataBoxId: '',
       physicalPerson: { ...physicalPerson, firstName: '', lastName: '' },
     };
 
@@ -62,7 +63,7 @@ describe('subjectFormSchema', () => {
   });
 
   it('does not require the economic subject of a physical non-entrepreneur', () => {
-    const input = { type: 'PHYSICAL_NON_ENTREPRENEUR', ...common, physicalPerson };
+    const input = { type: 'PHYSICAL_NON_ENTREPRENEUR', ...common, dataBoxId: '', physicalPerson };
 
     expect(getErrorPaths(input)).toEqual([]);
   });
@@ -82,11 +83,13 @@ describe('subjectFormSchema', () => {
     const invalid = {
       type: 'PHYSICAL_NON_ENTREPRENEUR',
       ...common,
+      dataBoxId: '',
       physicalPerson: { ...physicalPerson, personalId: '12-34' },
     };
     const valid = {
       type: 'PHYSICAL_NON_ENTREPRENEUR',
       ...common,
+      dataBoxId: '',
       physicalPerson: { ...physicalPerson, personalId: '640917/2000' },
     };
 

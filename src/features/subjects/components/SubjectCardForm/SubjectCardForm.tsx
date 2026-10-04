@@ -3,7 +3,9 @@ import { useForm, useWatch } from 'react-hook-form';
 import { subjectFormSchema } from '../../schemas/subjectForm.schema.ts';
 import type { SubjectFormInput, SubjectFormValues } from '../../schemas/subjectForm.schema.ts';
 import { hasEconomicSubject, hasLegalForm, hasPhysicalPerson } from '../../utils/subjectUtils.ts';
+import { SubjectAddresses } from '../SubjectAddresses/SubjectAddresses.tsx';
 import { SubjectBasicFields } from '../SubjectBasicFields/SubjectBasicFields.tsx';
+import { SubjectConnections } from '../SubjectConnections/SubjectConnections.tsx';
 import { SubjectEconomicFields } from '../SubjectEconomicFields/SubjectEconomicFields.tsx';
 import { SubjectPersonFields } from '../SubjectPersonFields/SubjectPersonFields.tsx';
 import styles from './SubjectCardForm.module.scss';
@@ -31,7 +33,10 @@ export function SubjectCardForm({ formId, defaultValues, onSave }: Readonly<Subj
           )}
           {hasPhysicalPerson(type) && <SubjectPersonFields form={form} />}
         </div>
-        {/* The right column (addresses and connections) is added next to the left one. */}
+        <div className={styles.subjectCardForm__column}>
+          <SubjectAddresses form={form} />
+          <SubjectConnections form={form} />
+        </div>
       </div>
     </form>
   );

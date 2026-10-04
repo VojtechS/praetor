@@ -8,9 +8,16 @@
   border: 1px solid $color-border;
   border-radius: $radius-card;
 
-  &__title {
-    margin-bottom: $space-4;
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-3;
 
+    margin-bottom: $space-4;
+  }
+
+  &__title {
     font-size: 13px;
     font-weight: 600;
   }

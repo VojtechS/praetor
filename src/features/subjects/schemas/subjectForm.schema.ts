@@ -138,10 +138,14 @@ export const subjectFormSchema = z.discriminatedUnion('type', [
   z.object({
     type: z.literal('PHYSICAL_NON_ENTREPRENEUR'),
     ...commonShape,
+    ...dataBoxShape,
     physicalPerson: physicalPersonSchema,
   }),
 ]);
 
+export type AddressFormInput = z.input<typeof addressRowSchema>;
+export type AddressFormValues = z.output<typeof addressRowSchema>;
+export type AddressForm = UseFormReturn<AddressFormInput, unknown, AddressFormValues>;
 export type SubjectFormInput = z.input<typeof subjectFormSchema>;
 export type SubjectFormValues = z.output<typeof subjectFormSchema>;
 export type SubjectForm = UseFormReturn<SubjectFormInput, unknown, SubjectFormValues>;

@@ -6,6 +6,7 @@ import type {
   SubjectRequest,
 } from '../api/subjectApi.types.ts';
 import type { SubjectFormInput, SubjectFormValues } from '../schemas/subjectForm.schema.ts';
+import { CZECH_COUNTRY_CODE } from '../constants/addressLabels.ts';
 import { hasLegalForm } from './subjectUtils.ts';
 
 type EconomicSubjectInput = Extract<
@@ -101,6 +102,29 @@ export function getNewSubjectFormDefaults(): SubjectFormInput {
   };
 }
 
+// A new address is a seat, delivery and billing address of the subject, see the spec.
+export function getNewAddressDefaults(): AddressInput {
+  return {
+    line1: '',
+    line2: '',
+    line3: '',
+    useSubjectName: true,
+    street: '',
+    houseNumber: '',
+    orientationNumber: '',
+    city: '',
+    cityPart: '',
+    zipCode: '',
+    region: '',
+    district: '',
+    country: CZECH_COUNTRY_CODE,
+    isSeat: true,
+    isDelivery: true,
+    isBranch: false,
+    isBilling: true,
+  };
+}
+
 export function mapSubjectToForm(subject: SubjectRequest): SubjectFormInput {
   return {
     type: subject.type,
@@ -153,7 +177,7 @@ export function mapFormToRequest(values: SubjectFormValues): SubjectRequest {
       personalId: orNull(person.personalId),
       documents: person.documents.map((document) => ({ ...document, id: NEW_ROW_ID })),
     },
-    dataBoxId: 'dataBoxId' in values ? orNull(values.dataBoxId) : null,
+    dataBoxId: orNull(values.dataBoxId),
     addresses: values.addresses.map((address) => ({
       ...address,
       id: NEW_ROW_ID,

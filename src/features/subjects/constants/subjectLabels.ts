@@ -20,6 +20,10 @@ export const SUBJECT_TYPE_OPTIONS = (Object.keys(subjectTypeLabels) as SubjectTy
   }),
 );
 
+export const CONNECTION_TYPE_OPTIONS = (Object.keys(connectionTypeLabels) as ConnectionType[]).map(
+  (type) => ({ value: type, label: connectionTypeLabels[type] }),
+);
+
 function isSubjectType(value: string): value is SubjectType {
   return value in subjectTypeLabels;
 }
