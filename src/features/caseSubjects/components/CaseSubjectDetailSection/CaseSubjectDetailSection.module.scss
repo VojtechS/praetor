@@ -1,0 +1,50 @@
+@use '../../../../styles/variables' as *;
+
+.caseSubjectDetailSection {
+  border-top: 1px solid $color-border;
+
+  &__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: $space-3 0;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    list-style: none;
+    cursor: pointer;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &:focus-visible {
+      outline: none;
+      border-radius: $radius-control;
+      box-shadow: $focus-ring;
+    }
+  }
+
+  &__icon {
+    width: 16px;
+    height: 16px;
+
+    color: $color-text-muted;
+
+    transition: transform $transition-duration;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  &[open] &__icon {
+    transform: rotate(180deg);
+  }
+
+  &__body {
+    padding-bottom: $space-4;
+  }
+}

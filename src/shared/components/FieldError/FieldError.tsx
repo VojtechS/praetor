@@ -6,7 +6,9 @@ export interface FieldErrorProps {
 }
 
 export function FieldError({ id, message }: Readonly<FieldErrorProps>) {
-  if (!message) return null;
+  if (!message) {
+    return null;
+  }
 
   return (
     <p id={id} className={styles.fieldError} role="alert">

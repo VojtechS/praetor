@@ -18,7 +18,7 @@ export function getSubjectDisplayName(
   return checkValue(subject.economicSubject?.companyName);
 }
 
-function formatBirthDate(birthDate: string): string {
+export function formatBirthDate(birthDate: string): string {
   const [year, month, day] = birthDate.split('-');
 
   return `${Number(day)}. ${Number(month)}. ${year}`;
@@ -29,7 +29,7 @@ export function getSubjectIdentification(
   birthDate: string | null,
 ): string {
   if (regNumber) {
-    return regNumber;
+    return `IČO ${regNumber}`;
   }
 
   return birthDate ? `dat. nar. ${formatBirthDate(birthDate)}` : checkValue(null);

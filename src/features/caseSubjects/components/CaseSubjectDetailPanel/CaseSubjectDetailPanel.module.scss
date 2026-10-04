@@ -1,0 +1,14 @@
+@use '../../../../styles/variables' as *;
+
+.panel {
+  position: relative;
+
+  min-height: 280px;
+  padding: $space-5;
+
+  background-color: $color-surface;
+
+  border: 1px solid $color-border;
+  border-radius: $radius-card;
+  box-shadow: $shadow-card;
+}

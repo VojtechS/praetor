@@ -7,3 +7,11 @@ export function groupCaseSubjectsByRole(items: CaseSubjectListItem[]): CaseSubje
     items: items.filter((item) => item.role === role),
   })).filter((group) => group.items.length > 0);
 }
+
+export function formatLegalRepresentative(item: CaseSubjectListItem): string {
+  const regNumber = item.legalRepresentativeRegNumber
+    ? `, IČO ${item.legalRepresentativeRegNumber}`
+    : '';
+
+  return `Právní zástupce: ${item.legalRepresentativeName}${regNumber}`;
+}

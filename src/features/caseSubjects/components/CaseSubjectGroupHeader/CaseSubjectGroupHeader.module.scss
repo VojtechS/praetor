@@ -1,0 +1,35 @@
+@use '../../../../styles/variables' as *;
+
+.caseSubjectGroupHeader {
+  padding: $space-5 $space-4 $space-2;
+
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+
+  border-bottom: 1px solid $color-border;
+
+  &__content {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+  }
+
+  &__icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  &--client {
+    color: $color-role-client;
+  }
+
+  &--opposing {
+    color: $color-role-opposing;
+  }
+
+  &--participant,
+  &--authority {
+    color: $color-role-authority;
+  }
+}

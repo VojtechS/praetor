@@ -1,0 +1,49 @@
+@use '../../../../../styles/variables' as *;
+
+.caseSubjectDetailContent {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: $space-3;
+  }
+
+  &__title {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  &__subtitle {
+    color: $color-text-muted;
+  }
+
+  &__closeButton {
+    display: inline-flex;
+    padding: $space-1;
+
+    color: $color-text-muted;
+    background: transparent;
+
+    border: 0;
+    border-radius: $radius-control;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $color-surface-muted;
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: $focus-ring;
+    }
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}

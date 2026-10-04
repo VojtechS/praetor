@@ -120,8 +120,13 @@ export function updateCaseSubject(
 
   // There is at most one main client and one main payer on a case.
   caseSubjects.forEach((item) => {
-    if (item !== record && request.isMainClient) item.isMainClient = false;
-    if (item !== record && request.isMainPayer) item.isMainPayer = false;
+    if (item !== record && request.isMainClient) {
+      item.isMainClient = false;
+    }
+
+    if (item !== record && request.isMainPayer) {
+      item.isMainPayer = false;
+    }
   });
 
   return toCaseSubject(record);
