@@ -1,0 +1,71 @@
+@use '../../../styles/variables' as *;
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+
+  height: $control-height;
+  padding: 0 $space-4;
+
+  font-weight: 500;
+  white-space: nowrap;
+
+  border: 1px solid transparent;
+  border-radius: $radius-control;
+  cursor: pointer;
+
+  transition:
+    background-color $transition-duration,
+    border-color $transition-duration,
+    box-shadow $transition-duration;
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: $focus-ring;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &__icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  &--primary {
+    color: $color-on-primary;
+    background-color: $color-primary;
+
+    &:hover:not(:disabled) {
+      background-color: $color-primary-hover;
+    }
+  }
+
+  &--secondary {
+    color: $color-text;
+    background-color: $color-surface;
+    border-color: $color-border-strong;
+
+    &:hover:not(:disabled) {
+      background-color: $color-surface-muted;
+    }
+  }
+
+  &--ghost {
+    color: $color-primary-text;
+    background-color: transparent;
+
+    &:hover:not(:disabled) {
+      background-color: $color-primary-light;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}

@@ -1,0 +1,6 @@
+@use '../../../styles/variables' as *;
+
+.fieldError {
+  color: $color-danger;
+  font-size: 12px;
+}

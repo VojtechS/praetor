@@ -1,0 +1,98 @@
+@use '../../../styles/variables' as *;
+
+.dialog {
+  width: 100%;
+  max-width: 92vw;
+  max-height: 90vh;
+
+  margin: auto;
+  padding: 0;
+
+  color: $color-text;
+  background-color: $color-surface;
+
+  border: 0;
+  border-radius: $radius-card;
+  box-shadow: $shadow-dialog;
+
+  &[open] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &::backdrop {
+    background-color: $color-overlay;
+  }
+
+  &--sm {
+    width: $dialog-width-sm;
+  }
+
+  &--md {
+    width: $dialog-width-md;
+  }
+
+  &--lg {
+    width: $dialog-width-lg;
+  }
+
+  &__header,
+  &__footer {
+    flex-shrink: 0;
+    padding: $space-4 $space-5;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-4;
+
+    border-bottom: 1px solid $color-border;
+  }
+
+  &__title {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  &__close {
+    display: inline-flex;
+    padding: $space-1;
+
+    color: $color-text-muted;
+    background: transparent;
+
+    border: 0;
+    border-radius: $radius-control;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $color-surface-muted;
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: $focus-ring;
+    }
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &__body {
+    flex: 1;
+    padding: $space-5;
+    overflow-y: auto;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: $space-2;
+
+    border-top: 1px solid $color-border;
+  }
+}

@@ -1,0 +1,91 @@
+@use '../../../styles/variables' as *;
+
+.dropdownMenu {
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+
+    height: $control-height;
+    padding: 0 $space-4;
+
+    color: $color-text;
+    font-weight: 500;
+    background-color: $color-surface;
+
+    border: 1px solid $color-border-strong;
+    border-radius: $radius-control;
+    cursor: pointer;
+
+    transition: background-color $transition-duration;
+
+    &:hover:not(:disabled) {
+      background-color: $color-surface-muted;
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: $focus-ring;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  &__icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  &__menu {
+    position: fixed;
+    inset: auto;
+
+    min-width: 240px;
+    margin: 0;
+    padding: $space-1;
+
+    color: $color-text;
+    background-color: $color-surface;
+
+    border: 1px solid $color-border;
+    border-radius: $radius-control;
+    box-shadow: $shadow-card;
+
+    &:popover-open {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &__item {
+    padding: $space-2 $space-3;
+
+    color: $color-text;
+    text-align: left;
+    background: transparent;
+
+    border: 0;
+    border-radius: $radius-control;
+    cursor: pointer;
+
+    &:hover:not(:disabled),
+    &:focus-visible {
+      outline: none;
+      background-color: $color-primary-light;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__button {
+      transition: none;
+    }
+  }
+}

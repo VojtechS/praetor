@@ -1,0 +1,35 @@
+@use '../../../styles/variables' as *;
+
+.loadingOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgba($color-surface, 0.6);
+  border-radius: $radius-card;
+
+  &__spinner {
+    width: 26px;
+    height: 26px;
+
+    color: $color-primary;
+
+    animation: loadingOverlay-spin 1200ms linear infinite;
+  }
+}
+
+@keyframes loadingOverlay-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loadingOverlay__spinner {
+    animation: none;
+  }
+}

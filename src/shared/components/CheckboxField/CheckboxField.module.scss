@@ -1,0 +1,37 @@
+@use '../../../styles/variables' as *;
+
+.checkboxField {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+  }
+
+  &__control {
+    width: 16px;
+    height: 16px;
+
+    accent-color: $color-primary;
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: $focus-ring;
+    }
+
+    &[aria-invalid='true'] {
+      outline: 1px solid $color-danger;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  &__label {
+    cursor: pointer;
+  }
+}

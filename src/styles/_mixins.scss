@@ -1,0 +1,43 @@
+@use 'variables' as *;
+
+@mixin field-label {
+  color: $color-text-muted;
+  font-size: 12px;
+}
+
+@mixin field-control {
+  width: 100%;
+  min-height: $control-height;
+
+  color: $color-text;
+  background-color: $color-surface;
+
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-control;
+  padding: 0 $space-3;
+
+  transition:
+    border-color $transition-duration,
+    box-shadow $transition-duration;
+
+  &:focus-visible,
+  &:focus-within {
+    outline: none;
+    border-color: $color-primary;
+    box-shadow: $focus-ring;
+  }
+
+  &[aria-invalid='true'] {
+    border-color: $color-danger;
+  }
+
+  &:disabled {
+    color: $color-text-muted;
+    background-color: $color-surface-muted;
+    cursor: not-allowed;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}

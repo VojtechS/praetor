@@ -47,3 +47,11 @@ $focus-ring: 0 0 0 3px rgba(76, 95, 213, 0.25);
 $media-breakpoint-md: 768px;
 $media-breakpoint-lg: 1100px;
 $content-max-width: 1600px;
+
+// Derived tokens
+$color-overlay: rgba(31, 36, 48, 0.4);
+$control-height: 36px;
+$transition-duration: 120ms;
+$dialog-width-sm: 440px;
+$dialog-width-md: 560px;
+$dialog-width-lg: 1100px;

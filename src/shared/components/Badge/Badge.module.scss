@@ -1,0 +1,22 @@
+@use '../../../styles/variables' as *;
+
+.badge {
+  display: inline-block;
+
+  font-size: 12px;
+  white-space: nowrap;
+
+  border-radius: $radius-pill;
+  padding: 0 $space-2;
+
+  &--primary {
+    color: $color-primary-text;
+    background-color: $color-primary-light;
+  }
+
+  &--muted {
+    color: $color-text-muted;
+    background-color: $color-surface-muted;
+    border: 1px solid $color-border;
+  }
+}

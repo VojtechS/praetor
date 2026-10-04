@@ -1,0 +1,16 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.textField {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+
+  &__label {
+    @include field-label;
+  }
+
+  &__control {
+    @include field-control;
+  }
+}
