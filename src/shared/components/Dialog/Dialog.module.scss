@@ -83,6 +83,7 @@
   }
 
   &__body {
+    position: relative;
     flex: 1;
     padding: $space-5;
     overflow-y: auto;

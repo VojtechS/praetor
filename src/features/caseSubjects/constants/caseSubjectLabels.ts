@@ -15,6 +15,11 @@ const roleLabels: Record<CaseSubjectRole, string> = {
   DECIDING_AUTHORITY: 'Rozhodující orgán',
 };
 
+export const CASE_SUBJECT_ROLE_OPTIONS = CASE_SUBJECT_ROLE_ORDER.map((role) => ({
+  value: role,
+  label: roleLabels[role],
+}));
+
 const roleGroupLabels: Record<CaseSubjectRole, string> = {
   CLIENT: 'Klient',
   OPPOSING_PARTY: 'Protistrana',

@@ -1,5 +1,6 @@
 import { CaseSubjectDetailPanel } from '../../features/caseSubjects/components/CaseSubjectDetailPanel/CaseSubjectDetailPanel.tsx';
 import { CaseSubjectList } from '../../features/caseSubjects/components/CaseSubjectList/CaseSubjectList.tsx';
+import { CaseSubjectRoleDialog } from '../../features/caseSubjects/components/CaseSubjectRoleDialog/CaseSubjectRoleDialog.tsx';
 import { CaseSubjectsToolbar } from '../../features/caseSubjects/components/CaseSubjectsToolbar/CaseSubjectsToolbar.tsx';
 import {
   useCaseQuery,
@@ -17,14 +18,13 @@ export function CaseSubjectsPage() {
   const materialLegalRolesQuery = useCodelistQuery('material-legal-roles');
 
   const items = caseSubjectsQuery.data?.data;
-  const { selectedSubjectId, selectedItem, isNotFound, clearSelection } =
+  const { selectedSubjectId, selectedItem, isNotFound, selectSubject, clearSelection } =
     useSelectedCaseSubject(items);
   const subjectQuery = useSubjectQuery(selectedSubjectId ?? 0, selectedItem !== undefined);
 
   const caseHeader = caseQuery.data?.data;
   const isDetailOpen = selectedSubjectId !== null || isNotFound;
-  const isDetailLoading =
-    caseSubjectsQuery.isPending || (selectedItem !== undefined && subjectQuery.isPending);
+  const isDetailLoading = caseSubjectsQuery.isPending || subjectQuery.isLoading;
 
   return (
     <>
@@ -38,6 +38,7 @@ export function CaseSubjectsPage() {
       </header>
 
       <CaseSubjectsToolbar selectedItem={selectedItem} />
+      <CaseSubjectRoleDialog items={items ?? []} onSaved={selectSubject} />
 
       <div className={styles.caseSubjectsPage__layout} data-detail-open={isDetailOpen}>
         <CaseSubjectList
