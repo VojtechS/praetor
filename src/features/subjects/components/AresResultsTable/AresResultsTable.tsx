@@ -1,5 +1,5 @@
-import type { KeyboardEvent } from 'react';
 import type { AresSubject } from '../../api/aresApi.types.ts';
+import { handleRowKeyDown } from '../../../../shared/utils/handleRowKeyDown.ts';
 import styles from './AresResultsTable.module.scss';
 
 export interface AresResultsTableProps {
@@ -15,16 +15,6 @@ export function AresResultsTable({
   onSelect,
   onChoose,
 }: Readonly<AresResultsTableProps>) {
-  // Space selects the row, Enter chooses it, the same as a double click.
-  function handleKeyDown(event: KeyboardEvent<HTMLTableRowElement>, regNumber: string) {
-    if (event.key === 'Enter') {
-      onChoose(regNumber);
-    } else if (event.key === ' ') {
-      event.preventDefault();
-      onSelect(regNumber);
-    }
-  }
-
   return (
     <table className={styles.aresResultsTable} role="grid" aria-label="Výsledky z ARES">
       <thead>
@@ -42,7 +32,13 @@ export function AresResultsTable({
             aria-selected={subject.regNumber === selectedRegNumber}
             onClick={() => onSelect(subject.regNumber)}
             onDoubleClick={() => onChoose(subject.regNumber)}
-            onKeyDown={(event) => handleKeyDown(event, subject.regNumber)}
+            onKeyDown={(event) =>
+              handleRowKeyDown(
+                event,
+                () => onSelect(subject.regNumber),
+                () => onChoose(subject.regNumber),
+              )
+            }
           >
             <td>{subject.regNumber}</td>
             <td>{subject.name}</td>

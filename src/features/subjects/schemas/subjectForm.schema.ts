@@ -68,7 +68,7 @@ export const addressRowSchema = z
     }
   });
 
-export const connectionRowSchema = z
+const connectionRowSchema = z
   .object({
     type: z.enum(['PHONE', 'EMAIL']),
     value: z.string().trim().min(1, 'Zadejte hodnotu'),

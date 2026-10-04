@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 
-export type PickerTarget = 'subject' | 'representative';
+type PickerTarget = 'subject' | 'representative';
 
-export interface RoleDialogState {
+interface RoleDialogState {
   mode: 'add' | 'edit';
   caseSubjectId: number | null;
 }
 
-export interface PickerState {
+interface PickerState {
   target: PickerTarget;
 }
 
@@ -19,12 +19,12 @@ export interface SubjectCardState {
 }
 
 // A null subjectId of the representative means "Smazat" (remove the representative).
-export interface PickedSubjectState {
+interface PickedSubjectState {
   target: PickerTarget;
   subjectId: number | null;
 }
 
-export interface CaseSubjectsUiState {
+interface CaseSubjectsUiState {
   roleDialog: RoleDialogState | null;
   picker: PickerState | null;
   subjectCard: SubjectCardState | null;

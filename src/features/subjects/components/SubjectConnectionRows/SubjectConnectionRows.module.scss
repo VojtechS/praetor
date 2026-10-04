@@ -1,20 +1,19 @@
 @use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
 
 .subjectConnectionRows {
   width: 100%;
   border-collapse: collapse;
 
   th {
+    @include table-heading;
+
     padding: $space-2;
+  }
 
-    color: $color-text-muted;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    text-align: left;
-    text-transform: uppercase;
-
-    border-bottom: 1px solid $color-border;
+  th:nth-child(1),
+  td:nth-child(1) {
+    width: 40%;
   }
 
   th:nth-child(2),

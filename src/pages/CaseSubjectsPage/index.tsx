@@ -57,6 +57,7 @@ export function CaseSubjectsPage() {
           proceduralRoles={proceduralRolesQuery.data}
           selectedSubjectId={selectedSubjectId}
           isLoading={caseSubjectsQuery.isPending}
+          isError={caseSubjectsQuery.isError}
         />
 
         <div className={styles.caseSubjectsPage__detail}>

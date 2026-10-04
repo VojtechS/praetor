@@ -82,12 +82,6 @@ export function listCaseSubjects(): CaseSubject[] {
   return caseSubjects.map(toCaseSubject);
 }
 
-export function getCaseSubject(id: number): CaseSubject | undefined {
-  const record = caseSubjects.find((item) => item.id === id);
-
-  return record && toCaseSubject(record);
-}
-
 export function hasCaseSubject(subjectId: number): boolean {
   return caseSubjects.some((item) => item.subjectId === subjectId);
 }

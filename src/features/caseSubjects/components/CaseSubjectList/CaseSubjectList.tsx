@@ -14,6 +14,7 @@ export interface CaseSubjectListProps {
   proceduralRoles: CodelistItem[] | undefined;
   selectedSubjectId: number | null;
   isLoading?: boolean;
+  isError?: boolean;
 }
 
 export function CaseSubjectList({
@@ -22,6 +23,7 @@ export function CaseSubjectList({
   proceduralRoles,
   selectedSubjectId,
   isLoading = false,
+  isError = false,
 }: Readonly<CaseSubjectListProps>) {
   return (
     <div className={styles.caseSubjectList__wrapper} aria-busy={isLoading}>
@@ -36,7 +38,9 @@ export function CaseSubjectList({
           <tbody>
             <tr>
               <td colSpan={5}>
-                <p className="emptyState">Žádné subjekty na spisu</p>
+                <p className="emptyState">
+                  {isError ? 'Seznam subjektů se nepodařilo načíst' : 'Žádné subjekty na spisu'}
+                </p>
               </td>
             </tr>
           </tbody>

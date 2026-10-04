@@ -21,6 +21,7 @@ export function useSelectedCaseSubject(items: CaseSubject[] | undefined) {
     });
   }
 
+  // Stable reference, the effect below depends on it.
   const removeParam = useCallback(() => {
     setSearchParams((params) => {
       params.delete(SUBJECT_ID_PARAM);

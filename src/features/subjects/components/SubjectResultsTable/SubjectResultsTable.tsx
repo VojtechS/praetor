@@ -1,7 +1,7 @@
-import type { KeyboardEvent } from 'react';
 import { checkValue } from '../../../../shared/utils/checkValue.ts';
 import type { SubjectListItem } from '../../model/subject.types.ts';
 import { formatBirthDate, getSubjectDisplayName } from '../../utils/subjectUtils.ts';
+import { handleRowKeyDown } from '../../../../shared/utils/handleRowKeyDown.ts';
 import styles from './SubjectResultsTable.module.scss';
 
 export interface SubjectResultsTableProps {
@@ -19,16 +19,6 @@ export function SubjectResultsTable({
   onSelect,
   onChoose,
 }: Readonly<SubjectResultsTableProps>) {
-  // Space selects the row, Enter chooses it, the same as a double click.
-  function handleKeyDown(event: KeyboardEvent<HTMLTableRowElement>, id: number) {
-    if (event.key === 'Enter') {
-      onChoose(id);
-    } else if (event.key === ' ') {
-      event.preventDefault();
-      onSelect(id);
-    }
-  }
-
   return (
     <table className={styles.subjectResultsTable} role="grid" aria-label="Výsledky hledání">
       <thead>
@@ -50,7 +40,13 @@ export function SubjectResultsTable({
               aria-selected={subject.id === selectedId}
               onClick={() => onSelect(subject.id)}
               onDoubleClick={() => onChoose(subject.id)}
-              onKeyDown={(event) => handleKeyDown(event, subject.id)}
+              onKeyDown={(event) =>
+                handleRowKeyDown(
+                  event,
+                  () => onSelect(subject.id),
+                  () => onChoose(subject.id),
+                )
+              }
             >
               <td>{getSubjectDisplayName(subject)}</td>
               <td>{checkValue(subject.economicSubject?.regNumber)}</td>

@@ -35,18 +35,8 @@ export function SubjectPickerDialog() {
   }
 
   // The card loads the ARES detail itself, the store keeps only the reg. number.
-  function chooseAres(regNumber: string) {
-    openSubjectCard({
-      mode: 'create',
-      subjectId: null,
-      aresPrefill: regNumber,
-      returnTarget: target,
-    });
-    close();
-  }
-
-  function createNew() {
-    openSubjectCard({ mode: 'create', subjectId: null, aresPrefill: null, returnTarget: target });
+  function openCard(aresPrefill: string | null) {
+    openSubjectCard({ mode: 'create', subjectId: null, aresPrefill, returnTarget: target });
     close();
   }
 
@@ -57,7 +47,7 @@ export function SubjectPickerDialog() {
 
   function chooseSelected() {
     if (isAres && search.selectedRegNumber) {
-      chooseAres(search.selectedRegNumber);
+      openCard(search.selectedRegNumber);
     } else if (!isAres && search.selectedSubjectId !== null) {
       chooseSubject(search.selectedSubjectId);
     }
@@ -73,7 +63,7 @@ export function SubjectPickerDialog() {
         <SubjectPickerFooter
           canChoose={search.canChoose}
           onChoose={chooseSelected}
-          onCreate={createNew}
+          onCreate={() => openCard(null)}
           onCancel={close}
           onRemove={isRepresentative ? removeRepresentative : undefined}
         />
@@ -92,7 +82,7 @@ export function SubjectPickerDialog() {
             submittedSearch={search.aresSearch}
             selectedRegNumber={search.selectedRegNumber}
             onSelect={search.setSelectedRegNumber}
-            onChoose={chooseAres}
+            onChoose={openCard}
           />
         ) : (
           <SubjectPickerPraetorResults

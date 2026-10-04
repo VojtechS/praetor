@@ -58,8 +58,8 @@
 
   &__icon,
   &__flag {
-    width: 16px;
-    height: 16px;
+    width: $icon-size;
+    height: $icon-size;
     flex-shrink: 0;
   }
 

@@ -11,7 +11,7 @@ export interface EconomicSubject {
   registryNote: string | null;
 }
 
-export interface PersonDocument {
+interface PersonDocument {
   id: number;
   number: string;
   type: string;

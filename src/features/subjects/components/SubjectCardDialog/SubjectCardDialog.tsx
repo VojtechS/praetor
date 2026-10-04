@@ -14,7 +14,7 @@ import {
   useUpdateSubjectMutation,
 } from '../../hooks/useSubjectQueries.ts';
 import type { SubjectFormValues } from '../../schemas/subjectForm.schema.ts';
-import { mapFormToRequest } from '../../utils/subjectFormMapper.ts';
+import { mapFormToRequest } from '../../utils/mapFormToRequest.ts';
 import { getSubjectDisplayName } from '../../utils/subjectUtils.ts';
 import { SubjectAresSearch } from '../SubjectAresSearch/SubjectAresSearch.tsx';
 import { SubjectCardForm } from '../SubjectCardForm/SubjectCardForm.tsx';

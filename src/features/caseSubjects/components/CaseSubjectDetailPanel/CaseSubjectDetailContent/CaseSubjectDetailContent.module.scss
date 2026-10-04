@@ -1,4 +1,5 @@
 @use '../../../../../styles/variables' as *;
+@use '../../../../../styles/mixins' as *;
 
 .caseSubjectDetailContent {
   display: flex;
@@ -22,28 +23,6 @@
   }
 
   &__closeButton {
-    display: inline-flex;
-    padding: $space-1;
-
-    color: $color-text-muted;
-    background: transparent;
-
-    border: 0;
-    border-radius: $radius-control;
-    cursor: pointer;
-
-    &:hover {
-      background-color: $color-surface-muted;
-    }
-
-    &:focus-visible {
-      outline: none;
-      box-shadow: $focus-ring;
-    }
-
-    svg {
-      width: 18px;
-      height: 18px;
-    }
+    @include icon-button;
   }
 }

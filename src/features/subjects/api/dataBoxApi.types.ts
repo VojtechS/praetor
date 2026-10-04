@@ -1,4 +1,4 @@
-export interface DataBox {
+interface DataBox {
   id: string;
   name: string;
 }

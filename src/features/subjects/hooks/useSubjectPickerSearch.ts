@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { MIN_SEARCH_LENGTH } from '../constants/subjectSearch.ts';
 
-export type SubjectPickerSource = 'praetor' | 'ares';
+type SubjectPickerSource = 'praetor' | 'ares';
 
 // Search and selection state of the subject picker. The source of the results is not a switch,
 // it follows the button the user pressed last.

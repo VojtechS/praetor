@@ -5,7 +5,7 @@ import type {
 import type { SubjectRequest } from '../features/subjects/api/subjectApi.types.ts';
 import * as db from './db.ts';
 
-export interface MockResult {
+interface MockResult {
   status: number;
   data?: unknown;
   message?: string;

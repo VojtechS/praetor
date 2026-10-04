@@ -31,7 +31,7 @@
     margin-top: $space-4;
 
     &[data-detail-open='true'] {
-      grid-template-columns: minmax(0, 1fr) 520px;
+      grid-template-columns: minmax(0, 1fr) $detail-panel-width;
       gap: $space-5;
     }
   }

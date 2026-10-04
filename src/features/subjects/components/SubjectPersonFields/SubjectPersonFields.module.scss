@@ -20,6 +20,6 @@
 
   // Aligned with the personal id field, below its label.
   &__action {
-    padding-top: 18px;
+    padding-top: $field-label-height + $space-1;
   }
 }
