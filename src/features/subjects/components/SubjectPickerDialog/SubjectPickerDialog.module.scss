@@ -1,0 +1,7 @@
+@use '../../../../styles/variables' as *;
+
+.subjectPickerDialog {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}

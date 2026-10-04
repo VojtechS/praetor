@@ -35,6 +35,14 @@ export function getSubjectIdentification(
   return birthDate ? `dat. nar. ${formatBirthDate(birthDate)}` : checkValue(null);
 }
 
+export function formatRecordCount(count: number): string {
+  if (count === 1) {
+    return '1 záznam';
+  }
+
+  return count >= 2 && count <= 4 ? `${count} záznamy` : `${count} záznamů`;
+}
+
 export function parseSubjectId(value: string | null): number | null {
   const id = Number(value);
 

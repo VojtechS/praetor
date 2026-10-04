@@ -41,3 +41,45 @@
     transition: none;
   }
 }
+
+@mixin results-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    padding: $space-3 $space-4;
+
+    color: $color-text-muted;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-align: left;
+    text-transform: uppercase;
+
+    border-bottom: 1px solid $color-border;
+  }
+
+  td {
+    padding: $space-3 $space-4;
+
+    border-bottom: 1px solid $color-border;
+  }
+
+  tbody tr {
+    cursor: pointer;
+
+    &:hover {
+      background-color: $color-surface-muted;
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: inset $focus-ring;
+    }
+
+    &[aria-selected='true'] {
+      background-color: $color-primary-light;
+      box-shadow: inset 2px 0 0 $color-primary;
+    }
+  }
+}

@@ -1,0 +1,67 @@
+import type { KeyboardEvent } from 'react';
+import { checkValue } from '../../../../shared/utils/checkValue.ts';
+import type { SubjectListItem } from '../../model/subject.types.ts';
+import { formatBirthDate, getSubjectDisplayName } from '../../utils/subjectUtils.ts';
+import styles from './SubjectResultsTable.module.scss';
+
+export interface SubjectResultsTableProps {
+  subjects: SubjectListItem[];
+  selectedId: number | null;
+  showBirthDate: boolean;
+  onSelect: (id: number) => void;
+  onChoose: (id: number) => void;
+}
+
+export function SubjectResultsTable({
+  subjects,
+  selectedId,
+  showBirthDate,
+  onSelect,
+  onChoose,
+}: Readonly<SubjectResultsTableProps>) {
+  // Space selects the row, Enter chooses it, the same as a double click.
+  function handleKeyDown(event: KeyboardEvent<HTMLTableRowElement>, id: number) {
+    if (event.key === 'Enter') {
+      onChoose(id);
+    } else if (event.key === ' ') {
+      event.preventDefault();
+      onSelect(id);
+    }
+  }
+
+  return (
+    <table className={styles.subjectResultsTable} role="grid" aria-label="Výsledky hledání">
+      <thead>
+        <tr>
+          <th scope="col">Označení</th>
+          <th scope="col">IČO</th>
+          <th scope="col">RČ</th>
+          {showBirthDate && <th scope="col">Datum nar.</th>}
+        </tr>
+      </thead>
+      <tbody>
+        {subjects.map((subject) => {
+          const birthDate = subject.physicalPerson?.birthDate;
+
+          return (
+            <tr
+              key={subject.id}
+              tabIndex={0}
+              aria-selected={subject.id === selectedId}
+              onClick={() => onSelect(subject.id)}
+              onDoubleClick={() => onChoose(subject.id)}
+              onKeyDown={(event) => handleKeyDown(event, subject.id)}
+            >
+              <td>{getSubjectDisplayName(subject)}</td>
+              <td>{checkValue(subject.economicSubject?.regNumber)}</td>
+              <td>{checkValue(subject.physicalPerson?.personalId)}</td>
+              {showBirthDate && (
+                <td>{birthDate ? formatBirthDate(birthDate) : checkValue(null)}</td>
+              )}
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
+}

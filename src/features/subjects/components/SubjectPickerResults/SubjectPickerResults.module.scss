@@ -1,0 +1,21 @@
+@use '../../../../styles/variables' as *;
+
+.subjectPickerResults {
+  &__source {
+    margin-bottom: $space-2;
+
+    color: $color-text-muted;
+    font-size: 12px;
+  }
+
+  &__table {
+    position: relative;
+
+    min-height: 120px;
+    max-height: 45vh;
+    overflow-y: auto;
+
+    border: 1px solid $color-border;
+    border-radius: $radius-control;
+  }
+}

@@ -8,6 +8,7 @@ import {
 } from '../../features/caseSubjects/hooks/useCaseSubjectQueries.ts';
 import { useSelectedCaseSubject } from '../../features/caseSubjects/hooks/useSelectedCaseSubject.ts';
 import { useCodelistQuery } from '../../features/codelists/hooks/useCodelistQuery.ts';
+import { SubjectPickerDialog } from '../../features/subjects/components/SubjectPickerDialog/SubjectPickerDialog.tsx';
 import { useSubjectQuery } from '../../features/subjects/hooks/useSubjectQueries.ts';
 import styles from './CaseSubjectsPage.module.scss';
 
@@ -39,6 +40,7 @@ export function CaseSubjectsPage() {
 
       <CaseSubjectsToolbar selectedItem={selectedItem} />
       <CaseSubjectRoleDialog items={items ?? []} onSaved={selectSubject} />
+      <SubjectPickerDialog />
 
       <div className={styles.caseSubjectsPage__layout} data-detail-open={isDetailOpen}>
         <CaseSubjectList
