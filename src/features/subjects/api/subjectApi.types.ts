@@ -86,6 +86,10 @@ export interface Subject {
 
 export type SubjectRequest = Omit<Subject, 'id'>;
 
+export interface SubjectListParams {
+  fulltext?: string;
+}
+
 export interface SubjectListResponse {
   data: Subject[];
 }

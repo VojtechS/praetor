@@ -1,6 +1,6 @@
 export interface DataBox {
   id: string;
-  ownerName: string;
+  name: string;
 }
 
 export interface DataBoxResponse {
