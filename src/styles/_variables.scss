@@ -1,0 +1,49 @@
+// Neutral
+$color-text: #1f2430;
+$color-text-muted: #5b6478;
+$color-border: #e4e7ee;
+$color-border-strong: #cfd4de;
+$color-bg-page: #f7f8fb;
+$color-surface: #ffffff;
+$color-surface-muted: #fafbfd;
+
+// Primary (indigo)
+$color-primary: #4c5fd5;
+$color-primary-hover: #3f4fb8;
+$color-primary-text: #3f4fb8; // text and icons on a light background
+$color-primary-light: #eef0fd; // hover, selected row, highlight
+$color-on-primary: #ffffff;
+
+// States
+$color-danger: #c8433a;
+$color-warning: #a16207;
+$color-success: #2f7d57;
+
+// Role groups (always together with an icon and text)
+$color-role-client: $color-primary-text;
+$color-role-opposing: $color-danger;
+$color-role-authority: $color-text-muted;
+
+// Spacing (4 px step)
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-5: 24px;
+$space-6: 32px;
+$space-7: 48px;
+
+// Radius and shadows
+$radius-control: 8px;
+$radius-card: 12px;
+$radius-pill: 999px;
+$shadow-card:
+  0 1px 2px rgba(16, 24, 40, 0.04),
+  0 4px 16px rgba(16, 24, 40, 0.06);
+$shadow-dialog: 0 12px 40px rgba(16, 24, 40, 0.16);
+$focus-ring: 0 0 0 3px rgba(76, 95, 213, 0.25);
+
+// Layout
+$media-breakpoint-md: 768px;
+$media-breakpoint-lg: 1100px;
+$content-max-width: 1600px;

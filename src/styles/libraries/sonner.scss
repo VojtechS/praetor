@@ -1,0 +1,30 @@
+@use '../variables' as *;
+
+body [data-sonner-toaster][data-sonner-theme='light'],
+body [data-sonner-toaster][data-sonner-theme='dark'] {
+  --normal-bg: #{$color-text};
+  --normal-border: #{$color-text};
+  --normal-text: #{$color-on-primary};
+  --success-bg: #{$color-success};
+  --success-border: #{$color-success};
+  --success-text: #{$color-on-primary};
+  --info-bg: #{$color-primary};
+  --info-border: #{$color-primary};
+  --info-text: #{$color-on-primary};
+  --warning-bg: #{$color-warning};
+  --warning-border: #{$color-warning};
+  --warning-text: #{$color-on-primary};
+  --error-bg: #{$color-danger};
+  --error-border: #{$color-danger};
+  --error-text: #{$color-on-primary};
+}
+
+body [data-sonner-toast] {
+  font-family: inherit;
+  border-radius: $radius-control;
+  box-shadow: $shadow-card;
+}
+
+body [data-sonner-toast][data-styled='true'] [data-title] {
+  font-weight: 400;
+}

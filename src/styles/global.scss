@@ -1,0 +1,69 @@
+@use 'reset';
+@use 'variables' as *;
+@use 'libraries/sonner';
+
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+
+  color: $color-text;
+  background-color: $color-bg-page;
+
+  padding: $space-6 $space-7;
+}
+
+main {
+  max-width: $content-max-width;
+  margin-inline: auto;
+}
+
+.pageTitle {
+  font-size: 24px;
+  font-weight: 500;
+
+  margin-bottom: $space-4;
+}
+
+.emptyState {
+  margin-top: $space-4;
+
+  color: $color-text-muted;
+  font-size: 14px;
+  text-align: center;
+}
+
+.link {
+  color: $color-primary-text;
+
+  &:hover {
+    color: $color-primary-hover;
+    text-decoration: none;
+  }
+}
+
+.visuallyHidden {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  padding: 0;
+  margin: -1px;
+
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: $media-breakpoint-md) {
+  body {
+    padding: $space-5 $space-3;
+  }
+}
