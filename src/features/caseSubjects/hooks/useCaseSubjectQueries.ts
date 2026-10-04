@@ -78,8 +78,10 @@ export function useRemoveCaseSubjectMutation() {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (id: number) => caseSubjectApi.remove(CASE_ID, id),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: CASE_SUBJECTS_QUERY_KEY });
+    // Not awaited on purpose: the caller closes the detail of the removed subject before the
+    // list is refreshed, otherwise the detail would flash "Subjekt nenalezen".
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: CASE_SUBJECTS_QUERY_KEY });
       toast.success('Subjekt byl odebrán ze spisu.');
     },
   });

@@ -37,12 +37,14 @@ export function CaseSubjectsToolbar({ selectedItem }: Readonly<CaseSubjectsToolb
     },
     {
       label: 'Nastavit jako hlavního plátce',
+      disabled: updateMutation.isPending,
       onSelect: () =>
         selectedItem &&
         updateMutation.mutate({ id: selectedItem.id, request: { isMainPayer: true } }),
     },
     {
       label: 'Nastavit jako hlavního klienta',
+      disabled: updateMutation.isPending,
       onSelect: () =>
         selectedItem &&
         updateMutation.mutate({ id: selectedItem.id, request: { isMainClient: true } }),

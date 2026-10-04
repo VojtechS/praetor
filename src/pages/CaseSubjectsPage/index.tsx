@@ -1,5 +1,6 @@
 import { CaseSubjectDetailPanel } from '../../features/caseSubjects/components/CaseSubjectDetailPanel/CaseSubjectDetailPanel.tsx';
 import { CaseSubjectList } from '../../features/caseSubjects/components/CaseSubjectList/CaseSubjectList.tsx';
+import { CaseSubjectRemoveDialog } from '../../features/caseSubjects/components/CaseSubjectRemoveDialog/CaseSubjectRemoveDialog.tsx';
 import { CaseSubjectRoleDialog } from '../../features/caseSubjects/components/CaseSubjectRoleDialog/CaseSubjectRoleDialog.tsx';
 import { CaseSubjectsToolbar } from '../../features/caseSubjects/components/CaseSubjectsToolbar/CaseSubjectsToolbar.tsx';
 import {
@@ -20,6 +21,7 @@ export function CaseSubjectsPage() {
   const materialLegalRolesQuery = useCodelistQuery('material-legal-roles');
 
   const items = caseSubjectsQuery.data?.data;
+  const listItems = items ?? [];
   const { selectedSubjectId, selectedItem, isNotFound, selectSubject, clearSelection } =
     useSelectedCaseSubject(items);
   const subjectQuery = useSubjectQuery(selectedSubjectId ?? 0, selectedItem !== undefined);
@@ -40,13 +42,17 @@ export function CaseSubjectsPage() {
       </header>
 
       <CaseSubjectsToolbar selectedItem={selectedItem} />
-      <CaseSubjectRoleDialog items={items ?? []} onSaved={selectSubject} />
+      <CaseSubjectRoleDialog items={listItems} onSaved={selectSubject} />
+      <CaseSubjectRemoveDialog
+        items={listItems}
+        onRemoved={(subjectId) => subjectId === selectedSubjectId && clearSelection()}
+      />
       <SubjectPickerDialog />
       <SubjectCardDialog />
 
       <div className={styles.caseSubjectsPage__layout} data-detail-open={isDetailOpen}>
         <CaseSubjectList
-          items={items ?? []}
+          items={listItems}
           materialLegalRoles={materialLegalRolesQuery.data}
           proceduralRoles={proceduralRolesQuery.data}
           selectedSubjectId={selectedSubjectId}
