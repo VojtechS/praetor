@@ -26,7 +26,7 @@ export function CaseSubjectGroupHeader({ role, count }: Readonly<CaseSubjectGrou
       <th
         className={`${styles.caseSubjectGroupHeader} ${modifierClass}`}
         scope="rowgroup"
-        colSpan={5}
+        colSpan={6}
       >
         <span className={styles.caseSubjectGroupHeader__content}>
           <Icon className={styles.caseSubjectGroupHeader__icon} aria-hidden="true" />

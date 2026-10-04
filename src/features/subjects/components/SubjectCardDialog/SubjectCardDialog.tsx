@@ -62,7 +62,8 @@ export function SubjectCardDialog() {
     <Dialog
       isOpen={subjectCard !== null}
       title={title}
-      size="lg"
+      size="xl"
+      isFocusedOnOpen
       onClose={close}
       headerExtra={<SubjectAresSearch onSelect={setAresRegNumber} />}
       footer={

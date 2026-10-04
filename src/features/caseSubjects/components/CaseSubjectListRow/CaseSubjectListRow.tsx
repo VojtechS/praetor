@@ -1,6 +1,5 @@
 import { Building2, Landmark, Scale, Star, User, Wallet } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import columnStyles from '../../../../styles/caseSubjectListColumns.module.scss';
 import { checkValue } from '../../../../shared/utils/checkValue.ts';
 import type { CodelistItem } from '../../../codelists/api/codelistApi.types.ts';
 import { getCodelistLabel } from '../../../codelists/utils/codelistUtils.ts';
@@ -8,6 +7,7 @@ import { getSubjectTypeLabel } from '../../../subjects/constants/subjectLabels.t
 import { getSubjectIdentification } from '../../../subjects/utils/subjectUtils.ts';
 import type { CaseSubjectListItem } from '../../model/caseSubject.types.ts';
 import { formatLegalRepresentative } from '../../utils/caseSubjectUtils.ts';
+import { CaseSubjectRowActions } from '../CaseSubjectRowActions/CaseSubjectRowActions.tsx';
 import styles from './CaseSubjectListRow.module.scss';
 
 export interface CaseSubjectListRowProps {
@@ -43,7 +43,7 @@ export function CaseSubjectListRow({
   return (
     <>
       <tr className={`${rowClass} ${hasRepresentative ? styles['caseSubjectListRow--open'] : ''}`}>
-        <th className={columnStyles.caseSubjectList__name} scope="row">
+        <th scope="row">
           <span className={styles.caseSubjectListRow__name}>
             <TypeIcon item={item} />
             <Link
@@ -73,10 +73,13 @@ export function CaseSubjectListRow({
         <td>{getCodelistLabel(materialLegalRoles, item.materialLegalRole)}</td>
         <td>{getCodelistLabel(proceduralRoles, item.proceduralRole)}</td>
         <td>{checkValue(item.caseFileNumber)}</td>
+        <td className={styles.caseSubjectListRow__actions}>
+          <CaseSubjectRowActions item={item} />
+        </td>
       </tr>
       {hasRepresentative && (
         <tr className={`${rowClass} ${styles.caseSubjectListRow__representativeRow}`}>
-          <td colSpan={5}>
+          <td colSpan={6}>
             <span className={styles.caseSubjectListRow__representative}>
               <Scale className={styles.caseSubjectListRow__icon} aria-hidden="true" />
               {formatLegalRepresentative(item)}

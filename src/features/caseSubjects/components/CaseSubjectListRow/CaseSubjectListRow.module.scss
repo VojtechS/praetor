@@ -1,8 +1,6 @@
 @use '../../../../styles/variables' as *;
 
 .caseSubjectListRow {
-  position: relative;
-
   border-bottom: 1px solid $color-border;
 
   & > th,
@@ -15,17 +13,11 @@
     vertical-align: middle;
   }
 
+  // The name is indented under the group heading.
   & > th {
+    padding-left: $space-6;
+
     font-weight: 500;
-  }
-
-  &:hover {
-    background-color: $color-surface-muted;
-  }
-
-  &--selected,
-  &--selected:hover {
-    background-color: $color-primary-light;
   }
 
   &--selected > :first-child {
@@ -44,9 +36,14 @@
 
   &__representativeRow > td {
     padding-top: 0;
+    padding-left: $space-6;
 
     color: $color-text-muted;
     font-size: 12px;
+  }
+
+  &--selected &__link {
+    color: $color-primary-text;
   }
 
   &__name,
@@ -67,7 +64,7 @@
     color: $color-primary-text;
   }
 
-  // Stretched link: the whole row selects the subject.
+  // Only the name selects the subject.
   &__link {
     color: $color-text;
     font-weight: 500;
@@ -81,12 +78,6 @@
       outline: none;
       border-radius: $radius-control;
       box-shadow: $focus-ring;
-    }
-
-    &::after {
-      content: '';
-      position: absolute;
-      inset: 0;
     }
   }
 }

@@ -37,6 +37,23 @@
     flex-shrink: 0;
   }
 
+  &--small {
+    height: $control-height-small;
+    padding: 0 $space-3;
+
+    font-size: 13px;
+  }
+
+  // Icon without text: a square button.
+  &--iconOnly {
+    width: $control-height;
+    padding: 0;
+
+    &.button--small {
+      width: $control-height-small;
+    }
+  }
+
   &--primary {
     color: $color-on-primary;
     background-color: $color-primary;
@@ -62,6 +79,15 @@
 
     &:hover:not(:disabled) {
       background-color: $color-primary-light;
+    }
+  }
+
+  &--danger {
+    color: $color-danger;
+    background-color: transparent;
+
+    &:hover:not(:disabled) {
+      background-color: $color-danger-light;
     }
   }
 

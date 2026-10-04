@@ -4,23 +4,23 @@
   &__button {
     display: inline-flex;
     align-items: center;
-    gap: $space-2;
+    justify-content: center;
 
-    height: $control-height;
-    padding: 0 $space-4;
+    width: $control-height-small;
+    height: $control-height-small;
+    padding: 0;
 
-    color: $color-text;
-    font-weight: 500;
-    background-color: $color-surface;
+    color: $color-text-muted;
+    background-color: transparent;
 
-    border: 1px solid $color-border-strong;
+    border: 0;
     border-radius: $radius-control;
     cursor: pointer;
 
     transition: background-color $transition-duration;
 
     &:hover:not(:disabled) {
-      background-color: $color-surface-muted;
+      background-color: $color-primary-light;
     }
 
     &:focus-visible {
@@ -53,6 +53,14 @@
     border: 1px solid $color-border;
     border-radius: $radius-control;
     box-shadow: $shadow-card;
+
+    // Invisible bridge over the gap, so the menu stays open while the mouse crosses it.
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -5px 0 auto;
+      height: 5px;
+    }
 
     &:popover-open {
       display: flex;

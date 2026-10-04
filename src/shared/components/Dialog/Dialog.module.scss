@@ -16,6 +16,10 @@
   border-radius: $radius-card;
   box-shadow: $shadow-dialog;
 
+  &:focus {
+    outline: none;
+  }
+
   &[open] {
     display: flex;
     flex-direction: column;
@@ -35,6 +39,10 @@
 
   &--lg {
     width: $dialog-width-lg;
+  }
+
+  &--xl {
+    width: $dialog-width-xl;
   }
 
   &__header,

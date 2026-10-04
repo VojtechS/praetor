@@ -15,6 +15,10 @@ if (!HTMLDialogElement.prototype.close) {
   };
 }
 
+if (!HTMLElement.prototype.showPopover) {
+  HTMLElement.prototype.showPopover = function showPopover() {};
+}
+
 if (!HTMLElement.prototype.hidePopover) {
   HTMLElement.prototype.hidePopover = function hidePopover() {};
 }

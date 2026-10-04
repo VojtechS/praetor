@@ -1,0 +1,8 @@
+@use '../../../../styles/variables' as *;
+
+.caseSubjectRowActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: $space-2;
+}

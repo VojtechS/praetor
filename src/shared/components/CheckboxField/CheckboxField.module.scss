@@ -12,10 +12,34 @@
   }
 
   &__control {
-    width: $icon-size;
-    height: $icon-size;
+    flex-shrink: 0;
+    width: $checkbox-size;
+    height: $checkbox-size;
+    margin: 0;
 
-    accent-color: $color-primary;
+    background-color: $color-surface;
+
+    border: 1.5px solid $color-border-strong;
+    border-radius: 6px;
+    cursor: pointer;
+    appearance: none;
+
+    transition:
+      background-color $transition-duration,
+      border-color $transition-duration;
+
+    &:hover:not(:disabled) {
+      border-color: $color-primary;
+    }
+
+    &:checked {
+      background-color: $color-primary;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 8.5l3 3 6-6.5'/%3E%3C/svg%3E");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 100%;
+      border-color: $color-primary;
+    }
 
     &:focus-visible {
       outline: none;
@@ -27,6 +51,7 @@
     }
 
     &:disabled {
+      opacity: 0.5;
       cursor: not-allowed;
     }
   }

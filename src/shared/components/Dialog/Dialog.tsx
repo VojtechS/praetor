@@ -6,11 +6,13 @@ import styles from './Dialog.module.scss';
 export interface DialogProps {
   isOpen: boolean;
   title: string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   onClose: () => void;
   children: ReactNode;
   footer?: ReactNode;
   headerExtra?: ReactNode;
+  /** Focuses the dialog itself, not its first control (e.g. a search field in the header). */
+  isFocusedOnOpen?: boolean;
 }
 
 export function Dialog({
@@ -21,6 +23,7 @@ export function Dialog({
   children,
   footer,
   headerExtra,
+  isFocusedOnOpen = false,
 }: Readonly<DialogProps>) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const titleId = useId();
@@ -31,10 +34,14 @@ export function Dialog({
 
     if (isOpen && !dialog?.open) {
       dialog?.showModal();
+
+      if (isFocusedOnOpen) {
+        dialog?.focus();
+      }
     } else if (!isOpen && dialog?.open) {
       dialog.close();
     }
-  }, [isOpen]);
+  }, [isOpen, isFocusedOnOpen]);
 
   // React bubbles the close event of a nested dialog to its parents, only the own closing counts.
   function handleClose(event: SyntheticEvent<HTMLDialogElement>) {
@@ -48,6 +55,7 @@ export function Dialog({
       ref={dialogRef}
       className={`${styles.dialog} ${modifier}`}
       aria-labelledby={titleId}
+      tabIndex={isFocusedOnOpen ? -1 : undefined}
       onClose={handleClose}
     >
       {isOpen && (

@@ -8,6 +8,7 @@ export interface TextFieldProps {
   registration: UseFormRegisterReturn;
   error?: string;
   type?: 'text' | 'date';
+  placeholder?: string;
   isLabelHidden?: boolean;
   disabled?: boolean;
 }
@@ -17,6 +18,7 @@ export function TextField({
   registration,
   error,
   type = 'text',
+  placeholder,
   isLabelHidden = false,
   disabled = false,
 }: Readonly<TextFieldProps>) {
@@ -31,6 +33,7 @@ export function TextField({
       <input
         id={id}
         type={type}
+        placeholder={placeholder}
         className={styles.textField__control}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? errorId : undefined}

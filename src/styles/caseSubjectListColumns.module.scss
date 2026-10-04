@@ -2,23 +2,23 @@
   width: 100%;
   table-layout: fixed;
 
-  &__name {
-    width: 34%;
-  }
-
   &__identification {
-    width: 20%;
-  }
-
-  &__materialLegalRole {
-    width: 17%;
-  }
-
-  &__proceduralRole {
     width: 16%;
   }
 
+  &__materialLegalRole {
+    width: 15%;
+  }
+
+  &__proceduralRole {
+    width: 14%;
+  }
+
   &__caseFileNumber {
-    width: 13%;
+    width: 12%;
+  }
+
+  &__actions {
+    width: 140px;
   }
 }

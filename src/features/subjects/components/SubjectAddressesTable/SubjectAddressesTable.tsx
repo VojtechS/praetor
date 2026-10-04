@@ -46,7 +46,8 @@ export function SubjectAddressesTable({
             <td>{getAddressTypeNote(field)}</td>
             <td className={styles.subjectAddressesTable__remove}>
               <Button
-                variant="ghost"
+                variant="danger"
+                size="small"
                 icon={Trash2}
                 aria-label="Odebrat adresu"
                 title="Odebrat adresu"

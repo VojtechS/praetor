@@ -40,6 +40,8 @@ export function SubjectDocumentRows({ form }: Readonly<SubjectDocumentRowsProps>
             hasEmptyOption
           />
           <Button
+            variant="danger"
+            size="small"
             icon={Trash2}
             aria-label="Odebrat doklad"
             title="Odebrat doklad"

@@ -5,9 +5,7 @@ export function CaseSubjectListHeader() {
   return (
     <thead className={styles.caseSubjectListHeader}>
       <tr>
-        <th className={columnStyles.caseSubjectList__name} scope="col">
-          Označení
-        </th>
+        <th scope="col">Označení</th>
         <th className={columnStyles.caseSubjectList__identification} scope="col">
           Identifikace
         </th>
@@ -19,6 +17,9 @@ export function CaseSubjectListHeader() {
         </th>
         <th className={columnStyles.caseSubjectList__caseFileNumber} scope="col">
           Spisová značka
+        </th>
+        <th className={columnStyles.caseSubjectList__actions} scope="col">
+          <span className="visuallyHidden">Akce</span>
         </th>
       </tr>
     </thead>

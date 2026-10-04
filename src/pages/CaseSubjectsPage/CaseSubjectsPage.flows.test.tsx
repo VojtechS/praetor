@@ -58,15 +58,27 @@ describe('CaseSubjectsPage flows', () => {
     expect(await screen.findByRole('link', { name: 'Mgr. Filip Petr' })).toBeInTheDocument();
   });
 
+  it('opens the subject card from the row actions without selecting the row', async () => {
+    const user = userEvent.setup();
+    renderPage();
+
+    const row = (await screen.findByRole('link', { name: 'Marek Horáček' })).closest('tr')!;
+    await user.click(within(row).getByRole('button', { name: 'Otevřít' }));
+
+    expect(await screen.findByRole('dialog', { name: 'Marek Horáček' })).toBeInTheDocument();
+    expect(
+      within(row).getByRole('link', { name: 'Marek Horáček', hidden: true }),
+    ).not.toHaveAttribute('aria-current');
+  });
+
   it('removes a subject from the case after a confirmation', async () => {
     const user = userEvent.setup();
     renderPage();
 
-    await user.click(await screen.findByRole('link', { name: 'Marek Horáček' }));
-    expect(await screen.findByRole('heading', { name: 'Marek Horáček' })).toBeInTheDocument();
-
+    const row = (await screen.findByRole('link', { name: 'Marek Horáček' })).closest('tr')!;
+    await user.click(within(row).getByRole('button', { name: 'Další akce' }));
     await user.click(
-      screen.getByRole('menuitem', { name: 'Odstranit subjekt ze spisu', hidden: true }),
+      within(row).getByRole('menuitem', { name: 'Odstranit subjekt ze spisu', hidden: true }),
     );
     const confirm = screen.getByRole('dialog', { name: 'Odebrat subjekt ze spisu' });
     await user.click(within(confirm).getByRole('button', { name: 'Odebrat' }));
@@ -74,6 +86,5 @@ describe('CaseSubjectsPage flows', () => {
     await waitFor(() => {
       expect(screen.queryByRole('link', { name: 'Marek Horáček' })).not.toBeInTheDocument();
     });
-    expect(screen.queryByRole('heading', { name: 'Marek Horáček' })).not.toBeInTheDocument();
   });
 });

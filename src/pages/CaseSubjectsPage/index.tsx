@@ -41,7 +41,7 @@ export function CaseSubjectsPage() {
         </h1>
       </header>
 
-      <CaseSubjectsToolbar selectedItem={selectedItem} />
+      <CaseSubjectsToolbar />
       <CaseSubjectRoleDialog items={listItems} onSaved={selectSubject} />
       <CaseSubjectRemoveDialog
         items={listItems}

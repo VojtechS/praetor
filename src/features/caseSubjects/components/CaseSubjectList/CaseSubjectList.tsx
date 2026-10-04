@@ -37,7 +37,7 @@ export function CaseSubjectList({
         {items.length === 0 && !isLoading && (
           <tbody>
             <tr>
-              <td colSpan={5}>
+              <td colSpan={6}>
                 <p className="emptyState">
                   {isError ? 'Seznam subjektů se nepodařilo načíst' : 'Žádné subjekty na spisu'}
                 </p>

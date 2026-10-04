@@ -28,16 +28,15 @@ export function SubjectConnectionRows({
         <tr>
           <th scope="col">Spojení</th>
           <th scope="col">Typ spojení</th>
-          <th scope="col">Poznámka</th>
           <th scope="col">Pref.</th>
           <th scope="col">
             <span className="visuallyHidden">Odebrat</span>
           </th>
         </tr>
       </thead>
-      <tbody>
-        {fields.map((field, index) => (
-          <tr key={field.id}>
+      {fields.map((field, index) => (
+        <tbody key={field.id} className={styles.subjectConnectionRows__connection}>
+          <tr>
             <td>
               <TextField
                 label={`Spojení ${index + 1}`}
@@ -55,13 +54,6 @@ export function SubjectConnectionRows({
               />
             </td>
             <td>
-              <TextField
-                label={`Poznámka ${index + 1}`}
-                registration={register(`connections.${index}.note`)}
-                isLabelHidden
-              />
-            </td>
-            <td>
               <CheckboxField
                 label={`Preferované ${index + 1}`}
                 registration={register(`connections.${index}.isPreferred`)}
@@ -70,7 +62,8 @@ export function SubjectConnectionRows({
             </td>
             <td>
               <Button
-                variant="ghost"
+                variant="danger"
+                size="small"
                 icon={Trash2}
                 aria-label="Odebrat spojení"
                 title="Odebrat spojení"
@@ -78,8 +71,18 @@ export function SubjectConnectionRows({
               />
             </td>
           </tr>
-        ))}
-      </tbody>
+          <tr>
+            <td colSpan={4}>
+              <TextField
+                label={`Poznámka ${index + 1}`}
+                registration={register(`connections.${index}.note`)}
+                placeholder="Poznámka"
+                isLabelHidden
+              />
+            </td>
+          </tr>
+        </tbody>
+      ))}
     </table>
   );
 }
