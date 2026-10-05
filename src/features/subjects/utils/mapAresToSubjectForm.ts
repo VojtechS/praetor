@@ -1,4 +1,4 @@
-import type { AresSubjectDetail } from '../api/aresApi.types.ts';
+import type { AresSubjectDetail } from '../api/aresApi/aresApi.types.ts';
 import type { SubjectFormInput } from '../schemas/subjectForm.schema.ts';
 import { mapSubjectToForm } from './subjectFormMapper.ts';
 

@@ -1,24 +1,9 @@
-.caseSubjectList {
-  width: 100%;
-  table-layout: fixed;
-
-  &__identification {
-    width: 16%;
-  }
-
-  &__materialLegalRole {
-    width: 15%;
-  }
-
-  &__proceduralRole {
-    width: 14%;
-  }
-
-  &__caseFileNumber {
-    width: 12%;
-  }
-
-  &__actions {
-    width: 140px;
-  }
+// Shared column layout of the case subject list header and rows.
+// The table min-width in CaseSubjectList.module.scss must equal the sum of the column minimums.
+.caseSubjectListGrid {
+  display: grid;
+  grid-template-columns:
+    minmax(200px, 1fr) minmax(110px, 16%) minmax(130px, 15%) minmax(110px, 14%)
+    minmax(100px, 12%) 140px;
+  align-items: center;
 }

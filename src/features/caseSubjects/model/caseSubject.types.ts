@@ -1,7 +1,7 @@
 import type {
   CaseSubject as CaseSubjectApi,
   CaseSubjectRole,
-} from '../api/caseSubjectApi.types.ts';
+} from '../api/caseSubjectApi/caseSubjectApi.types.ts';
 
 export type CaseSubjectListItem = Pick<
   CaseSubjectApi,

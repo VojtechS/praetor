@@ -7,9 +7,9 @@ import {
   getSubjectIdentification,
 } from '../../../../subjects/utils/subjectUtils.ts';
 import { CaseSubjectOnCaseSection } from '../../CaseSubjectOnCaseSection/CaseSubjectOnCaseSection.tsx';
-import { SubjectAddressesSection } from '../../SubjectAddressesSection/SubjectAddressesSection.tsx';
-import { SubjectBasicInfoSection } from '../../SubjectBasicInfoSection/SubjectBasicInfoSection.tsx';
-import { SubjectConnectionsSection } from '../../SubjectConnectionsSection/SubjectConnectionsSection.tsx';
+import { SubjectAddressesSection } from '../../../../subjects/components/SubjectAddressesSection/SubjectAddressesSection.tsx';
+import { SubjectBasicInfoSection } from '../../../../subjects/components/SubjectBasicInfoSection/SubjectBasicInfoSection.tsx';
+import { SubjectConnectionsSection } from '../../../../subjects/components/SubjectConnectionsSection/SubjectConnectionsSection.tsx';
 import styles from './CaseSubjectDetailContent.module.scss';
 
 export interface CaseSubjectDetailContentProps {

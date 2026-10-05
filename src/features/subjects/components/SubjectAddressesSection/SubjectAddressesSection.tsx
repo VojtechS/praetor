@@ -1,8 +1,8 @@
 import { useCodelistQuery } from '../../../codelists/hooks/useCodelistQuery.ts';
 import { getCodelistLabel } from '../../../codelists/utils/codelistUtils.ts';
-import type { Address } from '../../../subjects/api/subjectApi.types.ts';
-import { formatAddress, getAddressTypeNote } from '../../../subjects/utils/addressUtils.ts';
-import { CaseSubjectDetailSection } from '../CaseSubjectDetailSection/CaseSubjectDetailSection.tsx';
+import type { Address } from '../../api/subjectApi/subjectApi.types.ts';
+import { formatAddress, getAddressTypeNote } from '../../utils/addressUtils.ts';
+import { DetailSection } from '../../../../shared/components/DetailSection/DetailSection.tsx';
 import styles from './SubjectAddressesSection.module.scss';
 
 export interface SubjectAddressesSectionProps {
@@ -13,7 +13,7 @@ export function SubjectAddressesSection({ addresses }: Readonly<SubjectAddresses
   const countries = useCodelistQuery('countries').data;
 
   return (
-    <CaseSubjectDetailSection title="Adresy" count={addresses.length}>
+    <DetailSection title="Adresy" count={addresses.length}>
       {addresses.length === 0 && <p className="emptyState">Žádné adresy</p>}
       <ul className={styles.subjectAddressesSection__list}>
         {addresses.map((address) => (
@@ -25,6 +25,6 @@ export function SubjectAddressesSection({ addresses }: Readonly<SubjectAddresses
           </li>
         ))}
       </ul>
-    </CaseSubjectDetailSection>
+    </DetailSection>
   );
 }

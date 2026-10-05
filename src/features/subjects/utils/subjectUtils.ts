@@ -1,8 +1,5 @@
-import type { Contact, Subject, SubjectType } from '../api/subjectApi.types.ts';
+import type { Contact, Subject, SubjectType } from '../api/subjectApi/subjectApi.types.ts';
 import { checkValue } from '../../../shared/utils/checkValue.ts';
-
-const PERSONAL_ID_PATTERN = /^(\d{2})(\d{2})(\d{2})\/?(\d{3,4})$/;
-const FIRST_YEAR_WITHOUT_LONG_ID = 54;
 
 export function getSubjectDisplayName(
   subject: Pick<Subject, 'economicSubject' | 'physicalPerson'>,
@@ -71,37 +68,4 @@ export function hasPhysicalPerson(type: SubjectType): boolean {
 
 export function canLookupDataBox(type: SubjectType): boolean {
   return hasEconomicSubject(type);
-}
-
-// Month +50 means a woman, +20 means supplementary numbering.
-function getRealMonth(month: number): number {
-  const withoutWoman = month > 50 ? month - 50 : month;
-
-  return withoutWoman > 20 ? withoutWoman - 20 : withoutWoman;
-}
-
-// Returns an ISO date (yyyy-mm-dd) or null when the personal ID has no valid birth date.
-export function getBirthDateFromPersonalId(personalId: string): string | null {
-  const match = PERSONAL_ID_PATTERN.exec(personalId.trim());
-
-  if (!match) {
-    return null;
-  }
-
-  const [, yy, mm, dd, suffix] = match;
-  const shortYear = Number(yy);
-  const isLongId = suffix.length === 4;
-
-  if (!isLongId && shortYear >= FIRST_YEAR_WITHOUT_LONG_ID) {
-    return null;
-  }
-
-  const year = (isLongId && shortYear < FIRST_YEAR_WITHOUT_LONG_ID ? 2000 : 1900) + shortYear;
-  const month = getRealMonth(Number(mm));
-  const day = Number(dd);
-  const date = new Date(Date.UTC(year, month - 1, day));
-  const isValid =
-    date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day;
-
-  return isValid ? date.toISOString().slice(0, 10) : null;
 }

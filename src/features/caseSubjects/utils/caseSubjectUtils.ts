@@ -1,4 +1,7 @@
-import type { CaseSubject, CaseSubjectCreateRequest } from '../api/caseSubjectApi.types.ts';
+import type {
+  CaseSubject,
+  CaseSubjectCreateRequest,
+} from '../api/caseSubjectApi/caseSubjectApi.types.ts';
 import { CASE_SUBJECT_ROLE_ORDER } from '../constants/caseSubjectLabels.ts';
 import type { CaseSubjectGroup, CaseSubjectListItem } from '../model/caseSubject.types.ts';
 import type {

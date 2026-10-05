@@ -3,18 +3,15 @@
 .caseSubjectListRow {
   border-bottom: 1px solid $color-border;
 
-  & > th,
-  & > td {
+  & > * {
     padding: $space-3 $space-4;
 
     font-size: 14px;
     font-weight: 400;
-    text-align: left;
-    vertical-align: middle;
   }
 
   // The name is indented under the group heading.
-  & > th {
+  &__nameCell {
     padding-left: $space-6;
 
     font-weight: 500;
@@ -28,13 +25,12 @@
   &--open {
     border-bottom: 0;
 
-    & > th,
-    & > td {
+    & > * {
       padding-bottom: $space-1;
     }
   }
 
-  &__representativeRow > td {
+  &__representativeRow > * {
     padding-top: 0;
     padding-left: $space-6;
 

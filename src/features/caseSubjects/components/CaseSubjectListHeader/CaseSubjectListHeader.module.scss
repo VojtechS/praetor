@@ -1,7 +1,7 @@
 @use '../../../../styles/mixins' as *;
 
 .caseSubjectListHeader {
-  th {
+  & > * {
     @include table-heading;
   }
 }

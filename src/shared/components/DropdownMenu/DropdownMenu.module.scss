@@ -54,14 +54,6 @@
     border-radius: $radius-control;
     box-shadow: $shadow-card;
 
-    // Invisible bridge over the gap, so the menu stays open while the mouse crosses it.
-    &::before {
-      content: '';
-      position: absolute;
-      inset: -5px 0 auto;
-      height: 5px;
-    }
-
     &:popover-open {
       display: flex;
       flex-direction: column;

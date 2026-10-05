@@ -1,9 +1,5 @@
-import { CalendarCheck } from 'lucide-react';
-import { useWatch } from 'react-hook-form';
-import { Button } from '../../../../shared/components/Button/Button.tsx';
 import { TextField } from '../../../../shared/components/TextField/TextField.tsx';
 import type { SubjectForm } from '../../schemas/subjectForm.schema.ts';
-import { getBirthDateFromPersonalId } from '../../utils/subjectUtils.ts';
 import { SubjectDocumentRows } from '../SubjectDocumentRows/SubjectDocumentRows.tsx';
 import { SubjectFormSection } from '../SubjectFormSection/SubjectFormSection.tsx';
 import styles from './SubjectPersonFields.module.scss';
@@ -13,16 +9,8 @@ export interface SubjectPersonFieldsProps {
 }
 
 export function SubjectPersonFields({ form }: Readonly<SubjectPersonFieldsProps>) {
-  const { register, control, setValue, formState } = form;
+  const { register, formState } = form;
   const errors = 'physicalPerson' in formState.errors ? formState.errors.physicalPerson : undefined;
-  const personalId = useWatch({ control, name: 'physicalPerson.personalId' });
-  const birthDate = getBirthDateFromPersonalId(personalId ?? '');
-
-  function fillBirthDate() {
-    if (birthDate) {
-      setValue('physicalPerson.birthDate', birthDate, { shouldDirty: true });
-    }
-  }
 
   return (
     <SubjectFormSection title="Fyzická osoba">
@@ -55,11 +43,6 @@ export function SubjectPersonFields({ form }: Readonly<SubjectPersonFieldsProps>
             registration={register('physicalPerson.personalId')}
             error={errors?.personalId?.message}
           />
-          <div className={styles.subjectPersonFields__action}>
-            <Button icon={CalendarCheck} disabled={!birthDate} onClick={fillBirthDate}>
-              Doplnit dat. nar.
-            </Button>
-          </div>
         </div>
         <SubjectDocumentRows form={form} />
       </div>

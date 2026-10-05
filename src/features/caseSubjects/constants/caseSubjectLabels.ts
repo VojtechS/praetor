@@ -1,4 +1,4 @@
-import type { CaseSubjectRole } from '../api/caseSubjectApi.types.ts';
+import type { CaseSubjectRole } from '../api/caseSubjectApi/caseSubjectApi.types.ts';
 import { checkValue } from '../../../shared/utils/checkValue.ts';
 
 export const CASE_SUBJECT_ROLE_ORDER: CaseSubjectRole[] = [

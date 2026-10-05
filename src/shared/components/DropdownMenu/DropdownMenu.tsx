@@ -28,16 +28,20 @@ export function DropdownMenu({
   const menuRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  function handleToggle(event: ToggleEvent<HTMLDivElement>) {
+  // Runs before the menu is shown, so it never renders at a stale position.
+  function handleBeforeToggle(event: ToggleEvent<HTMLDivElement>) {
     const rect = buttonRef.current?.getBoundingClientRect();
 
-    setIsOpen(event.newState === 'open');
-
-    if (rect) {
+    if (rect && event.newState === 'open') {
       // The menu is aligned to the right edge of the trigger.
       event.currentTarget.style.top = `${rect.bottom + 4}px`;
-      event.currentTarget.style.left = `${rect.right - event.currentTarget.offsetWidth}px`;
+      event.currentTarget.style.left = 'auto';
+      event.currentTarget.style.right = `${document.documentElement.clientWidth - rect.right}px`;
     }
+  }
+
+  function handleToggle(event: ToggleEvent<HTMLDivElement>) {
+    setIsOpen(event.newState === 'open');
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
@@ -53,24 +57,13 @@ export function DropdownMenu({
     enabled.at(next % enabled.length)?.focus();
   }
 
-  // The menu opens on hover (and on click for keyboard and touch), the gap below the trigger is bridged in the SCSS.
-  function show() {
-    if (!isOpen) {
-      menuRef.current?.showPopover();
-    }
-  }
-
-  function hide() {
-    menuRef.current?.hidePopover();
-  }
-
   function handleSelect(item: DropdownMenuItem) {
     menuRef.current?.hidePopover();
     item.onSelect();
   }
 
   return (
-    <div className={styles.dropdownMenu} onMouseEnter={show} onMouseLeave={hide}>
+    <div className={styles.dropdownMenu}>
       <button
         ref={buttonRef}
         type="button"
@@ -79,7 +72,7 @@ export function DropdownMenu({
         aria-expanded={isOpen}
         aria-label={label}
         disabled={disabled}
-        onClick={show}
+        popoverTarget={menuId}
       >
         <Icon className={styles.dropdownMenu__icon} aria-hidden="true" />
       </button>
@@ -90,6 +83,7 @@ export function DropdownMenu({
         role="menu"
         tabIndex={-1}
         className={styles.dropdownMenu__menu}
+        onBeforeToggle={handleBeforeToggle}
         onToggle={handleToggle}
         onKeyDown={handleKeyDown}
       >

@@ -1,6 +1,5 @@
-import columnStyles from '../../../../styles/caseSubjectListColumns.module.scss';
 import { LoadingOverlay } from '../../../../shared/components/LoadingOverlay/LoadingOverlay.tsx';
-import type { CodelistItem } from '../../../codelists/api/codelistApi.types.ts';
+import type { CodelistItem } from '../../../codelists/api/codelistApi/codelistApi.types.ts';
 import type { CaseSubjectListItem } from '../../model/caseSubject.types.ts';
 import { groupCaseSubjectsByRole } from '../../utils/caseSubjectUtils.ts';
 import { CaseSubjectGroupHeader } from '../CaseSubjectGroupHeader/CaseSubjectGroupHeader.tsx';
@@ -9,6 +8,7 @@ import { CaseSubjectListRow } from '../CaseSubjectListRow/CaseSubjectListRow.tsx
 import styles from './CaseSubjectList.module.scss';
 
 export interface CaseSubjectListProps {
+  caseId: string;
   items: CaseSubjectListItem[];
   materialLegalRoles: CodelistItem[] | undefined;
   proceduralRoles: CodelistItem[] | undefined;
@@ -18,6 +18,7 @@ export interface CaseSubjectListProps {
 }
 
 export function CaseSubjectList({
+  caseId,
   items,
   materialLegalRoles,
   proceduralRoles,
@@ -29,28 +30,31 @@ export function CaseSubjectList({
     <div className={styles.caseSubjectList__wrapper} aria-busy={isLoading}>
       {isLoading && <LoadingOverlay label="Načítání seznamu subjektů" />}
 
-      <table className={`${styles.caseSubjectList__table} ${columnStyles.caseSubjectList}`}>
-        <caption className="visuallyHidden">Seznam subjektů na spisu</caption>
-
+      <div
+        role="table"
+        className={styles.caseSubjectList__table}
+        aria-label="Seznam subjektů na spisu"
+      >
         <CaseSubjectListHeader />
 
         {items.length === 0 && !isLoading && (
-          <tbody>
-            <tr>
-              <td colSpan={6}>
+          <div role="rowgroup">
+            <div role="row">
+              <div role="cell" aria-colspan={6}>
                 <p className="emptyState">
                   {isError ? 'Seznam subjektů se nepodařilo načíst' : 'Žádné subjekty na spisu'}
                 </p>
-              </td>
-            </tr>
-          </tbody>
+              </div>
+            </div>
+          </div>
         )}
 
         {groupCaseSubjectsByRole(items).map((group) => (
-          <tbody key={group.role}>
+          <div role="rowgroup" key={group.role}>
             <CaseSubjectGroupHeader role={group.role} count={group.items.length} />
             {group.items.map((item) => (
               <CaseSubjectListRow
+                caseId={caseId}
                 key={item.id}
                 item={item}
                 materialLegalRoles={materialLegalRoles}
@@ -58,9 +62,9 @@ export function CaseSubjectList({
                 isSelected={item.subjectId === selectedSubjectId}
               />
             ))}
-          </tbody>
+          </div>
         ))}
-      </table>
+      </div>
     </div>
   );
 }

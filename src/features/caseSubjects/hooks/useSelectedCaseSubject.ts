@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { parseSubjectId } from '../../subjects/utils/subjectUtils.ts';
-import type { CaseSubject } from '../api/caseSubjectApi.types.ts';
+import type { CaseSubject } from '../api/caseSubjectApi/caseSubjectApi.types.ts';
 
 const SUBJECT_ID_PARAM = 'subjectId';
 

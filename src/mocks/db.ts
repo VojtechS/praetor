@@ -2,11 +2,11 @@ import type {
   CaseSubject,
   CaseSubjectCreateRequest,
   CaseSubjectUpdateRequest,
-} from '../features/caseSubjects/api/caseSubjectApi.types.ts';
-import type { Case } from '../features/caseSubjects/api/caseApi.types.ts';
-import type { CodelistItem, CodelistName } from '../features/codelists/api/codelistApi.types.ts';
-import type { AresSubject, AresSubjectDetail } from '../features/subjects/api/aresApi.types.ts';
-import type { Subject, SubjectRequest } from '../features/subjects/api/subjectApi.types.ts';
+} from '../features/caseSubjects/api/caseSubjectApi/caseSubjectApi.types.ts';
+import type { Case } from '../features/caseSubjects/api/caseApi/caseApi.types.ts';
+import type { CodelistItem, CodelistName } from '../features/codelists/api/codelistApi/codelistApi.types.ts';
+import type { AresSubject, AresSubjectDetail } from '../features/subjects/api/aresApi/aresApi.types.ts';
+import type { Subject, SubjectRequest } from '../features/subjects/api/subjectApi/subjectApi.types.ts';
 import { SUBJECT_SEARCH_LIMIT } from '../features/subjects/constants/subjectSearch.ts';
 import { getSubjectDisplayName } from '../features/subjects/utils/subjectUtils.ts';
 import {

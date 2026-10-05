@@ -1,6 +1,6 @@
-@use '../../../../styles/variables' as *;
+@use '../../../styles/variables' as *;
 
-.caseSubjectDetailSection {
+.detailSection {
   border-top: 1px solid $color-border;
 
   &__summary {

@@ -1,4 +1,4 @@
-import type { AresSubjectDetail } from '../api/aresApi.types.ts';
+import type { AresSubjectDetail } from '../api/aresApi/aresApi.types.ts';
 import type { SubjectDetail } from '../model/subject.types.ts';
 import type { SubjectCardState } from '../../caseSubjects/store/useCaseSubjectsUiStore.ts';
 import type { SubjectFormInput } from '../schemas/subjectForm.schema.ts';

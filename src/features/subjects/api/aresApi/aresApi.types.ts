@@ -1,4 +1,4 @@
-import type { SubjectRequest } from './subjectApi.types.ts';
+import type { SubjectRequest } from '../subjectApi/subjectApi.types.ts';
 
 export interface AresSubject {
   regNumber: string;

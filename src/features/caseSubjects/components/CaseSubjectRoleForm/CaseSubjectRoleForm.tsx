@@ -15,8 +15,8 @@ import {
   selectPickedSubject,
   useCaseSubjectsUiStore,
 } from '../../store/useCaseSubjectsUiStore.ts';
-import { CaseSubjectContactsChecklist } from '../CaseSubjectContactsChecklist/CaseSubjectContactsChecklist.tsx';
 import { CaseSubjectRoleFields } from '../CaseSubjectRoleFields/CaseSubjectRoleFields.tsx';
+import { CaseSubjectRoleTabs } from '../CaseSubjectRoleTabs/CaseSubjectRoleTabs.tsx';
 
 export interface CaseSubjectRoleFormProps {
   formId: string;
@@ -84,7 +84,7 @@ export function CaseSubjectRoleForm({
         onPickSubject={() => openPicker('subject')}
         onPickRepresentative={() => openPicker('representative')}
       />
-      <CaseSubjectContactsChecklist
+      <CaseSubjectRoleTabs
         contacts={subject?.contacts ?? []}
         registration={register('preferredContactIds')}
         hasSubject={!!subjectId}

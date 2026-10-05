@@ -1,6 +1,6 @@
 import type { UseFormRegisterReturn } from 'react-hook-form';
 import { CheckboxField } from '../../../../shared/components/CheckboxField/CheckboxField.tsx';
-import type { Contact } from '../../../subjects/api/subjectApi.types.ts';
+import type { Contact } from '../../../subjects/api/subjectApi/subjectApi.types.ts';
 import { formatContactLabel } from '../../../subjects/utils/subjectUtils.ts';
 import styles from './CaseSubjectContactsChecklist.module.scss';
 
@@ -35,14 +35,5 @@ export function CaseSubjectContactsChecklist({
     content = <p className="emptyState">Subjekt nemá žádné kontaktní osoby</p>;
   }
 
-  return (
-    <section className={styles.caseSubjectContactsChecklist}>
-      <div className={styles.caseSubjectContactsChecklist__tabs}>
-        <h3 className={styles.caseSubjectContactsChecklist__title}>
-          Preferované kontakty na spisu
-        </h3>
-      </div>
-      {content}
-    </section>
-  );
+  return content;
 }

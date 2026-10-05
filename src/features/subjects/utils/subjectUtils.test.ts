@@ -1,28 +1,9 @@
 import {
   canLookupDataBox,
-  getBirthDateFromPersonalId,
   hasEconomicSubject,
   hasLegalForm,
   hasPhysicalPerson,
 } from './subjectUtils.ts';
-
-describe('getBirthDateFromPersonalId', () => {
-  it('derives the birth date of a man', () => {
-    expect(getBirthDateFromPersonalId('640917/2000')).toBe('1964-09-17');
-  });
-
-  it('derives the birth date of a woman (month + 50)', () => {
-    expect(getBirthDateFromPersonalId('756230/1234')).toBe('1975-12-30');
-  });
-
-  it('uses year 2000+ for 10 digits and yy < 54', () => {
-    expect(getBirthDateFromPersonalId('0101010009')).toBe('2001-01-01');
-  });
-
-  it('returns null for an invalid date', () => {
-    expect(getBirthDateFromPersonalId('990231/1234')).toBeNull();
-  });
-});
 
 describe('section visibility by subject type', () => {
   it('follows the table in the spec', () => {

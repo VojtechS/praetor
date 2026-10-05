@@ -1,4 +1,4 @@
-import type { ConnectionType, SubjectType } from '../api/subjectApi.types.ts';
+import type { ConnectionType, SubjectType } from '../api/subjectApi/subjectApi.types.ts';
 import { checkValue } from '../../../shared/utils/checkValue.ts';
 
 const subjectTypeLabels: Record<SubjectType, string> = {

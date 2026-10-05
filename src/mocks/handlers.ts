@@ -1,8 +1,8 @@
 import type {
   CaseSubjectCreateRequest,
   CaseSubjectUpdateRequest,
-} from '../features/caseSubjects/api/caseSubjectApi.types.ts';
-import type { SubjectRequest } from '../features/subjects/api/subjectApi.types.ts';
+} from '../features/caseSubjects/api/caseSubjectApi/caseSubjectApi.types.ts';
+import type { SubjectRequest } from '../features/subjects/api/subjectApi/subjectApi.types.ts';
 import * as db from './db.ts';
 
 interface MockResult {

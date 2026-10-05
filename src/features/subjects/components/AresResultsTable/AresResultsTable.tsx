@@ -1,4 +1,4 @@
-import type { AresSubject } from '../../api/aresApi.types.ts';
+import type { AresSubject } from '../../api/aresApi/aresApi.types.ts';
 import { handleRowKeyDown } from '../../../../shared/utils/handleRowKeyDown.ts';
 import styles from './AresResultsTable.module.scss';
 

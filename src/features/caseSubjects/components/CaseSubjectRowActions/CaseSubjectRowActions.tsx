@@ -13,14 +13,15 @@ import {
 import styles from './CaseSubjectRowActions.module.scss';
 
 export interface CaseSubjectRowActionsProps {
+  caseId: string;
   item: CaseSubjectListItem;
 }
 
-export function CaseSubjectRowActions({ item }: Readonly<CaseSubjectRowActionsProps>) {
+export function CaseSubjectRowActions({ caseId, item }: Readonly<CaseSubjectRowActionsProps>) {
   const openRoleDialog = useCaseSubjectsUiStore(selectOpenRoleDialog);
   const openSubjectCard = useCaseSubjectsUiStore(selectOpenSubjectCard);
   const requestRemove = useCaseSubjectsUiStore(selectRequestRemove);
-  const updateMutation = useUpdateCaseSubjectMutation();
+  const updateMutation = useUpdateCaseSubjectMutation(caseId);
 
   function openCard(subjectId: number) {
     openSubjectCard({ mode: 'edit', subjectId, aresPrefill: null, returnTarget: null });

@@ -1,23 +1,23 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { CaseSubjectsPage } from './index.tsx';
 import { setupApiMocks } from './CaseSubjectsPage.test-data.ts';
 
-vi.mock('../../features/caseSubjects/api/caseApi.ts', () => ({
+vi.mock('../../features/caseSubjects/api/caseApi/caseApi.ts', () => ({
   caseApi: { getById: vi.fn() },
 }));
 
-vi.mock('../../features/caseSubjects/api/caseSubjectApi.ts', () => ({
+vi.mock('../../features/caseSubjects/api/caseSubjectApi/caseSubjectApi.ts', () => ({
   caseSubjectApi: { getAll: vi.fn(), create: vi.fn(), update: vi.fn(), remove: vi.fn() },
 }));
 
-vi.mock('../../features/subjects/api/subjectApi.ts', () => ({
+vi.mock('../../features/subjects/api/subjectApi/subjectApi.ts', () => ({
   subjectApi: { getAll: vi.fn(), getById: vi.fn(), create: vi.fn(), update: vi.fn() },
 }));
 
-vi.mock('../../features/codelists/api/codelistApi.ts', () => ({
+vi.mock('../../features/codelists/api/codelistApi/codelistApi.ts', () => ({
   codelistApi: { getByName: vi.fn() },
 }));
 
@@ -29,7 +29,9 @@ function renderPage(url = '/spisy/2026-001/subjekty') {
   return render(
     <QueryClientProvider client={queryClient}>
       <MemoryRouter initialEntries={[url]}>
-        <CaseSubjectsPage />
+        <Routes>
+          <Route path="/spisy/:caseId/subjekty" element={<CaseSubjectsPage />} />
+        </Routes>
       </MemoryRouter>
     </QueryClientProvider>,
   );

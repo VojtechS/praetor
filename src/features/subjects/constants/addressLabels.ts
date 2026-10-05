@@ -1,4 +1,4 @@
-import type { Address } from '../api/subjectApi.types.ts';
+import type { Address } from '../api/subjectApi/subjectApi.types.ts';
 
 type AddressTypeFlag = keyof Pick<Address, 'isSeat' | 'isDelivery' | 'isBranch' | 'isBilling'>;
 

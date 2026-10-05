@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { aresApi } from '../api/aresApi.ts';
-import { dataBoxApi } from '../api/dataBoxApi.ts';
+import { aresApi } from '../api/aresApi/aresApi.ts';
+import { dataBoxApi } from '../api/dataBoxApi/dataBoxApi.ts';
 import { MIN_SEARCH_LENGTH } from '../constants/subjectSearch.ts';
 import { useDataToast } from '../../../shared/hooks/useDataToast.ts';
 

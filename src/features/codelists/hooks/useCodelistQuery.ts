@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { codelistApi } from '../api/codelistApi.ts';
-import type { CodelistName } from '../api/codelistApi.types.ts';
+import { codelistApi } from '../api/codelistApi/codelistApi.ts';
+import type { CodelistName } from '../api/codelistApi/codelistApi.types.ts';
 import { useDataToast } from '../../../shared/hooks/useDataToast.ts';
 
 const CODELISTS_QUERY_KEY = ['codelists'] as const;

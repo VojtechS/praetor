@@ -1,4 +1,4 @@
-import { api } from '../../../services/api/axios.ts';
+import { api } from '../../../../services/api/axios.ts';
 import type {
   CaseSubjectCreateRequest,
   CaseSubjectListResponse,

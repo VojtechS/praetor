@@ -2,7 +2,7 @@ import { Button } from '../../../../shared/components/Button/Button.tsx';
 import { Dialog } from '../../../../shared/components/Dialog/Dialog.tsx';
 import { LoadingOverlay } from '../../../../shared/components/LoadingOverlay/LoadingOverlay.tsx';
 import { useCodelistQuery } from '../../../codelists/hooks/useCodelistQuery.ts';
-import type { CaseSubject } from '../../api/caseSubjectApi.types.ts';
+import type { CaseSubject } from '../../api/caseSubjectApi/caseSubjectApi.types.ts';
 import {
   useAddCaseSubjectMutation,
   useUpdateCaseSubjectMutation,
@@ -23,17 +23,22 @@ import { CaseSubjectRoleForm } from '../CaseSubjectRoleForm/CaseSubjectRoleForm.
 const ROLE_FORM_ID = 'caseSubjectRoleForm';
 
 export interface CaseSubjectRoleDialogProps {
+  caseId: string;
   items: CaseSubject[];
   onSaved: (subjectId: number) => void;
 }
 
-export function CaseSubjectRoleDialog({ items, onSaved }: Readonly<CaseSubjectRoleDialogProps>) {
+export function CaseSubjectRoleDialog({
+  caseId,
+  items,
+  onSaved,
+}: Readonly<CaseSubjectRoleDialogProps>) {
   const roleDialog = useCaseSubjectsUiStore(selectRoleDialog);
   const closeRoleDialog = useCaseSubjectsUiStore(selectCloseRoleDialog);
   const proceduralRoles = useCodelistQuery('procedural-roles').data;
   const materialLegalRoles = useCodelistQuery('material-legal-roles').data;
-  const addMutation = useAddCaseSubjectMutation();
-  const updateMutation = useUpdateCaseSubjectMutation();
+  const addMutation = useAddCaseSubjectMutation(caseId);
+  const updateMutation = useUpdateCaseSubjectMutation(caseId);
 
   const isEdit = roleDialog?.mode === 'edit';
   const editItem = items.find((item) => item.id === roleDialog?.caseSubjectId);

@@ -1,4 +1,4 @@
-import type { CodelistItem } from '../api/codelistApi.types.ts';
+import type { CodelistItem } from '../api/codelistApi/codelistApi.types.ts';
 import type { SelectOption } from '../../../shared/components/SelectField/SelectField.tsx';
 import { checkValue } from '../../../shared/utils/checkValue.ts';
 

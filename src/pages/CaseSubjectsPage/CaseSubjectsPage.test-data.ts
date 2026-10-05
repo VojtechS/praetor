@@ -1,7 +1,7 @@
-import { caseApi } from '../../features/caseSubjects/api/caseApi.ts';
-import { caseSubjectApi } from '../../features/caseSubjects/api/caseSubjectApi.ts';
-import { codelistApi } from '../../features/codelists/api/codelistApi.ts';
-import { subjectApi } from '../../features/subjects/api/subjectApi.ts';
+import { caseApi } from '../../features/caseSubjects/api/caseApi/caseApi.ts';
+import { caseSubjectApi } from '../../features/caseSubjects/api/caseSubjectApi/caseSubjectApi.ts';
+import { codelistApi } from '../../features/codelists/api/codelistApi/codelistApi.ts';
+import { subjectApi } from '../../features/subjects/api/subjectApi/subjectApi.ts';
 import {
   createCaseSubject,
   deleteCaseSubject,

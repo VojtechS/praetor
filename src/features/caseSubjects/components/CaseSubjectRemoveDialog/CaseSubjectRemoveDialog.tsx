@@ -1,5 +1,5 @@
 import { ConfirmDialog } from '../../../../shared/components/ConfirmDialog/ConfirmDialog.tsx';
-import type { CaseSubject } from '../../api/caseSubjectApi.types.ts';
+import type { CaseSubject } from '../../api/caseSubjectApi/caseSubjectApi.types.ts';
 import { useRemoveCaseSubjectMutation } from '../../hooks/useCaseSubjectQueries.ts';
 import {
   selectCancelRemove,
@@ -8,18 +8,20 @@ import {
 } from '../../store/useCaseSubjectsUiStore.ts';
 
 export interface CaseSubjectRemoveDialogProps {
+  caseId: string;
   items: CaseSubject[];
   onRemoved: (subjectId: number) => void;
 }
 
 // Only the link of the subject to the case is removed, the subject itself stays.
 export function CaseSubjectRemoveDialog({
+  caseId,
   items,
   onRemoved,
 }: Readonly<CaseSubjectRemoveDialogProps>) {
   const confirmRemoveId = useCaseSubjectsUiStore(selectConfirmRemoveId);
   const cancelRemove = useCaseSubjectsUiStore(selectCancelRemove);
-  const removeMutation = useRemoveCaseSubjectMutation();
+  const removeMutation = useRemoveCaseSubjectMutation(caseId);
   const item = items.find((candidate) => candidate.id === confirmRemoveId);
 
   function handleConfirm() {

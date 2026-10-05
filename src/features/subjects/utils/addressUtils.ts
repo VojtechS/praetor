@@ -1,4 +1,4 @@
-import type { Address } from '../api/subjectApi.types.ts';
+import type { Address } from '../api/subjectApi/subjectApi.types.ts';
 import { ADDRESS_TYPE_FLAGS } from '../constants/addressLabels.ts';
 
 type AddressLines = Pick<

@@ -1,4 +1,4 @@
-import type { SubjectRequest } from '../api/subjectApi.types.ts';
+import type { SubjectRequest } from '../api/subjectApi/subjectApi.types.ts';
 import type { SubjectFormValues } from '../schemas/subjectForm.schema.ts';
 import { hasLegalForm } from './subjectUtils.ts';
 

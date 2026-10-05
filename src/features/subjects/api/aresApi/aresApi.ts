@@ -1,4 +1,4 @@
-import { api } from '../../../services/api/axios.ts';
+import { api } from '../../../../services/api/axios.ts';
 import type { AresSubjectDetailResponse, AresSubjectListResponse } from './aresApi.types.ts';
 
 export const aresApi = {

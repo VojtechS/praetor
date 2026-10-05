@@ -1,8 +1,8 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { CASE_SUBJECTS_QUERY_KEY } from '../../caseSubjects/hooks/useCaseSubjectQueries.ts';
-import { subjectApi } from '../api/subjectApi.ts';
-import type { SubjectRequest } from '../api/subjectApi.types.ts';
+import { subjectApi } from '../api/subjectApi/subjectApi.ts';
+import type { SubjectRequest } from '../api/subjectApi/subjectApi.types.ts';
 import { useDataToast } from '../../../shared/hooks/useDataToast.ts';
 
 const SUBJECTS_QUERY_KEY = ['subjects'] as const;

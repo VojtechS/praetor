@@ -4,7 +4,7 @@ import type {
   EconomicSubject,
   PhysicalPerson,
   SubjectRequest,
-} from '../api/subjectApi.types.ts';
+} from '../api/subjectApi/subjectApi.types.ts';
 import type { SubjectFormInput } from '../schemas/subjectForm.schema.ts';
 import { CZECH_COUNTRY_CODE } from '../constants/addressLabels.ts';
 

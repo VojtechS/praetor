@@ -1,4 +1,4 @@
-import type { SubjectType } from '../../subjects/api/subjectApi.types.ts';
+import type { SubjectType } from '../../../subjects/api/subjectApi/subjectApi.types.ts';
 
 export type CaseSubjectRole = 'CLIENT' | 'OPPOSING_PARTY' | 'PARTICIPANT' | 'DECIDING_AUTHORITY';
 

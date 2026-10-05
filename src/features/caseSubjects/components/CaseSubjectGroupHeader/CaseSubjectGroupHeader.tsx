@@ -1,7 +1,7 @@
 import { Landmark, ShieldCheck, Swords, Users } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Badge } from '../../../../shared/components/Badge/Badge.tsx';
-import type { CaseSubjectRole } from '../../api/caseSubjectApi.types.ts';
+import type { CaseSubjectRole } from '../../api/caseSubjectApi/caseSubjectApi.types.ts';
 import { getCaseSubjectRoleGroupLabel } from '../../constants/caseSubjectLabels.ts';
 import styles from './CaseSubjectGroupHeader.module.scss';
 
@@ -22,18 +22,18 @@ export function CaseSubjectGroupHeader({ role, count }: Readonly<CaseSubjectGrou
   const modifierClass = styles[`caseSubjectGroupHeader--${modifier}`];
 
   return (
-    <tr>
-      <th
+    <div role="row">
+      <div
+        role="rowheader"
+        aria-colspan={6}
         className={`${styles.caseSubjectGroupHeader} ${modifierClass}`}
-        scope="rowgroup"
-        colSpan={6}
       >
         <span className={styles.caseSubjectGroupHeader__content}>
           <Icon className={styles.caseSubjectGroupHeader__icon} aria-hidden="true" />
           <span>{getCaseSubjectRoleGroupLabel(role)}</span>
           <Badge>{count}</Badge>
         </span>
-      </th>
-    </tr>
+      </div>
+    </div>
   );
 }

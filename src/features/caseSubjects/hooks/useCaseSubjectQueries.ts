@@ -1,24 +1,25 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 import { toast } from 'sonner';
-import { caseApi } from '../api/caseApi.ts';
-import { caseSubjectApi } from '../api/caseSubjectApi.ts';
+import { caseApi } from '../api/caseApi/caseApi.ts';
+import { caseSubjectApi } from '../api/caseSubjectApi/caseSubjectApi.ts';
 import type {
   CaseSubjectCreateRequest,
   CaseSubjectUpdateRequest,
-} from '../api/caseSubjectApi.types.ts';
-import { CASE_ID } from '../constants/currentCase.ts';
+} from '../api/caseSubjectApi/caseSubjectApi.types.ts';
 import { useDataToast } from '../../../shared/hooks/useDataToast.ts';
 
 const CASE_QUERY_KEY = (caseId: string) => ['cases', caseId] as const;
-export const CASE_SUBJECTS_QUERY_KEY = ['caseSubjects', CASE_ID] as const;
+export const CASE_SUBJECTS_QUERY_KEY = ['caseSubjects'] as const;
+const CASE_SUBJECTS_BY_CASE_QUERY_KEY = (caseId: string) =>
+  [...CASE_SUBJECTS_QUERY_KEY, caseId] as const;
 
 const HTTP_CONFLICT = 409;
 
-export function useCaseQuery() {
+export function useCaseQuery(caseId: string) {
   const query = useQuery({
-    queryKey: CASE_QUERY_KEY(CASE_ID),
-    queryFn: () => caseApi.getById(CASE_ID),
+    queryKey: CASE_QUERY_KEY(caseId),
+    queryFn: () => caseApi.getById(caseId),
   });
 
   useDataToast(query.isError, 'Nepodařilo se načíst spis.');
@@ -26,10 +27,10 @@ export function useCaseQuery() {
   return query;
 }
 
-export function useCaseSubjectsQuery() {
+export function useCaseSubjectsQuery(caseId: string) {
   const query = useQuery({
-    queryKey: CASE_SUBJECTS_QUERY_KEY,
-    queryFn: () => caseSubjectApi.getAll(CASE_ID),
+    queryKey: CASE_SUBJECTS_BY_CASE_QUERY_KEY(caseId),
+    queryFn: () => caseSubjectApi.getAll(caseId),
     placeholderData: keepPreviousData,
   });
 
@@ -38,10 +39,10 @@ export function useCaseSubjectsQuery() {
   return query;
 }
 
-export function useAddCaseSubjectMutation() {
+export function useAddCaseSubjectMutation(caseId: string) {
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: (request: CaseSubjectCreateRequest) => caseSubjectApi.create(CASE_ID, request),
+    mutationFn: (request: CaseSubjectCreateRequest) => caseSubjectApi.create(caseId, request),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: CASE_SUBJECTS_QUERY_KEY });
       toast.success('Subjekt byl přidán na spis.');
@@ -58,11 +59,11 @@ export function useAddCaseSubjectMutation() {
   return mutation;
 }
 
-export function useUpdateCaseSubjectMutation() {
+export function useUpdateCaseSubjectMutation(caseId: string) {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: ({ id, request }: { id: number; request: CaseSubjectUpdateRequest }) =>
-      caseSubjectApi.update(CASE_ID, id, request),
+      caseSubjectApi.update(caseId, id, request),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: CASE_SUBJECTS_QUERY_KEY });
       toast.success('Změny byly uloženy.');
@@ -74,10 +75,10 @@ export function useUpdateCaseSubjectMutation() {
   return mutation;
 }
 
-export function useRemoveCaseSubjectMutation() {
+export function useRemoveCaseSubjectMutation(caseId: string) {
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: (id: number) => caseSubjectApi.remove(CASE_ID, id),
+    mutationFn: (id: number) => caseSubjectApi.remove(caseId, id),
     // Not awaited on purpose: the caller closes the detail of the removed subject before the
     // list is refreshed, otherwise the detail would flash "Subjekt nenalezen".
     onSuccess: () => {

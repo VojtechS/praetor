@@ -1,4 +1,4 @@
-import type { Subject as SubjectApi } from '../api/subjectApi.types.ts';
+import type { Subject as SubjectApi } from '../api/subjectApi/subjectApi.types.ts';
 
 export type SubjectListItem = Pick<
   SubjectApi,

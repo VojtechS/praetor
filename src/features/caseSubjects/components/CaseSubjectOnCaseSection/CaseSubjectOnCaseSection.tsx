@@ -1,11 +1,11 @@
 import { checkValue } from '../../../../shared/utils/checkValue.ts';
 import { useCodelistQuery } from '../../../codelists/hooks/useCodelistQuery.ts';
 import { getCodelistLabel } from '../../../codelists/utils/codelistUtils.ts';
-import type { Contact } from '../../../subjects/api/subjectApi.types.ts';
+import type { Contact } from '../../../subjects/api/subjectApi/subjectApi.types.ts';
 import { getCaseSubjectRoleLabel } from '../../constants/caseSubjectLabels.ts';
 import type { CaseSubjectDetail } from '../../model/caseSubject.types.ts';
-import { CaseSubjectDetailRow } from '../CaseSubjectDetailRow/CaseSubjectDetailRow.tsx';
-import { CaseSubjectDetailSection } from '../CaseSubjectDetailSection/CaseSubjectDetailSection.tsx';
+import { DetailRow } from '../../../../shared/components/DetailRow/DetailRow.tsx';
+import { DetailSection } from '../../../../shared/components/DetailSection/DetailSection.tsx';
 import styles from './CaseSubjectOnCaseSection.module.scss';
 
 export interface CaseSubjectOnCaseSectionProps {
@@ -24,26 +24,23 @@ export function CaseSubjectOnCaseSection({
   );
 
   return (
-    <CaseSubjectDetailSection title="Na spisu" isOpen>
-      <dl>
-        <CaseSubjectDetailRow label="Role" value={getCaseSubjectRoleLabel(caseSubject.role)} />
-        <CaseSubjectDetailRow
+    <DetailSection title="Na spisu" isOpen>
+      <div>
+        <DetailRow label="Role" value={getCaseSubjectRoleLabel(caseSubject.role)} />
+        <DetailRow
           label="Procesní role"
           value={getCodelistLabel(proceduralRoles.data, caseSubject.proceduralRole)}
         />
-        <CaseSubjectDetailRow
+        <DetailRow
           label="Hmotně právní role"
           value={getCodelistLabel(materialLegalRoles.data, caseSubject.materialLegalRole)}
         />
-        <CaseSubjectDetailRow
+        <DetailRow
           label="Právní zástupce"
           value={checkValue(caseSubject.legalRepresentativeName)}
         />
-        <CaseSubjectDetailRow
-          label="Spisová značka"
-          value={checkValue(caseSubject.caseFileNumber)}
-        />
-      </dl>
+        <DetailRow label="Spisová značka" value={checkValue(caseSubject.caseFileNumber)} />
+      </div>
       <h3 className={styles.caseSubjectOnCaseSection__title}>Preferované kontakty</h3>
       {preferredContacts.length === 0 ? (
         <p>{checkValue(null)}</p>
@@ -54,6 +51,6 @@ export function CaseSubjectOnCaseSection({
           ))}
         </ul>
       )}
-    </CaseSubjectDetailSection>
+    </DetailSection>
   );
 }

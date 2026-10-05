@@ -1,4 +1,4 @@
-import { api } from '../../../services/api/axios.ts';
+import { api } from '../../../../services/api/axios.ts';
 import type { CaseResponse } from './caseApi.types.ts';
 
 export const caseApi = {

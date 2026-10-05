@@ -3,25 +3,20 @@ import styles from './CaseSubjectListHeader.module.scss';
 
 export function CaseSubjectListHeader() {
   return (
-    <thead className={styles.caseSubjectListHeader}>
-      <tr>
-        <th scope="col">Označení</th>
-        <th className={columnStyles.caseSubjectList__identification} scope="col">
-          Identifikace
-        </th>
-        <th className={columnStyles.caseSubjectList__materialLegalRole} scope="col">
-          Hmotně právní role
-        </th>
-        <th className={columnStyles.caseSubjectList__proceduralRole} scope="col">
-          Procesní role
-        </th>
-        <th className={columnStyles.caseSubjectList__caseFileNumber} scope="col">
-          Spisová značka
-        </th>
-        <th className={columnStyles.caseSubjectList__actions} scope="col">
+    <div role="rowgroup">
+      <div
+        role="row"
+        className={`${styles.caseSubjectListHeader} ${columnStyles.caseSubjectListGrid}`}
+      >
+        <div role="columnheader">Označení</div>
+        <div role="columnheader">Identifikace</div>
+        <div role="columnheader">Hmotně právní role</div>
+        <div role="columnheader">Procesní role</div>
+        <div role="columnheader">Spisová značka</div>
+        <div role="columnheader">
           <span className="visuallyHidden">Akce</span>
-        </th>
-      </tr>
-    </thead>
+        </div>
+      </div>
+    </div>
   );
 }

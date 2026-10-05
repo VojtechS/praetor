@@ -1,7 +1,7 @@
 import { Trash2 } from 'lucide-react';
 import type { FieldArrayWithId } from 'react-hook-form';
 import { Button } from '../../../../shared/components/Button/Button.tsx';
-import type { CodelistItem } from '../../../codelists/api/codelistApi.types.ts';
+import type { CodelistItem } from '../../../codelists/api/codelistApi/codelistApi.types.ts';
 import { getCodelistLabel } from '../../../codelists/utils/codelistUtils.ts';
 import type { SubjectFormInput } from '../../schemas/subjectForm.schema.ts';
 import { formatAddress, getAddressTypeNote } from '../../utils/addressUtils.ts';

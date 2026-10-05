@@ -1,4 +1,4 @@
-import { api } from '../../../services/api/axios.ts';
+import { api } from '../../../../services/api/axios.ts';
 import type { DataBoxResponse } from './dataBoxApi.types.ts';
 
 export const dataBoxApi = {

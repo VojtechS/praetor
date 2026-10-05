@@ -1,4 +1,4 @@
-import { api } from '../../../services/api/axios.ts';
+import { api } from '../../../../services/api/axios.ts';
 import type { CodelistName, CodelistResponse } from './codelistApi.types.ts';
 
 export const codelistApi = {
