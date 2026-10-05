@@ -1,6 +1,5 @@
 import type { UseFormReturn } from 'react-hook-form';
 import { z } from 'zod';
-import { toStringArray } from '../../../shared/utils/toStringArray.ts';
 import { CZECH_COUNTRY_CODE } from '../constants/addressLabels.ts';
 
 const PHONE_MIN_LENGTH = 9;
@@ -102,7 +101,7 @@ const commonShape = {
   language: z.string(),
   clientNumber: z.string(),
   abbreviation: z.string(),
-  labels: z.union([z.array(z.string()), z.string(), z.literal(false)]).transform(toStringArray),
+  labels: z.array(z.string()),
   note: z.string(),
   category: z.string(),
   group: z.string(),

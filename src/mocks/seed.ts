@@ -3,14 +3,19 @@ import type {
   CaseSubjectRole,
 } from '../features/caseSubjects/api/caseSubjectApi/caseSubjectApi.types.ts';
 import type { Case } from '../features/caseSubjects/api/caseApi/caseApi.types.ts';
-import type { CodelistItem, CodelistName } from '../features/codelists/api/codelistApi/codelistApi.types.ts';
-import type { AresSubject, AresSubjectDetail } from '../features/subjects/api/aresApi/aresApi.types.ts';
+import type {
+  CodelistItem,
+  CodelistName,
+} from '../features/codelists/api/codelistApi/codelistApi.types.ts';
+import type {
+  AresSubject,
+  AresSubjectDetail,
+} from '../features/subjects/api/aresApi/aresApi.types.ts';
 import type {
   Address,
   EconomicSubject,
   PhysicalPerson,
   Subject,
-  SubjectRequest,
 } from '../features/subjects/api/subjectApi/subjectApi.types.ts';
 
 // Summary fields of a case subject are derived from the subject on read.
@@ -25,8 +30,8 @@ export type CaseSubjectRecord = Omit<
 >;
 
 function createSubjectRequest(
-  subject: Partial<SubjectRequest> & Pick<SubjectRequest, 'type'>,
-): SubjectRequest {
+  subject: Partial<Omit<Subject, 'id'>> & Pick<Subject, 'type'>,
+): Omit<Subject, 'id'> {
   return {
     country: 'CZ',
     language: 'CS',

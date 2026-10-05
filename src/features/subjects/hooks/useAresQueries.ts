@@ -7,7 +7,6 @@ import { useDataToast } from '../../../shared/hooks/useDataToast.ts';
 
 const ARES_QUERY_KEY = ['ares'] as const;
 
-// The query runs only for a submitted search, so typing in the field never triggers it.
 export function useAresSearchQuery(submittedSearch: string) {
   const query = useQuery({
     queryKey: [...ARES_QUERY_KEY, 'search', submittedSearch],
@@ -21,11 +20,11 @@ export function useAresSearchQuery(submittedSearch: string) {
   return query;
 }
 
-export function useAresDetailQuery(regNumber: string, enabled: boolean = true) {
+export function useAresDetailQuery(regNumber: string | null) {
   const query = useQuery({
     queryKey: [...ARES_QUERY_KEY, 'detail', regNumber],
-    queryFn: () => aresApi.getByRegNumber(regNumber),
-    enabled: enabled && !!regNumber,
+    queryFn: () => aresApi.getByRegNumber(regNumber ?? ''),
+    enabled: !!regNumber,
   });
 
   useDataToast(query.isError, 'Nepodařilo se načíst detail z ARES.');

@@ -1,15 +1,15 @@
 import { X } from 'lucide-react';
 import type { CaseSubjectDetail } from '../../../model/caseSubject.types.ts';
-import { getSubjectTypeLabel } from '../../../../subjects/constants/subjectLabels.ts';
+import { SUBJECT_TYPE_LABELS } from '../../../../subjects/constants/subjectLabels.ts';
 import type { SubjectDetail } from '../../../../subjects/model/subject.types.ts';
 import {
   getSubjectDisplayName,
   getSubjectIdentification,
 } from '../../../../subjects/utils/subjectUtils.ts';
 import { CaseSubjectOnCaseSection } from '../../CaseSubjectOnCaseSection/CaseSubjectOnCaseSection.tsx';
-import { SubjectAddressesSection } from '../../../../subjects/components/SubjectAddressesSection/SubjectAddressesSection.tsx';
-import { SubjectBasicInfoSection } from '../../../../subjects/components/SubjectBasicInfoSection/SubjectBasicInfoSection.tsx';
-import { SubjectConnectionsSection } from '../../../../subjects/components/SubjectConnectionsSection/SubjectConnectionsSection.tsx';
+import { SubjectAddressesDetail } from '../../../../subjects/components/detail/SubjectAddressesDetail/SubjectAddressesDetail.tsx';
+import { SubjectBasicInfoDetail } from '../../../../subjects/components/detail/SubjectBasicInfoDetail/SubjectBasicInfoDetail.tsx';
+import { SubjectConnectionsDetail } from '../../../../subjects/components/detail/SubjectConnectionsDetail/SubjectConnectionsDetail.tsx';
 import styles from './CaseSubjectDetailContent.module.scss';
 
 export interface CaseSubjectDetailContentProps {
@@ -36,7 +36,7 @@ export function CaseSubjectDetailContent({
             {getSubjectDisplayName(subject)}
           </h2>
           <p className={styles.caseSubjectDetailContent__subtitle}>
-            {getSubjectTypeLabel(subject.type)} · {identification}
+            {SUBJECT_TYPE_LABELS[subject.type]} · {identification}
           </p>
         </div>
         <button
@@ -50,9 +50,9 @@ export function CaseSubjectDetailContent({
       </header>
 
       <CaseSubjectOnCaseSection caseSubject={caseSubject} contacts={subject.contacts} />
-      <SubjectBasicInfoSection subject={subject} />
-      <SubjectAddressesSection addresses={subject.addresses} />
-      <SubjectConnectionsSection connections={subject.connections} />
+      <SubjectBasicInfoDetail subject={subject} />
+      <SubjectAddressesDetail addresses={subject.addresses} />
+      <SubjectConnectionsDetail connections={subject.connections} />
     </div>
   );
 }

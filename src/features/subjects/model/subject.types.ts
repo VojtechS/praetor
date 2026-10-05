@@ -1,10 +1,5 @@
 import type { Subject as SubjectApi } from '../api/subjectApi/subjectApi.types.ts';
 
-export type SubjectListItem = Pick<
-  SubjectApi,
-  'id' | 'type' | 'economicSubject' | 'physicalPerson'
->;
-
 export type SubjectDetail = Pick<
   SubjectApi,
   | 'id'

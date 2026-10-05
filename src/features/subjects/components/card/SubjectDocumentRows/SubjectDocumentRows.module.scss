@@ -1,0 +1,16 @@
+@use '../../../../../styles/variables' as *;
+
+.subjectDocumentRows {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+
+  &__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+    align-items: end;
+    gap: $space-4;
+  }
+}

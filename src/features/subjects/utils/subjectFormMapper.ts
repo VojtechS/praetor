@@ -1,8 +1,8 @@
 import type {
-  Address,
-  Connection,
+  AddressRequest,
+  ConnectionRequest,
   EconomicSubject,
-  PhysicalPerson,
+  PhysicalPersonRequest,
   SubjectRequest,
 } from '../api/subjectApi/subjectApi.types.ts';
 import type { SubjectFormInput } from '../schemas/subjectForm.schema.ts';
@@ -30,7 +30,7 @@ function toEconomicSubjectInput(economicSubject: EconomicSubject | null): Econom
   };
 }
 
-function toPhysicalPersonInput(person: PhysicalPerson | null): PhysicalPersonInput {
+function toPhysicalPersonInput(person: PhysicalPersonRequest | null): PhysicalPersonInput {
   return {
     titleBefore: orEmpty(person?.titleBefore),
     firstName: orEmpty(person?.firstName),
@@ -43,7 +43,7 @@ function toPhysicalPersonInput(person: PhysicalPerson | null): PhysicalPersonInp
   };
 }
 
-function toAddressInput(address: Address): AddressInput {
+function toAddressInput(address: AddressRequest): AddressInput {
   return {
     line1: orEmpty(address.line1),
     line2: orEmpty(address.line2),
@@ -65,7 +65,7 @@ function toAddressInput(address: Address): AddressInput {
   };
 }
 
-function toConnectionInput(connection: Connection): ConnectionInput {
+function toConnectionInput(connection: ConnectionRequest): ConnectionInput {
   return {
     type: connection.type,
     value: connection.value,
@@ -74,7 +74,6 @@ function toConnectionInput(connection: Connection): ConnectionInput {
   };
 }
 
-// New subject: the default type is a legal person, see the README assumptions.
 export function getNewSubjectFormDefaults(): SubjectFormInput {
   return {
     type: 'LEGAL',
@@ -94,7 +93,6 @@ export function getNewSubjectFormDefaults(): SubjectFormInput {
   };
 }
 
-// A new address is a seat, delivery and billing address of the subject, see the spec.
 export function getNewAddressDefaults(): AddressInput {
   return {
     line1: '',

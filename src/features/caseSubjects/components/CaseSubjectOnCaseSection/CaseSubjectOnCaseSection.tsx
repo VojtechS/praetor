@@ -2,7 +2,7 @@ import { checkValue } from '../../../../shared/utils/checkValue.ts';
 import { useCodelistQuery } from '../../../codelists/hooks/useCodelistQuery.ts';
 import { getCodelistLabel } from '../../../codelists/utils/codelistUtils.ts';
 import type { Contact } from '../../../subjects/api/subjectApi/subjectApi.types.ts';
-import { getCaseSubjectRoleLabel } from '../../constants/caseSubjectLabels.ts';
+import { CASE_SUBJECT_ROLE_LABELS } from '../../constants/caseSubjectLabels.ts';
 import type { CaseSubjectDetail } from '../../model/caseSubject.types.ts';
 import { DetailRow } from '../../../../shared/components/DetailRow/DetailRow.tsx';
 import { DetailSection } from '../../../../shared/components/DetailSection/DetailSection.tsx';
@@ -26,7 +26,7 @@ export function CaseSubjectOnCaseSection({
   return (
     <DetailSection title="Na spisu" isOpen>
       <div>
-        <DetailRow label="Role" value={getCaseSubjectRoleLabel(caseSubject.role)} />
+        <DetailRow label="Role" value={CASE_SUBJECT_ROLE_LABELS[caseSubject.role]} />
         <DetailRow
           label="Procesní role"
           value={getCodelistLabel(proceduralRoles.data, caseSubject.proceduralRole)}

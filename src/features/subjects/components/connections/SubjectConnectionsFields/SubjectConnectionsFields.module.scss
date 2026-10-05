@@ -1,0 +1,22 @@
+@use '../../../../../styles/variables' as *;
+
+.subjectConnectionsFields {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+
+  &__dataBox {
+    display: flex;
+    align-items: flex-start;
+    gap: $space-3;
+
+    & > :first-child {
+      flex: 1;
+    }
+
+    // Aligned with the input, below its label.
+    & > button {
+      margin-top: $field-label-height + $space-1;
+    }
+  }
+}

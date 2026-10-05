@@ -4,8 +4,8 @@ import type { SelectOption } from '../../../../shared/components/SelectField/Sel
 import { TextField } from '../../../../shared/components/TextField/TextField.tsx';
 import { CASE_SUBJECT_ROLE_OPTIONS } from '../../constants/caseSubjectLabels.ts';
 import type { CaseSubjectFormInput } from '../../schemas/caseSubjectForm.schema.ts';
-import { SubjectPickerField } from '../../../subjects/components/SubjectPickerField/SubjectPickerField.tsx';
-import { SubjectPickerPanel } from '../../../subjects/components/SubjectPickerPanel/SubjectPickerPanel.tsx';
+import { SubjectPickerField } from '../../../subjects/components/picker/SubjectPickerField/SubjectPickerField.tsx';
+import { SubjectPickerPanel } from '../../../subjects/components/picker/SubjectPickerPanel/SubjectPickerPanel.tsx';
 import styles from './CaseSubjectRoleFields.module.scss';
 
 export interface CaseSubjectRoleFieldsProps {

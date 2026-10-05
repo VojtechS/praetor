@@ -4,9 +4,18 @@ import type {
   CaseSubjectUpdateRequest,
 } from '../features/caseSubjects/api/caseSubjectApi/caseSubjectApi.types.ts';
 import type { Case } from '../features/caseSubjects/api/caseApi/caseApi.types.ts';
-import type { CodelistItem, CodelistName } from '../features/codelists/api/codelistApi/codelistApi.types.ts';
-import type { AresSubject, AresSubjectDetail } from '../features/subjects/api/aresApi/aresApi.types.ts';
-import type { Subject, SubjectRequest } from '../features/subjects/api/subjectApi/subjectApi.types.ts';
+import type {
+  CodelistItem,
+  CodelistName,
+} from '../features/codelists/api/codelistApi/codelistApi.types.ts';
+import type {
+  AresSubject,
+  AresSubjectDetail,
+} from '../features/subjects/api/aresApi/aresApi.types.ts';
+import type {
+  Subject,
+  SubjectRequest,
+} from '../features/subjects/api/subjectApi/subjectApi.types.ts';
 import { SUBJECT_SEARCH_LIMIT } from '../features/subjects/constants/subjectSearch.ts';
 import { getSubjectDisplayName } from '../features/subjects/utils/subjectUtils.ts';
 import {
@@ -60,7 +69,7 @@ function toCaseSubject(record: CaseSubjectRecord): CaseSubject {
   };
 }
 
-function withNewIds(request: SubjectRequest): SubjectRequest {
+function withNewIds(request: SubjectRequest): Omit<Subject, 'id'> {
   const { physicalPerson } = request;
 
   return {

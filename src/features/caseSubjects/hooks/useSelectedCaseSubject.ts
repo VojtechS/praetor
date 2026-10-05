@@ -1,9 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { parseSubjectId } from '../../subjects/utils/subjectUtils.ts';
 import type { CaseSubject } from '../api/caseSubjectApi/caseSubjectApi.types.ts';
 
 const SUBJECT_ID_PARAM = 'subjectId';
+
+function parseSubjectId(value: string | null): number | null {
+  const id = Number(value);
+
+  return Number.isInteger(id) && id > 0 ? id : null;
+}
 
 // `items` is undefined until the case subjects are loaded.
 export function useSelectedCaseSubject(items: CaseSubject[] | undefined) {

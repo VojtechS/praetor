@@ -1,45 +1,24 @@
 import type { ConnectionType, SubjectType } from '../api/subjectApi/subjectApi.types.ts';
-import { checkValue } from '../../../shared/utils/checkValue.ts';
 
-const subjectTypeLabels: Record<SubjectType, string> = {
+export const SUBJECT_TYPE_LABELS: Record<SubjectType, string> = {
   UNDETERMINED: 'Neurčeno',
   LEGAL: 'Právnická osoba',
   PHYSICAL_ENTREPRENEUR: 'Fyzická osoba – podnikatel',
   PHYSICAL_NON_ENTREPRENEUR: 'Fyzická osoba – nepodnikatel',
 };
 
-const connectionTypeLabels: Record<ConnectionType, string> = {
+export const CONNECTION_TYPE_LABELS: Record<ConnectionType, string> = {
   PHONE: 'Telefon',
   EMAIL: 'E-mail',
 };
 
-export const SUBJECT_TYPE_OPTIONS = (Object.keys(subjectTypeLabels) as SubjectType[]).map(
+export const SUBJECT_TYPE_OPTIONS = (Object.keys(SUBJECT_TYPE_LABELS) as SubjectType[]).map(
   (type) => ({
     value: type,
-    label: subjectTypeLabels[type],
+    label: SUBJECT_TYPE_LABELS[type],
   }),
 );
 
-export const CONNECTION_TYPE_OPTIONS = (Object.keys(connectionTypeLabels) as ConnectionType[]).map(
-  (type) => ({ value: type, label: connectionTypeLabels[type] }),
-);
-
-function isSubjectType(value: string): value is SubjectType {
-  return value in subjectTypeLabels;
-}
-
-function isConnectionType(value: string): value is ConnectionType {
-  return value in connectionTypeLabels;
-}
-
-export function getSubjectTypeLabel(value: string | null | undefined): string {
-  const type = checkValue(value);
-
-  return isSubjectType(type) ? subjectTypeLabels[type] : type;
-}
-
-export function getConnectionTypeLabel(value: string | null | undefined): string {
-  const type = checkValue(value);
-
-  return isConnectionType(type) ? connectionTypeLabels[type] : type;
-}
+export const CONNECTION_TYPE_OPTIONS = (
+  Object.keys(CONNECTION_TYPE_LABELS) as ConnectionType[]
+).map((type) => ({ value: type, label: CONNECTION_TYPE_LABELS[type] }));

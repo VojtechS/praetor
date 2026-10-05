@@ -1,0 +1,13 @@
+@use '../../../../../styles/variables' as *;
+
+.subjectPickerPanel {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+
+  padding: $space-3;
+
+  background-color: $color-surface-muted;
+  border: 1px solid $color-border;
+  border-radius: $radius-control;
+}

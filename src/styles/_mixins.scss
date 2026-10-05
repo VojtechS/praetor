@@ -96,20 +96,45 @@
   }
 
   tbody tr {
+    position: relative;
+
     cursor: pointer;
 
     &:hover {
       background-color: $color-surface-muted;
     }
 
-    &:focus-visible {
-      outline: none;
-      box-shadow: inset $focus-ring;
-    }
-
     &[aria-selected='true'] {
       background-color: $color-primary-light;
       box-shadow: inset 2px 0 0 $color-primary;
+    }
+  }
+
+  // The button stretches over the whole row, so a click anywhere chooses it.
+  &__choose {
+    padding: 0;
+
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    background: transparent;
+
+    border: 0;
+    cursor: pointer;
+
+    &::after {
+      content: '';
+
+      position: absolute;
+      inset: 0;
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    &:focus-visible::after {
+      box-shadow: inset $focus-ring;
     }
   }
 }

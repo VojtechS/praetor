@@ -1,26 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import { MIN_SEARCH_LENGTH, SEARCH_DEBOUNCE_MS } from '../constants/subjectSearch.ts';
 
-type SubjectPickerSource = 'praetor' | 'ares';
+interface SubmittedSearch {
+  source: 'praetor' | 'ares';
+  term: string;
+}
 
-// Search state of the subject picker. The source of the results is not a switch, it follows the
-// last search. Typing searches Praetor after a pause (empty or at least MIN_SEARCH_LENGTH
-// characters), the buttons search immediately.
 export function useSubjectPickerSearch() {
   const [search, setSearch] = useState('');
-  const [praetorSearch, setPraetorSearch] = useState('');
-  const [aresSearch, setAresSearch] = useState('');
-  const [source, setSource] = useState<SubjectPickerSource>('praetor');
+  const [submitted, setSubmitted] = useState<SubmittedSearch>({ source: 'praetor', term: '' });
   const [isAresTooShort, setIsAresTooShort] = useState(false);
   const debounceTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => () => clearTimeout(debounceTimer.current), []);
-
-  function applyPraetorSearch(term: string) {
-    setPraetorSearch(term);
-    setSource('praetor');
-    setIsAresTooShort(false);
-  }
 
   function handleSearchChange(value: string) {
     const trimmed = value.trim();
@@ -30,13 +22,17 @@ export function useSubjectPickerSearch() {
     clearTimeout(debounceTimer.current);
 
     if (trimmed.length === 0 || trimmed.length >= MIN_SEARCH_LENGTH) {
-      debounceTimer.current = setTimeout(() => applyPraetorSearch(trimmed), SEARCH_DEBOUNCE_MS);
+      debounceTimer.current = setTimeout(
+        () => setSubmitted({ source: 'praetor', term: trimmed }),
+        SEARCH_DEBOUNCE_MS,
+      );
     }
   }
 
   function searchPraetor() {
     clearTimeout(debounceTimer.current);
-    applyPraetorSearch(search.trim());
+    setIsAresTooShort(false);
+    setSubmitted({ source: 'praetor', term: search.trim() });
   }
 
   function searchAres() {
@@ -50,18 +46,8 @@ export function useSubjectPickerSearch() {
       return;
     }
 
-    setAresSearch(trimmed);
-    setSource('ares');
+    setSubmitted({ source: 'ares', term: trimmed });
   }
 
-  return {
-    search,
-    praetorSearch,
-    aresSearch,
-    source,
-    isAresTooShort,
-    handleSearchChange,
-    searchPraetor,
-    searchAres,
-  };
+  return { search, submitted, isAresTooShort, handleSearchChange, searchPraetor, searchAres };
 }

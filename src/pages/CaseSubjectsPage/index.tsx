@@ -10,7 +10,7 @@ import {
 } from '../../features/caseSubjects/hooks/useCaseSubjectQueries.ts';
 import { useSelectedCaseSubject } from '../../features/caseSubjects/hooks/useSelectedCaseSubject.ts';
 import { useCodelistQuery } from '../../features/codelists/hooks/useCodelistQuery.ts';
-import { SubjectCardDialog } from '../../features/subjects/components/SubjectCardDialog/SubjectCardDialog.tsx';
+import { SubjectCardDialog } from '../../features/subjects/components/card/SubjectCardDialog/SubjectCardDialog.tsx';
 import { useSubjectQuery } from '../../features/subjects/hooks/useSubjectQueries.ts';
 import styles from './CaseSubjectsPage.module.scss';
 

@@ -2,7 +2,7 @@ import { Landmark, ShieldCheck, Swords, Users } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Badge } from '../../../../shared/components/Badge/Badge.tsx';
 import type { CaseSubjectRole } from '../../api/caseSubjectApi/caseSubjectApi.types.ts';
-import { getCaseSubjectRoleGroupLabel } from '../../constants/caseSubjectLabels.ts';
+import { CASE_SUBJECT_ROLE_GROUP_LABELS } from '../../constants/caseSubjectLabels.ts';
 import styles from './CaseSubjectGroupHeader.module.scss';
 
 const GROUP_STYLES: Record<CaseSubjectRole, { icon: LucideIcon; modifier: string }> = {
@@ -30,7 +30,7 @@ export function CaseSubjectGroupHeader({ role, count }: Readonly<CaseSubjectGrou
       >
         <span className={styles.caseSubjectGroupHeader__content}>
           <Icon className={styles.caseSubjectGroupHeader__icon} aria-hidden="true" />
-          <span>{getCaseSubjectRoleGroupLabel(role)}</span>
+          <span>{CASE_SUBJECT_ROLE_GROUP_LABELS[role]}</span>
           <Badge>{count}</Badge>
         </span>
       </div>

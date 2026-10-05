@@ -2,7 +2,6 @@ import type { AresSubjectDetail } from '../api/aresApi/aresApi.types.ts';
 import type { SubjectDetail } from '../model/subject.types.ts';
 import type { SubjectCardState } from '../../caseSubjects/store/useCaseSubjectsUiStore.ts';
 import type { SubjectFormInput } from '../schemas/subjectForm.schema.ts';
-import { mapAresToSubjectForm } from '../utils/mapAresToSubjectForm.ts';
 import { getNewSubjectFormDefaults, mapSubjectToForm } from '../utils/subjectFormMapper.ts';
 import { useAresDetailQuery } from './useAresQueries.ts';
 import { useSubjectQuery } from './useSubjectQueries.ts';
@@ -14,7 +13,6 @@ interface CardParams {
   formKey: string;
 }
 
-// A reg. number chosen in ARES wins over the card state, the form is then filled from ARES.
 function getCardParams(
   subjectCard: SubjectCardState | null,
   aresRegNumber: string | null,
@@ -37,7 +35,7 @@ function resolveDefaults(
   isWaitingForAres: boolean,
 ): SubjectFormInput | null {
   if (aresDetail) {
-    return mapAresToSubjectForm(aresDetail);
+    return mapSubjectToForm(aresDetail);
   }
 
   if (isEdit) {
@@ -53,7 +51,7 @@ export function useSubjectCardDefaults(
 ) {
   const { isEdit, subjectId, regNumber, formKey } = getCardParams(subjectCard, aresRegNumber);
   const subjectQuery = useSubjectQuery(subjectId, isEdit);
-  const aresQuery = useAresDetailQuery(regNumber ?? '', regNumber !== null);
+  const aresQuery = useAresDetailQuery(regNumber);
   const subject = subjectQuery.data?.data;
   const isWaitingForAres = regNumber !== null && !aresQuery.isError;
   const defaultValues = resolveDefaults(isEdit, subject, aresQuery.data?.data, isWaitingForAres);

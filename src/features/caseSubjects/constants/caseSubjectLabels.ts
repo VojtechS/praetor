@@ -1,5 +1,4 @@
 import type { CaseSubjectRole } from '../api/caseSubjectApi/caseSubjectApi.types.ts';
-import { checkValue } from '../../../shared/utils/checkValue.ts';
 
 export const CASE_SUBJECT_ROLE_ORDER: CaseSubjectRole[] = [
   'CLIENT',
@@ -8,7 +7,7 @@ export const CASE_SUBJECT_ROLE_ORDER: CaseSubjectRole[] = [
   'DECIDING_AUTHORITY',
 ];
 
-const roleLabels: Record<CaseSubjectRole, string> = {
+export const CASE_SUBJECT_ROLE_LABELS: Record<CaseSubjectRole, string> = {
   CLIENT: 'Klient',
   OPPOSING_PARTY: 'Protistrana',
   PARTICIPANT: 'Zúčastněný subjekt',
@@ -17,28 +16,12 @@ const roleLabels: Record<CaseSubjectRole, string> = {
 
 export const CASE_SUBJECT_ROLE_OPTIONS = CASE_SUBJECT_ROLE_ORDER.map((role) => ({
   value: role,
-  label: roleLabels[role],
+  label: CASE_SUBJECT_ROLE_LABELS[role],
 }));
 
-const roleGroupLabels: Record<CaseSubjectRole, string> = {
+export const CASE_SUBJECT_ROLE_GROUP_LABELS: Record<CaseSubjectRole, string> = {
   CLIENT: 'Klient',
   OPPOSING_PARTY: 'Protistrana',
   PARTICIPANT: 'Zúčastněné subjekty',
   DECIDING_AUTHORITY: 'Rozhodující orgány',
 };
-
-function isCaseSubjectRole(value: string): value is CaseSubjectRole {
-  return value in roleLabels;
-}
-
-export function getCaseSubjectRoleLabel(value: string | null | undefined): string {
-  const role = checkValue(value);
-
-  return isCaseSubjectRole(role) ? roleLabels[role] : role;
-}
-
-export function getCaseSubjectRoleGroupLabel(value: string | null | undefined): string {
-  const role = checkValue(value);
-
-  return isCaseSubjectRole(role) ? roleGroupLabels[role] : role;
-}

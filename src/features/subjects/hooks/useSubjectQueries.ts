@@ -53,7 +53,6 @@ export function useUpdateSubjectMutation() {
     mutationFn: ({ id, request }: { id: number; request: SubjectRequest }) =>
       subjectApi.update(id, request),
     onSuccess: async () => {
-      // The case list shows the subject name, identification and the legal representative.
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: SUBJECTS_QUERY_KEY }),
         queryClient.invalidateQueries({ queryKey: CASE_SUBJECTS_QUERY_KEY }),

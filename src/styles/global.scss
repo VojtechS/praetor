@@ -35,15 +35,6 @@ main {
   font-style: normal;
 }
 
-.link {
-  color: $color-primary-text;
-
-  &:hover {
-    color: $color-primary-hover;
-    text-decoration: none;
-  }
-}
-
 .visuallyHidden {
   position: absolute;
 

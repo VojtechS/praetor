@@ -1,8 +1,15 @@
 import type { UseFormRegisterReturn } from 'react-hook-form';
 import { CheckboxField } from '../../../../shared/components/CheckboxField/CheckboxField.tsx';
 import type { Contact } from '../../../subjects/api/subjectApi/subjectApi.types.ts';
-import { formatContactLabel } from '../../../subjects/utils/subjectUtils.ts';
 import styles from './CaseSubjectContactsChecklist.module.scss';
+
+function formatContactLabel(contact: Contact): string {
+  if (contact.personalId) {
+    return `${contact.fullName} (r. č.: ${contact.personalId})`;
+  }
+
+  return contact.regNumber ? `${contact.fullName} (IČO: ${contact.regNumber})` : contact.fullName;
+}
 
 export interface CaseSubjectContactsChecklistProps {
   contacts: Contact[];

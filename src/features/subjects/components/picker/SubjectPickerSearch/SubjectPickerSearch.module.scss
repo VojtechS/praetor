@@ -1,0 +1,45 @@
+@use '../../../../../styles/variables' as *;
+@use '../../../../../styles/mixins' as *;
+
+.subjectPickerSearch {
+  display: block;
+
+  &__form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-2;
+  }
+
+  &__field {
+    position: relative;
+
+    flex: 1;
+    min-width: 160px;
+  }
+
+  &__icon {
+    position: absolute;
+    top: 50%;
+    left: $space-3;
+
+    width: $icon-size;
+    height: $icon-size;
+
+    color: $color-text-muted;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  &__input {
+    @include field-control;
+
+    padding-left: $space-6;
+  }
+
+  &__validation {
+    margin-top: $space-1;
+
+    color: $color-danger;
+    font-size: 12px;
+  }
+}

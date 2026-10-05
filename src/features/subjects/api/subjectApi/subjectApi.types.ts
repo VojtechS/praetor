@@ -84,7 +84,21 @@ export interface Subject {
   contacts: Contact[];
 }
 
-export type SubjectRequest = Omit<Subject, 'id'>;
+// The server assigns ids to subject and to its rows, a request does not carry any.
+export type PhysicalPersonRequest = Omit<PhysicalPerson, 'documents'> & {
+  documents: Omit<PersonDocument, 'id'>[];
+};
+export type AddressRequest = Omit<Address, 'id'>;
+export type ConnectionRequest = Omit<Connection, 'id'>;
+
+export type SubjectRequest = Omit<
+  Subject,
+  'id' | 'physicalPerson' | 'addresses' | 'connections'
+> & {
+  physicalPerson: PhysicalPersonRequest | null;
+  addresses: AddressRequest[];
+  connections: ConnectionRequest[];
+};
 
 export interface SubjectListParams {
   fulltext?: string;

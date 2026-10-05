@@ -2,9 +2,6 @@ import type { SubjectRequest } from '../api/subjectApi/subjectApi.types.ts';
 import type { SubjectFormValues } from '../schemas/subjectForm.schema.ts';
 import { hasLegalForm } from './subjectUtils.ts';
 
-// The server assigns the real ids, rows of the form do not carry any.
-const NEW_ROW_ID = 0;
-
 function orNull(value: string): string | null {
   return value.trim() || null;
 }
@@ -39,12 +36,11 @@ export function mapFormToRequest(values: SubjectFormValues): SubjectRequest {
       birthDate: orNull(person.birthDate),
       salutation: orNull(person.salutation),
       personalId: orNull(person.personalId),
-      documents: person.documents.map((document) => ({ ...document, id: NEW_ROW_ID })),
+      documents: person.documents,
     },
     dataBoxId: orNull(values.dataBoxId),
     addresses: values.addresses.map((address) => ({
       ...address,
-      id: NEW_ROW_ID,
       line1: orNull(address.line1),
       line2: orNull(address.line2),
       line3: orNull(address.line3),
@@ -58,7 +54,6 @@ export function mapFormToRequest(values: SubjectFormValues): SubjectRequest {
     })),
     connections: values.connections.map((connection) => ({
       ...connection,
-      id: NEW_ROW_ID,
       note: orNull(connection.note),
     })),
     contacts: [],

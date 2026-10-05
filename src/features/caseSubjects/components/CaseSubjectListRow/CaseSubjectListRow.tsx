@@ -4,7 +4,7 @@ import columnStyles from '../../../../styles/caseSubjectListColumns.module.scss'
 import { checkValue } from '../../../../shared/utils/checkValue.ts';
 import type { CodelistItem } from '../../../codelists/api/codelistApi/codelistApi.types.ts';
 import { getCodelistLabel } from '../../../codelists/utils/codelistUtils.ts';
-import { getSubjectTypeLabel } from '../../../subjects/constants/subjectLabels.ts';
+import { SUBJECT_TYPE_LABELS } from '../../../subjects/constants/subjectLabels.ts';
 import { getSubjectIdentification } from '../../../subjects/utils/subjectUtils.ts';
 import type { CaseSubjectListItem } from '../../model/caseSubject.types.ts';
 import { formatLegalRepresentative } from '../../utils/caseSubjectUtils.ts';
@@ -23,7 +23,7 @@ function TypeIcon({ item }: Readonly<{ item: CaseSubjectListItem }>) {
   const props = {
     className: styles.caseSubjectListRow__icon,
     role: 'img',
-    'aria-label': getSubjectTypeLabel(item.subjectType),
+    'aria-label': SUBJECT_TYPE_LABELS[item.subjectType],
   };
 
   if (item.role === 'DECIDING_AUTHORITY') {

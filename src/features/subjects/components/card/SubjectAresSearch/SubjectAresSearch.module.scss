@@ -1,0 +1,86 @@
+@use '../../../../../styles/variables' as *;
+@use '../../../../../styles/mixins' as *;
+
+.subjectAresSearch {
+  position: relative;
+
+  display: block;
+
+  &__form {
+    display: flex;
+    gap: $space-2;
+  }
+
+  &__field {
+    position: relative;
+
+    width: 260px;
+  }
+
+  &__icon {
+    position: absolute;
+    top: 50%;
+    left: $space-3;
+
+    width: $icon-size;
+    height: $icon-size;
+
+    color: $color-text-muted;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  &__input {
+    @include field-control;
+
+    padding-right: $space-6;
+    padding-left: $space-6;
+  }
+
+  &__clear {
+    @include icon-button;
+
+    position: absolute;
+    top: 50%;
+    right: $space-1;
+
+    transform: translateY(-50%);
+
+    svg {
+      width: $icon-size;
+      height: $icon-size;
+    }
+  }
+
+  &__results {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 10;
+
+    width: $dialog-width-md;
+    max-width: 80vw;
+    margin-top: $space-1;
+    padding: $space-3;
+
+    background-color: $color-surface;
+    border: 1px solid $color-border;
+    border-radius: $radius-card;
+    box-shadow: $shadow-card;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__validation {
+    position: absolute;
+    top: 100%;
+    left: 0;
+
+    margin-top: $space-1;
+
+    color: $color-danger;
+    font-size: 12px;
+  }
+}
