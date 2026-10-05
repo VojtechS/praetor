@@ -52,7 +52,7 @@ export function CaseSubjectRowActions({ caseId, item }: Readonly<CaseSubjectRowA
   return (
     <div className={styles.caseSubjectRowActions}>
       <Button variant="primary" size="small" onClick={() => openCard(item.subjectId)}>
-        Otevřít
+        Upravit
       </Button>
       <DropdownMenu label="Další akce" icon={MoreHorizontal} items={menuItems} />
     </div>
