@@ -1,11 +1,8 @@
 import axios from 'axios';
-import { mockAdapter } from './mockAdapter.ts';
 
-const apiBaseUrl = String(import.meta.env.VITE_API_URL ?? '/api/');
-const useMockApi = String(import.meta.env.VITE_USE_MOCK_API) !== 'false';
+export const API_BASE_URL = String(import.meta.env.VITE_API_URL ?? '/api').replace(/\/$/, '');
 
 export const api = axios.create({
-  baseURL: apiBaseUrl,
+  baseURL: API_BASE_URL,
   timeout: 15000,
-  adapter: useMockApi ? mockAdapter : undefined,
 });

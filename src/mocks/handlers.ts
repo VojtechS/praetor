@@ -1,144 +1,106 @@
+import { delay, http, HttpResponse } from 'msw';
 import type {
   CaseSubjectCreateRequest,
   CaseSubjectUpdateRequest,
 } from '../features/caseSubjects/api/caseSubjectApi/caseSubjectApi.types.ts';
 import type { SubjectRequest } from '../features/subjects/api/subjectApi/subjectApi.types.ts';
+import { API_BASE_URL } from '../services/api/axios.ts';
 import * as db from './db.ts';
 
-interface MockResult {
-  status: number;
-  data?: unknown;
-  message?: string;
-}
-
-interface MockRequest {
-  args: string[];
-  query: Record<string, string | undefined>;
-  body: unknown;
-}
-
-interface Route {
-  method: string;
-  pattern: RegExp;
-  handler: (request: MockRequest) => MockResult;
-}
-
+const MOCK_DELAY_MS = 400;
 const SUBJECT_NOT_FOUND = 'Subjekt nenalezen';
+const CASE_SUBJECT_NOT_FOUND = 'Subjekt na spisu nenalezen';
 
-function ok(data: unknown, status = 200): MockResult {
-  return { status, data };
+function url(path: string): string {
+  return `${API_BASE_URL}${path}`;
 }
 
-function fail(status: number, message: string): MockResult {
-  return { status, message };
+function ok(data: unknown, status = 200): Response {
+  return HttpResponse.json({ data }, { status });
 }
 
-function found(data: unknown, message: string): MockResult {
+function fail(status: number, message: string): Response {
+  return HttpResponse.json({ message }, { status });
+}
+
+function found(data: unknown, message: string): Response {
   return data === undefined ? fail(404, message) : ok(data);
 }
 
-function getCase({ args }: MockRequest): MockResult {
-  return args[0] === db.getCase().id ? ok(db.getCase()) : fail(404, 'Spis nenalezen');
-}
+export const handlers = [
+  http.all(url('/*'), () => delay(MOCK_DELAY_MS)),
 
-function getCaseSubjects(): MockResult {
-  return ok(db.listCaseSubjects());
-}
+  http.get(url('/cases/:caseId'), ({ params }) =>
+    params.caseId === db.getCase().id ? ok(db.getCase()) : fail(404, 'Spis nenalezen'),
+  ),
 
-function createCaseSubject({ body }: MockRequest): MockResult {
-  const request = body as CaseSubjectCreateRequest;
+  http.get(url('/cases/:caseId/subjects'), () => ok(db.listCaseSubjects())),
 
-  if (!db.getSubject(request.subjectId)) {
-    return fail(404, SUBJECT_NOT_FOUND);
-  }
+  http.post(url('/cases/:caseId/subjects'), async ({ request }) => {
+    const body = (await request.json()) as CaseSubjectCreateRequest;
 
-  if (db.hasCaseSubject(request.subjectId)) {
-    return fail(409, 'Subjekt už na spisu je');
-  }
-
-  return ok(db.createCaseSubject(request), 201);
-}
-
-function updateCaseSubject({ args, body }: MockRequest): MockResult {
-  return found(
-    db.updateCaseSubject(Number(args[0]), body as CaseSubjectUpdateRequest),
-    'Subjekt na spisu nenalezen',
-  );
-}
-
-function deleteCaseSubject({ args }: MockRequest): MockResult {
-  return db.deleteCaseSubject(Number(args[0]))
-    ? ok(null, 204)
-    : fail(404, 'Subjekt na spisu nenalezen');
-}
-
-function getSubjects({ query }: MockRequest): MockResult {
-  return ok(db.listSubjects(query.fulltext ?? ''));
-}
-
-function getSubject({ args }: MockRequest): MockResult {
-  return found(db.getSubject(Number(args[0])), SUBJECT_NOT_FOUND);
-}
-
-function createSubject({ body }: MockRequest): MockResult {
-  return ok(db.createSubject(body as SubjectRequest), 201);
-}
-
-function updateSubject({ args, body }: MockRequest): MockResult {
-  return found(db.updateSubject(Number(args[0]), body as SubjectRequest), SUBJECT_NOT_FOUND);
-}
-
-function searchAres({ query }: MockRequest): MockResult {
-  const text = query.query ?? '';
-
-  return text.trim().toLowerCase() === 'chyba'
-    ? fail(500, 'Služba ARES je nedostupná')
-    : ok(db.searchAres(text));
-}
-
-function getAresDetail({ args }: MockRequest): MockResult {
-  return found(db.getAresDetail(args[0]), 'Záznam v ARES nenalezen');
-}
-
-function getDataBox({ args }: MockRequest): MockResult {
-  const name = db.getDataBoxName(args[0]);
-
-  return name === undefined ? fail(404, 'Datová schránka nenalezena') : ok({ id: args[0], name });
-}
-
-function getCodelist({ args }: MockRequest): MockResult {
-  return found(db.getCodelist(args[0]), 'Číselník nenalezen');
-}
-
-const routes: Route[] = [
-  { method: 'get', pattern: /^\/cases\/([^/]+)$/, handler: getCase },
-  { method: 'get', pattern: /^\/cases\/[^/]+\/subjects$/, handler: getCaseSubjects },
-  { method: 'post', pattern: /^\/cases\/[^/]+\/subjects$/, handler: createCaseSubject },
-  { method: 'patch', pattern: /^\/cases\/[^/]+\/subjects\/(\d+)$/, handler: updateCaseSubject },
-  { method: 'delete', pattern: /^\/cases\/[^/]+\/subjects\/(\d+)$/, handler: deleteCaseSubject },
-  { method: 'get', pattern: /^\/subjects$/, handler: getSubjects },
-  { method: 'get', pattern: /^\/subjects\/(\d+)$/, handler: getSubject },
-  { method: 'post', pattern: /^\/subjects$/, handler: createSubject },
-  { method: 'put', pattern: /^\/subjects\/(\d+)$/, handler: updateSubject },
-  { method: 'get', pattern: /^\/ares\/subjects$/, handler: searchAres },
-  { method: 'get', pattern: /^\/ares\/subjects\/([^/]+)$/, handler: getAresDetail },
-  { method: 'get', pattern: /^\/data-boxes\/([^/]+)$/, handler: getDataBox },
-  { method: 'get', pattern: /^\/codelists\/([^/]+)$/, handler: getCodelist },
-];
-
-export function handleMockRequest(
-  method: string,
-  url: string,
-  query: Record<string, string | undefined>,
-  body: unknown,
-): MockResult {
-  for (const route of routes) {
-    const match = route.method === method ? route.pattern.exec(url) : null;
-
-    if (match) {
-      return route.handler({ args: match.slice(1), query, body });
+    if (!db.getSubject(body.subjectId)) {
+      return fail(404, SUBJECT_NOT_FOUND);
     }
-  }
 
-  return fail(404, 'Cesta nenalezena');
-}
+    if (db.hasCaseSubject(body.subjectId)) {
+      return fail(409, 'Subjekt už na spisu je');
+    }
+
+    return ok(db.createCaseSubject(body), 201);
+  }),
+
+  http.patch(url('/cases/:caseId/subjects/:id'), async ({ params, request }) => {
+    const body = (await request.json()) as CaseSubjectUpdateRequest;
+
+    return found(db.updateCaseSubject(Number(params.id), body), CASE_SUBJECT_NOT_FOUND);
+  }),
+
+  http.delete(url('/cases/:caseId/subjects/:id'), ({ params }) =>
+    db.deleteCaseSubject(Number(params.id))
+      ? new HttpResponse(null, { status: 204 })
+      : fail(404, CASE_SUBJECT_NOT_FOUND),
+  ),
+
+  http.get(url('/subjects'), ({ request }) =>
+    ok(db.listSubjects(new URL(request.url).searchParams.get('fulltext') ?? '')),
+  ),
+
+  http.get(url('/subjects/:id'), ({ params }) =>
+    found(db.getSubject(Number(params.id)), SUBJECT_NOT_FOUND),
+  ),
+
+  http.post(url('/subjects'), async ({ request }) =>
+    ok(db.createSubject((await request.json()) as SubjectRequest), 201),
+  ),
+
+  http.put(url('/subjects/:id'), async ({ params, request }) =>
+    found(
+      db.updateSubject(Number(params.id), (await request.json()) as SubjectRequest),
+      SUBJECT_NOT_FOUND,
+    ),
+  ),
+
+  http.get(url('/ares/subjects'), ({ request }) => {
+    const query = new URL(request.url).searchParams.get('query') ?? '';
+
+    return query.trim().toLowerCase() === 'chyba'
+      ? fail(500, 'Služba ARES je nedostupná')
+      : ok(db.searchAres(query));
+  }),
+
+  http.get(url('/ares/subjects/:regNumber'), ({ params }) =>
+    found(db.getAresDetail(String(params.regNumber)), 'Záznam v ARES nenalezen'),
+  ),
+
+  http.get(url('/data-boxes/:id'), ({ params }) => {
+    const id = String(params.id);
+    const name = db.getDataBoxName(id);
+
+    return name === undefined ? fail(404, 'Datová schránka nenalezena') : ok({ id, name });
+  }),
+
+  http.get(url('/codelists/:name'), ({ params }) =>
+    found(db.getCodelist(String(params.name)), 'Číselník nenalezen'),
+  ),
+];
