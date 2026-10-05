@@ -53,14 +53,6 @@ export function CaseSubjectsPage() {
         </div>
       </header>
 
-      <CaseSubjectRoleDialog caseId={caseId} items={items} onSaved={setSelectedSubjectId} />
-      <CaseSubjectRemoveDialog
-        caseId={caseId}
-        items={items}
-        onRemoved={(subjectId) => subjectId === selectedSubjectId && setSelectedSubjectId(null)}
-      />
-      <SubjectCardDialog />
-
       <div className={styles.caseSubjectsPage__layout} data-detail-open={isDetailOpen}>
         <CaseSubjectList
           caseId={caseId}
@@ -83,6 +75,14 @@ export function CaseSubjectsPage() {
           />
         </div>
       </div>
+
+      <CaseSubjectRoleDialog caseId={caseId} items={items} onSaved={setSelectedSubjectId} />
+      <CaseSubjectRemoveDialog
+        caseId={caseId}
+        items={items}
+        onRemoved={(subjectId) => subjectId === selectedSubjectId && setSelectedSubjectId(null)}
+      />
+      <SubjectCardDialog />
     </>
   );
 }

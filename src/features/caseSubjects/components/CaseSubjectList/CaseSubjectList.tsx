@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import columnStyles from '../../../../styles/caseSubjectListColumns.module.scss';
 import { LoadingOverlay } from '../../../../shared/components/LoadingOverlay/LoadingOverlay.tsx';
 import type { CodelistItem } from '../../../codelists/api/codelistApi/codelistApi.types.ts';
-import type { CaseSubjectListItem } from '../../model/caseSubject.types.ts';
+import type { CaseSubject } from '../../api/caseSubjectApi/caseSubjectApi.types.ts';
 import { groupCaseSubjectsByRole } from '../../utils/caseSubjectUtils.ts';
 import { CaseSubjectGroupHeader } from '../CaseSubjectGroupHeader/CaseSubjectGroupHeader.tsx';
 import { CaseSubjectListRow } from '../CaseSubjectListRow/CaseSubjectListRow.tsx';
@@ -10,7 +10,7 @@ import styles from './CaseSubjectList.module.scss';
 
 export interface CaseSubjectListProps {
   caseId: string;
-  items: CaseSubjectListItem[];
+  items: CaseSubject[];
   materialLegalRoles: CodelistItem[] | undefined;
   proceduralRoles: CodelistItem[] | undefined;
   selectedSubjectId: number | null;

@@ -3,19 +3,20 @@ import { Button } from '../../../../shared/components/Button/Button.tsx';
 import { DropdownMenu } from '../../../../shared/components/DropdownMenu/DropdownMenu.tsx';
 import type { DropdownMenuItem } from '../../../../shared/components/DropdownMenu/DropdownMenu.tsx';
 import { useUpdateCaseSubjectMutation } from '../../hooks/useCaseSubjectQueries.ts';
-import type { CaseSubjectListItem } from '../../model/caseSubject.types.ts';
+import type { CaseSubject } from '../../api/caseSubjectApi/caseSubjectApi.types.ts';
 import { useCaseSubjectsUiStore } from '../../store/useCaseSubjectsUiStore.ts';
 import styles from './CaseSubjectRowActions.module.scss';
 
 export interface CaseSubjectRowActionsProps {
   caseId: string;
-  item: CaseSubjectListItem;
+  item: CaseSubject;
 }
 
 export function CaseSubjectRowActions({ caseId, item }: Readonly<CaseSubjectRowActionsProps>) {
   const openRoleDialog = useCaseSubjectsUiStore((state) => state.openRoleDialog);
   const openSubjectCard = useCaseSubjectsUiStore((state) => state.openSubjectCard);
   const requestRemove = useCaseSubjectsUiStore((state) => state.requestRemove);
+
   const updateMutation = useUpdateCaseSubjectMutation(caseId);
 
   function openCard(subjectId: number) {

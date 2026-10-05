@@ -7,21 +7,21 @@ import type { CodelistItem } from '../../../codelists/api/codelistApi/codelistAp
 import { getCodelistLabel } from '../../../codelists/utils/codelistUtils.ts';
 import { SUBJECT_TYPE_LABELS } from '../../../subjects/constants/subjectLabels.ts';
 import { getSubjectIdentification } from '../../../subjects/utils/subjectUtils.ts';
-import type { CaseSubjectListItem } from '../../model/caseSubject.types.ts';
+import type { CaseSubject } from '../../api/caseSubjectApi/caseSubjectApi.types.ts';
 import { formatLegalRepresentative } from '../../utils/caseSubjectUtils.ts';
 import { CaseSubjectRowActions } from '../CaseSubjectRowActions/CaseSubjectRowActions.tsx';
 import styles from './CaseSubjectListRow.module.scss';
 
 export interface CaseSubjectListRowProps {
   caseId: string;
-  item: CaseSubjectListItem;
+  item: CaseSubject;
   materialLegalRoles: CodelistItem[] | undefined;
   proceduralRoles: CodelistItem[] | undefined;
   isSelected: boolean;
   onSelect: (subjectId: number) => void;
 }
 
-function TypeIcon({ item }: Readonly<{ item: CaseSubjectListItem }>) {
+function TypeIcon({ item }: Readonly<{ item: CaseSubject }>) {
   const props = {
     className: styles.caseSubjectListRow__icon,
     role: 'img',
@@ -35,7 +35,6 @@ function TypeIcon({ item }: Readonly<{ item: CaseSubjectListItem }>) {
   return item.subjectType.startsWith('PHYSICAL') ? <User {...props} /> : <Building2 {...props} />;
 }
 
-// Memoized so selecting one row doesn't re-render the whole list; props are reference-stable.
 export const CaseSubjectListRow = memo(function CaseSubjectListRowView({
   caseId,
   item,

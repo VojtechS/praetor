@@ -3,13 +3,13 @@ import { useCodelistQuery } from '../../../codelists/hooks/useCodelistQuery.ts';
 import { getCodelistLabel } from '../../../codelists/utils/codelistUtils.ts';
 import type { RelatedSubject } from '../../../subjects/api/subjectApi/subjectApi.types.ts';
 import { CASE_SUBJECT_ROLE_LABELS } from '../../constants/caseSubjectLabels.ts';
-import type { CaseSubjectDetail } from '../../model/caseSubject.types.ts';
+import type { CaseSubject } from '../../api/caseSubjectApi/caseSubjectApi.types.ts';
 import { DetailRow } from '../../../../shared/components/DetailRow/DetailRow.tsx';
 import { DetailSection } from '../../../../shared/components/DetailSection/DetailSection.tsx';
 import styles from './CaseSubjectOnCaseSection.module.scss';
 
 export interface CaseSubjectOnCaseSectionProps {
-  caseSubject: CaseSubjectDetail;
+  caseSubject: CaseSubject;
   relatedSubjects: RelatedSubject[];
 }
 

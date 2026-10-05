@@ -1,22 +1,27 @@
 import type {
   CaseSubject,
   CaseSubjectCreateRequest,
+  CaseSubjectRole,
 } from '../api/caseSubjectApi/caseSubjectApi.types.ts';
 import { CASE_SUBJECT_ROLE_ORDER } from '../constants/caseSubjectLabels.ts';
-import type { CaseSubjectGroup, CaseSubjectListItem } from '../model/caseSubject.types.ts';
 import type {
   CaseSubjectFormInput,
   CaseSubjectFormValues,
 } from '../schemas/caseSubjectForm.schema.ts';
 
-export function groupCaseSubjectsByRole(items: CaseSubjectListItem[]): CaseSubjectGroup[] {
+export interface CaseSubjectGroup {
+  role: CaseSubjectRole;
+  items: CaseSubject[];
+}
+
+export function groupCaseSubjectsByRole(items: CaseSubject[]): CaseSubjectGroup[] {
   return CASE_SUBJECT_ROLE_ORDER.map((role) => ({
     role,
     items: items.filter((item) => item.role === role),
   })).filter((group) => group.items.length > 0);
 }
 
-export function formatLegalRepresentative(item: CaseSubjectListItem): string {
+export function formatLegalRepresentative(item: CaseSubject): string {
   const regNumber = item.legalRepresentativeRegNumber
     ? `, IČO ${item.legalRepresentativeRegNumber}`
     : '';

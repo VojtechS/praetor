@@ -1,6 +1,7 @@
 import { useId, useState } from 'react';
 import type { UseFormRegisterReturn } from 'react-hook-form';
 import type { RelatedSubject } from '../../../subjects/api/subjectApi/subjectApi.types.ts';
+import { CaseSubjectClientZone } from '../CaseSubjectClientZone/CaseSubjectClientZone.tsx';
 import { CaseSubjectRelatedSubjectsChecklist } from '../CaseSubjectRelatedSubjectsChecklist/CaseSubjectRelatedSubjectsChecklist.tsx';
 import styles from './CaseSubjectRoleTabs.module.scss';
 
@@ -58,6 +59,7 @@ export function CaseSubjectRoleTabs({
               hasSubject={hasSubject}
             />
           )}
+          {tab.id === 'clientZone' && <CaseSubjectClientZone />}
         </div>
       ))}
     </section>

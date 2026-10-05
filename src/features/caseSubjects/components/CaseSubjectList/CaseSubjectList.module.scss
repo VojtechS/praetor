@@ -15,7 +15,6 @@
     box-shadow: $shadow-card;
   }
 
-  // Narrower than this the columns collide, so the wrapper scrolls instead.
   &__table {
     min-width: 790px;
   }

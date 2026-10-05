@@ -32,8 +32,10 @@ export function CaseSubjectRoleDialog({
 }: Readonly<CaseSubjectRoleDialogProps>) {
   const roleDialog = useCaseSubjectsUiStore((state) => state.roleDialog);
   const closeRoleDialog = useCaseSubjectsUiStore((state) => state.closeRoleDialog);
+
   const proceduralRoles = useCodelistQuery('procedural-roles').data;
   const materialLegalRoles = useCodelistQuery('material-legal-roles').data;
+
   const addMutation = useAddCaseSubjectMutation(caseId);
   const updateMutation = useUpdateCaseSubjectMutation(caseId);
 

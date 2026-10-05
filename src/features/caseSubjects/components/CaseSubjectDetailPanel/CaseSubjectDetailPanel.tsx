@@ -6,7 +6,7 @@ import {
   getSubjectDisplayName,
   getSubjectIdentification,
 } from '../../../subjects/utils/subjectUtils.ts';
-import type { CaseSubjectDetail } from '../../model/caseSubject.types.ts';
+import type { CaseSubject } from '../../api/caseSubjectApi/caseSubjectApi.types.ts';
 import { CaseSubjectOnCaseSection } from '../CaseSubjectOnCaseSection/CaseSubjectOnCaseSection.tsx';
 import { SubjectAddressesDetail } from '../../../subjects/components/detail/SubjectAddressesDetail/SubjectAddressesDetail.tsx';
 import { SubjectBasicInfoDetail } from '../../../subjects/components/detail/SubjectBasicInfoDetail/SubjectBasicInfoDetail.tsx';
@@ -14,7 +14,7 @@ import { SubjectContactsDetail } from '../../../subjects/components/detail/Subje
 import styles from './CaseSubjectDetailPanel.module.scss';
 
 export interface CaseSubjectDetailPanelProps {
-  caseSubject?: CaseSubjectDetail;
+  caseSubject?: CaseSubject;
   subject?: Subject;
   onClose: () => void;
   isOpen: boolean;
