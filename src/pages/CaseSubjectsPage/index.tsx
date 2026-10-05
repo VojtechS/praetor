@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { CaseSubjectDetailPanel } from '../../features/caseSubjects/components/CaseSubjectDetailPanel/CaseSubjectDetailPanel.tsx';
 import { CaseSubjectList } from '../../features/caseSubjects/components/CaseSubjectList/CaseSubjectList.tsx';
@@ -8,7 +9,6 @@ import {
   useCaseQuery,
   useCaseSubjectsQuery,
 } from '../../features/caseSubjects/hooks/useCaseSubjectQueries.ts';
-import { useSelectedCaseSubject } from '../../features/caseSubjects/hooks/useSelectedCaseSubject.ts';
 import { useCodelistQuery } from '../../features/codelists/hooks/useCodelistQuery.ts';
 import { SubjectCardDialog } from '../../features/subjects/components/card/SubjectCardDialog/SubjectCardDialog.tsx';
 import { useSubjectQuery } from '../../features/subjects/hooks/useSubjectQueries.ts';
@@ -23,12 +23,12 @@ export function CaseSubjectsPage() {
 
   const items = caseSubjectsQuery.data?.data;
   const listItems = items ?? [];
-  const { selectedSubjectId, selectedItem, isNotFound, selectSubject, clearSelection } =
-    useSelectedCaseSubject(items);
+  const [selectedSubjectId, setSelectedSubjectId] = useState<number | null>(null);
+  const selectedItem = items?.find((item) => item.subjectId === selectedSubjectId);
   const subjectQuery = useSubjectQuery(selectedSubjectId ?? 0, selectedItem !== undefined);
 
   const caseHeader = caseQuery.data?.data;
-  const isDetailOpen = selectedSubjectId !== null || isNotFound;
+  const isDetailOpen = selectedSubjectId !== null;
   const isDetailLoading = caseSubjectsQuery.isPending || subjectQuery.isLoading;
 
   return (
@@ -43,11 +43,11 @@ export function CaseSubjectsPage() {
         <CaseSubjectsToolbar />
       </header>
 
-      <CaseSubjectRoleDialog caseId={caseId} items={listItems} onSaved={selectSubject} />
+      <CaseSubjectRoleDialog caseId={caseId} items={listItems} onSaved={setSelectedSubjectId} />
       <CaseSubjectRemoveDialog
         caseId={caseId}
         items={listItems}
-        onRemoved={(subjectId) => subjectId === selectedSubjectId && clearSelection()}
+        onRemoved={(subjectId) => subjectId === selectedSubjectId && setSelectedSubjectId(null)}
       />
       <SubjectCardDialog />
 
@@ -58,6 +58,7 @@ export function CaseSubjectsPage() {
           materialLegalRoles={materialLegalRolesQuery.data}
           proceduralRoles={proceduralRolesQuery.data}
           selectedSubjectId={selectedSubjectId}
+          onSelect={setSelectedSubjectId}
           isLoading={caseSubjectsQuery.isPending}
           isError={caseSubjectsQuery.isError}
         />
@@ -66,10 +67,9 @@ export function CaseSubjectsPage() {
           <CaseSubjectDetailPanel
             caseSubject={selectedItem}
             subject={subjectQuery.data?.data}
-            onClose={clearSelection}
+            onClose={() => setSelectedSubjectId(null)}
             isOpen={isDetailOpen}
             isLoading={isDetailLoading}
-            isNotFound={isNotFound}
           />
         </div>
       </div>

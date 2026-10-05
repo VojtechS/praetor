@@ -1,5 +1,4 @@
 import { Building2, Landmark, Scale, Star, User, Wallet } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import columnStyles from '../../../../styles/caseSubjectListColumns.module.scss';
 import { checkValue } from '../../../../shared/utils/checkValue.ts';
 import type { CodelistItem } from '../../../codelists/api/codelistApi/codelistApi.types.ts';
@@ -17,6 +16,7 @@ export interface CaseSubjectListRowProps {
   materialLegalRoles: CodelistItem[] | undefined;
   proceduralRoles: CodelistItem[] | undefined;
   isSelected: boolean;
+  onSelect: (subjectId: number) => void;
 }
 
 function TypeIcon({ item }: Readonly<{ item: CaseSubjectListItem }>) {
@@ -39,6 +39,7 @@ export function CaseSubjectListRow({
   materialLegalRoles,
   proceduralRoles,
   isSelected,
+  onSelect,
 }: Readonly<CaseSubjectListRowProps>) {
   const hasRepresentative = item.legalRepresentativeId !== null;
   const rowClass = `${styles.caseSubjectListRow} ${isSelected ? styles['caseSubjectListRow--selected'] : ''}`;
@@ -52,13 +53,14 @@ export function CaseSubjectListRow({
         <div role="rowheader" className={styles.caseSubjectListRow__nameCell}>
           <span className={styles.caseSubjectListRow__name}>
             <TypeIcon item={item} />
-            <Link
+            <button
+              type="button"
               className={styles.caseSubjectListRow__link}
-              to={{ search: `?subjectId=${item.subjectId}` }}
               aria-current={isSelected ? 'true' : undefined}
+              onClick={() => onSelect(item.subjectId)}
             >
               {item.subjectName}
-            </Link>
+            </button>
             {item.isMainClient && (
               <Star
                 className={styles.caseSubjectListRow__flag}

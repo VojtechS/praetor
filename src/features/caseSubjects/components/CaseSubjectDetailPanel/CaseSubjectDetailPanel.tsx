@@ -1,4 +1,3 @@
-import { Button } from '../../../../shared/components/Button/Button.tsx';
 import { LoadingOverlay } from '../../../../shared/components/LoadingOverlay/LoadingOverlay.tsx';
 import type { SubjectDetail } from '../../../subjects/model/subject.types.ts';
 import type { CaseSubjectDetail } from '../../model/caseSubject.types.ts';
@@ -11,7 +10,6 @@ export interface CaseSubjectDetailPanelProps {
   onClose: () => void;
   isOpen: boolean;
   isLoading?: boolean;
-  isNotFound?: boolean;
 }
 
 export function CaseSubjectDetailPanel({
@@ -20,7 +18,6 @@ export function CaseSubjectDetailPanel({
   onClose,
   isOpen,
   isLoading = false,
-  isNotFound = false,
 }: Readonly<CaseSubjectDetailPanelProps>) {
   if (!isOpen) {
     return null;
@@ -28,14 +25,7 @@ export function CaseSubjectDetailPanel({
 
   let content = <LoadingOverlay label="Načítání detailu subjektu" />;
 
-  if (isNotFound) {
-    content = (
-      <>
-        <p className="emptyState">Subjekt nenalezen</p>
-        <Button onClick={onClose}>Zavřít</Button>
-      </>
-    );
-  } else if (caseSubject && subject) {
+  if (caseSubject && subject) {
     content = (
       <CaseSubjectDetailContent caseSubject={caseSubject} subject={subject} onClose={onClose} />
     );

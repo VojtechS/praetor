@@ -13,6 +13,7 @@ export interface CaseSubjectListProps {
   materialLegalRoles: CodelistItem[] | undefined;
   proceduralRoles: CodelistItem[] | undefined;
   selectedSubjectId: number | null;
+  onSelect: (subjectId: number) => void;
   isLoading?: boolean;
   isError?: boolean;
 }
@@ -23,6 +24,7 @@ export function CaseSubjectList({
   materialLegalRoles,
   proceduralRoles,
   selectedSubjectId,
+  onSelect,
   isLoading = false,
   isError = false,
 }: Readonly<CaseSubjectListProps>) {
@@ -60,6 +62,7 @@ export function CaseSubjectList({
                 materialLegalRoles={materialLegalRoles}
                 proceduralRoles={proceduralRoles}
                 isSelected={item.subjectId === selectedSubjectId}
+                onSelect={onSelect}
               />
             ))}
           </div>

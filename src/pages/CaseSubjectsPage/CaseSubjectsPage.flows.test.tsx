@@ -55,21 +55,21 @@ describe('CaseSubjectsPage flows', () => {
     expect(await within(roleDialog).findByText('Mgr. Filip Petr')).toBeInTheDocument();
     await user.click(within(roleDialog).getByRole('button', { name: 'Uložit' }));
 
-    expect(await screen.findByRole('link', { name: 'Mgr. Filip Petr' })).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: 'Mgr. Filip Petr' })).toBeInTheDocument();
   });
 
   it('opens the subject card from the row actions without selecting the row', async () => {
     const user = userEvent.setup();
     renderPage();
 
-    const row = (await screen.findByRole('link', { name: 'Marek Horáček' })).closest<HTMLElement>(
+    const row = (await screen.findByRole('button', { name: 'Marek Horáček' })).closest<HTMLElement>(
       '[role="row"]',
     )!;
     await user.click(within(row).getByRole('button', { name: 'Otevřít' }));
 
     expect(await screen.findByRole('dialog', { name: 'Marek Horáček' })).toBeInTheDocument();
     expect(
-      within(row).getByRole('link', { name: 'Marek Horáček', hidden: true }),
+      within(row).getByRole('button', { name: 'Marek Horáček', hidden: true }),
     ).not.toHaveAttribute('aria-current');
   });
 
@@ -77,7 +77,7 @@ describe('CaseSubjectsPage flows', () => {
     const user = userEvent.setup();
     renderPage();
 
-    const row = (await screen.findByRole('link', { name: 'Marek Horáček' })).closest<HTMLElement>(
+    const row = (await screen.findByRole('button', { name: 'Marek Horáček' })).closest<HTMLElement>(
       '[role="row"]',
     )!;
     await user.click(within(row).getByRole('button', { name: 'Další akce' }));
@@ -88,7 +88,7 @@ describe('CaseSubjectsPage flows', () => {
     await user.click(within(confirm).getByRole('button', { name: 'Odebrat' }));
 
     await waitFor(() => {
-      expect(screen.queryByRole('link', { name: 'Marek Horáček' })).not.toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: 'Marek Horáček' })).not.toBeInTheDocument();
     });
   });
 });

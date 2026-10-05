@@ -21,14 +21,14 @@ vi.mock('../../features/codelists/api/codelistApi/codelistApi.ts', () => ({
   codelistApi: { getByName: vi.fn() },
 }));
 
-function renderPage(url = '/spisy/2026-001/subjekty') {
+function renderPage() {
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false } },
   });
 
   return render(
     <QueryClientProvider client={queryClient}>
-      <MemoryRouter initialEntries={[url]}>
+      <MemoryRouter initialEntries={['/spisy/2026-001/subjekty']}>
         <Routes>
           <Route path="/spisy/:caseId/subjekty" element={<CaseSubjectsPage />} />
         </Routes>
@@ -45,8 +45,8 @@ describe('CaseSubjectsPage', () => {
   it('renders the groups and rows', async () => {
     renderPage();
 
-    expect(await screen.findByRole('link', { name: 'INVESTIT Group' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Adam Masaryk' })).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: 'INVESTIT Group' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Adam Masaryk' })).toBeInTheDocument();
     expect(screen.getByText('Klient')).toBeInTheDocument();
     expect(screen.getByText('Protistrana')).toBeInTheDocument();
     expect(screen.getByText('Zúčastněné subjekty')).toBeInTheDocument();
@@ -60,19 +60,13 @@ describe('CaseSubjectsPage', () => {
     const user = userEvent.setup();
     renderPage();
 
-    await user.click(await screen.findByRole('link', { name: 'Adam Masaryk' }));
+    await user.click(await screen.findByRole('button', { name: 'Adam Masaryk' }));
 
     expect(await screen.findByRole('heading', { name: 'Adam Masaryk' })).toBeInTheDocument();
     expect(screen.getByRole('complementary', { name: 'Detail subjektu' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Adam Masaryk' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: 'Adam Masaryk' })).toHaveAttribute(
       'aria-current',
       'true',
     );
-  });
-
-  it('shows a message for an unknown subjectId', async () => {
-    renderPage('/spisy/2026-001/subjekty?subjectId=999');
-
-    expect(await screen.findByText('Subjekt nenalezen')).toBeInTheDocument();
   });
 });
