@@ -1,4 +1,4 @@
-import { Globe, Search } from 'lucide-react';
+import { Globe, Plus, Search } from 'lucide-react';
 import { useId } from 'react';
 import type { SyntheticEvent } from 'react';
 import { Button } from '../../../../shared/components/Button/Button.tsx';
@@ -10,6 +10,8 @@ export interface SubjectPickerSearchProps {
   onChange: (value: string) => void;
   onSearch: () => void;
   onAresSearch?: () => void;
+  onCreate: () => void;
+  onRemove?: () => void;
   isAresTooShort?: boolean;
 }
 
@@ -18,6 +20,8 @@ export function SubjectPickerSearch({
   onChange,
   onSearch,
   onAresSearch,
+  onCreate,
+  onRemove,
   isAresTooShort = false,
 }: Readonly<SubjectPickerSearchProps>) {
   const id = useId();
@@ -54,6 +58,10 @@ export function SubjectPickerSearch({
             Vyhledat v ARES (CZ)
           </Button>
         )}
+        <Button icon={Plus} onClick={onCreate}>
+          Založit nový
+        </Button>
+        {onRemove && <Button onClick={onRemove}>Smazat</Button>}
       </form>
       {isAresTooShort && (
         <p id={validationMessageId} className={styles.subjectPickerSearch__validation} role="alert">

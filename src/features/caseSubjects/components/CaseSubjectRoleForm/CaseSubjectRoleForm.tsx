@@ -11,8 +11,9 @@ import type {
 } from '../../schemas/caseSubjectForm.schema.ts';
 import {
   selectClearPickedSubject,
-  selectOpenPicker,
   selectPickedSubject,
+  selectPicker,
+  selectTogglePicker,
   useCaseSubjectsUiStore,
 } from '../../store/useCaseSubjectsUiStore.ts';
 import { CaseSubjectRoleFields } from '../CaseSubjectRoleFields/CaseSubjectRoleFields.tsx';
@@ -35,7 +36,8 @@ export function CaseSubjectRoleForm({
   isEdit,
   onSave,
 }: Readonly<CaseSubjectRoleFormProps>) {
-  const openPicker = useCaseSubjectsUiStore(selectOpenPicker);
+  const picker = useCaseSubjectsUiStore(selectPicker);
+  const togglePicker = useCaseSubjectsUiStore(selectTogglePicker);
   const pickedSubject = useCaseSubjectsUiStore(selectPickedSubject);
   const clearPickedSubject = useCaseSubjectsUiStore(selectClearPickedSubject);
   const { register, handleSubmit, setValue, getValues, control, formState } = useForm<
@@ -81,8 +83,9 @@ export function CaseSubjectRoleForm({
         proceduralRoleOptions={proceduralRoleOptions}
         materialLegalRoleOptions={materialLegalRoleOptions}
         isEdit={isEdit}
-        onPickSubject={() => openPicker('subject')}
-        onPickRepresentative={() => openPicker('representative')}
+        openPickerTarget={picker?.target}
+        onPickSubject={() => togglePicker('subject')}
+        onPickRepresentative={() => togglePicker('representative')}
       />
       <CaseSubjectRoleTabs
         contacts={subject?.contacts ?? []}

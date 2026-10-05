@@ -4,18 +4,14 @@ import { SubjectResultsTable } from '../SubjectResultsTable/SubjectResultsTable.
 
 export interface SubjectPickerPraetorResultsProps {
   submittedSearch: string;
-  selectedId: number | null;
   showBirthDate: boolean;
-  onSelect: (id: number) => void;
   onChoose: (id: number) => void;
 }
 
 // Mounted only while the picker is open, so the list is loaded right after opening.
 export function SubjectPickerPraetorResults({
   submittedSearch,
-  selectedId,
   showBirthDate,
-  onSelect,
   onChoose,
 }: Readonly<SubjectPickerPraetorResultsProps>) {
   const query = useSubjectsSearchQuery(submittedSearch);
@@ -28,13 +24,7 @@ export function SubjectPickerPraetorResults({
       isLoading={query.isFetching}
       isError={query.isError}
     >
-      <SubjectResultsTable
-        subjects={subjects}
-        selectedId={selectedId}
-        showBirthDate={showBirthDate}
-        onSelect={onSelect}
-        onChoose={onChoose}
-      />
+      <SubjectResultsTable subjects={subjects} showBirthDate={showBirthDate} onChoose={onChoose} />
     </SubjectPickerResults>
   );
 }

@@ -6,17 +6,13 @@ import styles from './SubjectResultsTable.module.scss';
 
 export interface SubjectResultsTableProps {
   subjects: SubjectListItem[];
-  selectedId: number | null;
   showBirthDate: boolean;
-  onSelect: (id: number) => void;
   onChoose: (id: number) => void;
 }
 
 export function SubjectResultsTable({
   subjects,
-  selectedId,
   showBirthDate,
-  onSelect,
   onChoose,
 }: Readonly<SubjectResultsTableProps>) {
   return (
@@ -37,13 +33,11 @@ export function SubjectResultsTable({
             <tr
               key={subject.id}
               tabIndex={0}
-              aria-selected={subject.id === selectedId}
-              onClick={() => onSelect(subject.id)}
-              onDoubleClick={() => onChoose(subject.id)}
+              onClick={() => onChoose(subject.id)}
               onKeyDown={(event) =>
                 handleRowKeyDown(
                   event,
-                  () => onSelect(subject.id),
+                  () => onChoose(subject.id),
                   () => onChoose(subject.id),
                 )
               }

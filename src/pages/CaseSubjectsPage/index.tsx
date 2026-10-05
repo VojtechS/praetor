@@ -11,7 +11,6 @@ import {
 import { useSelectedCaseSubject } from '../../features/caseSubjects/hooks/useSelectedCaseSubject.ts';
 import { useCodelistQuery } from '../../features/codelists/hooks/useCodelistQuery.ts';
 import { SubjectCardDialog } from '../../features/subjects/components/SubjectCardDialog/SubjectCardDialog.tsx';
-import { SubjectPickerDialog } from '../../features/subjects/components/SubjectPickerDialog/SubjectPickerDialog.tsx';
 import { useSubjectQuery } from '../../features/subjects/hooks/useSubjectQueries.ts';
 import styles from './CaseSubjectsPage.module.scss';
 
@@ -50,7 +49,6 @@ export function CaseSubjectsPage() {
         items={listItems}
         onRemoved={(subjectId) => subjectId === selectedSubjectId && clearSelection()}
       />
-      <SubjectPickerDialog />
       <SubjectCardDialog />
 
       <div className={styles.caseSubjectsPage__layout} data-detail-open={isDetailOpen}>

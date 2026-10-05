@@ -5,6 +5,7 @@ import { TextField } from '../../../../shared/components/TextField/TextField.tsx
 import { CASE_SUBJECT_ROLE_OPTIONS } from '../../constants/caseSubjectLabels.ts';
 import type { CaseSubjectFormInput } from '../../schemas/caseSubjectForm.schema.ts';
 import { SubjectPickerField } from '../../../subjects/components/SubjectPickerField/SubjectPickerField.tsx';
+import { SubjectPickerPanel } from '../../../subjects/components/SubjectPickerPanel/SubjectPickerPanel.tsx';
 import styles from './CaseSubjectRoleFields.module.scss';
 
 export interface CaseSubjectRoleFieldsProps {
@@ -15,6 +16,7 @@ export interface CaseSubjectRoleFieldsProps {
   proceduralRoleOptions: SelectOption[];
   materialLegalRoleOptions: SelectOption[];
   isEdit: boolean;
+  openPickerTarget?: 'subject' | 'representative';
   onPickSubject: () => void;
   onPickRepresentative: () => void;
 }
@@ -27,6 +29,7 @@ export function CaseSubjectRoleFields({
   proceduralRoleOptions,
   materialLegalRoleOptions,
   isEdit,
+  openPickerTarget,
   onPickSubject,
   onPickRepresentative,
 }: Readonly<CaseSubjectRoleFieldsProps>) {
@@ -40,8 +43,14 @@ export function CaseSubjectRoleFields({
           onClick={onPickSubject}
           error={errors.subjectId?.message}
           disabled={isEdit}
+          isExpanded={openPickerTarget === 'subject'}
         />
       </div>
+      {openPickerTarget === 'subject' && (
+        <div className={styles.caseSubjectRoleFields__full}>
+          <SubjectPickerPanel target="subject" />
+        </div>
+      )}
       <SelectField
         label="Role"
         registration={register('role')}
@@ -60,13 +69,21 @@ export function CaseSubjectRoleFields({
         options={materialLegalRoleOptions}
         hasEmptyOption
       />
-      <SubjectPickerField
-        label="Právní zástupce"
-        value={representativeName}
-        placeholder="Vyberte právního zástupce"
-        onClick={onPickRepresentative}
-        error={errors.legalRepresentativeId?.message}
-      />
+      <div className={styles.caseSubjectRoleFields__full}>
+        <SubjectPickerField
+          label="Právní zástupce"
+          value={representativeName}
+          placeholder="Vyberte právního zástupce"
+          onClick={onPickRepresentative}
+          error={errors.legalRepresentativeId?.message}
+          isExpanded={openPickerTarget === 'representative'}
+        />
+      </div>
+      {openPickerTarget === 'representative' && (
+        <div className={styles.caseSubjectRoleFields__full}>
+          <SubjectPickerPanel target="representative" />
+        </div>
+      )}
       <div className={styles.caseSubjectRoleFields__full}>
         <TextField
           label="Sp. zn. vedená subjektem"

@@ -32,7 +32,7 @@ interface CaseSubjectsUiState {
   confirmRemoveId: number | null;
   openRoleDialog: (mode: RoleDialogState['mode'], caseSubjectId?: number | null) => void;
   closeRoleDialog: () => void;
-  openPicker: (target: PickerTarget) => void;
+  togglePicker: (target: PickerTarget) => void;
   closePicker: () => void;
   openSubjectCard: (subjectCard: SubjectCardState) => void;
   closeSubjectCard: () => void;
@@ -49,8 +49,9 @@ export const useCaseSubjectsUiStore = create<CaseSubjectsUiState>()((set) => ({
   pickedSubject: null,
   confirmRemoveId: null,
   openRoleDialog: (mode, caseSubjectId = null) => set({ roleDialog: { mode, caseSubjectId } }),
-  closeRoleDialog: () => set({ roleDialog: null, pickedSubject: null }),
-  openPicker: (target) => set({ picker: { target } }),
+  closeRoleDialog: () => set({ roleDialog: null, picker: null, pickedSubject: null }),
+  togglePicker: (target) =>
+    set((state) => ({ picker: state.picker?.target === target ? null : { target } })),
   closePicker: () => set({ picker: null }),
   openSubjectCard: (subjectCard) => set({ subjectCard }),
   closeSubjectCard: () => set({ subjectCard: null }),
@@ -67,7 +68,7 @@ export const selectPickedSubject = (state: CaseSubjectsUiState) => state.pickedS
 export const selectConfirmRemoveId = (state: CaseSubjectsUiState) => state.confirmRemoveId;
 export const selectOpenRoleDialog = (state: CaseSubjectsUiState) => state.openRoleDialog;
 export const selectCloseRoleDialog = (state: CaseSubjectsUiState) => state.closeRoleDialog;
-export const selectOpenPicker = (state: CaseSubjectsUiState) => state.openPicker;
+export const selectTogglePicker = (state: CaseSubjectsUiState) => state.togglePicker;
 export const selectClosePicker = (state: CaseSubjectsUiState) => state.closePicker;
 export const selectOpenSubjectCard = (state: CaseSubjectsUiState) => state.openSubjectCard;
 export const selectCloseSubjectCard = (state: CaseSubjectsUiState) => state.closeSubjectCard;

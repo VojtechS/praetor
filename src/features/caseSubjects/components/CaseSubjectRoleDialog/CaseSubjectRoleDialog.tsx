@@ -84,6 +84,7 @@ export function CaseSubjectRoleDialog({
     <Dialog
       isOpen={roleDialog !== null}
       title="Přidání/editace subjektu"
+      size="lg"
       onClose={closeRoleDialog}
       footer={
         <>

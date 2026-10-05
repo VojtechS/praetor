@@ -50,9 +50,7 @@ describe('CaseSubjectsPage flows', () => {
     const roleDialog = screen.getByRole('dialog', { name: 'Přidání/editace subjektu' });
     await user.click(within(roleDialog).getByRole('button', { name: /Subjekt \/ osoba/ }));
 
-    const picker = await screen.findByRole('dialog', { name: 'Seznam subjektů' });
-    await user.click(await within(picker).findByRole('row', { name: /Mgr\. Filip Petr/ }));
-    await user.click(within(picker).getByRole('button', { name: 'Vybrat' }));
+    await user.click(await within(roleDialog).findByRole('row', { name: /Mgr\. Filip Petr/ }));
 
     expect(await within(roleDialog).findByText('Mgr. Filip Petr')).toBeInTheDocument();
     await user.click(within(roleDialog).getByRole('button', { name: 'Uložit' }));

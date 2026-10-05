@@ -10,6 +10,7 @@ export interface SubjectPickerFieldProps {
   onClick: () => void;
   error?: string;
   disabled?: boolean;
+  isExpanded?: boolean;
 }
 
 export function SubjectPickerField({
@@ -19,6 +20,7 @@ export function SubjectPickerField({
   onClick,
   error,
   disabled = false,
+  isExpanded = false,
 }: Readonly<SubjectPickerFieldProps>) {
   const id = useId();
   const labelId = `${id}-label`;
@@ -33,7 +35,7 @@ export function SubjectPickerField({
       <button
         type="button"
         className={`${styles.subjectPickerField__control} ${error ? styles['subjectPickerField__control--invalid'] : ''}`}
-        aria-haspopup="dialog"
+        aria-expanded={isExpanded}
         aria-labelledby={`${labelId} ${valueId}`}
         aria-describedby={error ? errorId : undefined}
         disabled={disabled}
