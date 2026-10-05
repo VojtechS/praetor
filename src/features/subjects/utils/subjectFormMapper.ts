@@ -1,6 +1,6 @@
 import type {
   AddressRequest,
-  ConnectionRequest,
+  ContactRequest,
   EconomicSubject,
   PhysicalPersonRequest,
   SubjectRequest,
@@ -14,7 +14,7 @@ type EconomicSubjectInput = Extract<
 >['economicSubject'];
 type PhysicalPersonInput = Extract<SubjectFormInput, { physicalPerson: unknown }>['physicalPerson'];
 type AddressInput = SubjectFormInput['addresses'][number];
-type ConnectionInput = SubjectFormInput['connections'][number];
+type ContactInput = SubjectFormInput['contacts'][number];
 
 function orEmpty(value: string | null | undefined): string {
   return value ?? '';
@@ -65,12 +65,12 @@ function toAddressInput(address: AddressRequest): AddressInput {
   };
 }
 
-function toConnectionInput(connection: ConnectionRequest): ConnectionInput {
+function toContactInput(contact: ContactRequest): ContactInput {
   return {
-    type: connection.type,
-    value: connection.value,
-    note: orEmpty(connection.note),
-    isPreferred: connection.isPreferred,
+    type: contact.type,
+    value: contact.value,
+    note: orEmpty(contact.note),
+    isPreferred: contact.isPreferred,
   };
 }
 
@@ -88,7 +88,7 @@ export function getNewSubjectFormDefaults(): SubjectFormInput {
     responsibleEmployee: '',
     dataBoxId: '',
     addresses: [],
-    connections: [],
+    contacts: [],
     economicSubject: toEconomicSubjectInput(null),
   };
 }
@@ -129,7 +129,7 @@ export function mapSubjectToForm(subject: SubjectRequest): SubjectFormInput {
     responsibleEmployee: orEmpty(subject.responsibleEmployee),
     dataBoxId: orEmpty(subject.dataBoxId),
     addresses: subject.addresses.map(toAddressInput),
-    connections: subject.connections.map(toConnectionInput),
+    contacts: subject.contacts.map(toContactInput),
     economicSubject: toEconomicSubjectInput(subject.economicSubject),
     physicalPerson: toPhysicalPersonInput(subject.physicalPerson),
   };

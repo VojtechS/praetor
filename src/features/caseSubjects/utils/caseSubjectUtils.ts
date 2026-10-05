@@ -30,7 +30,7 @@ const NEW_CASE_SUBJECT_DEFAULTS: Partial<CaseSubjectFormInput> = {
   materialLegalRole: '',
   legalRepresentativeId: null,
   caseFileNumber: '',
-  preferredContactIds: [],
+  preferredRelatedSubjectIds: [],
 };
 
 export function getCaseSubjectFormDefaults(item?: CaseSubject): Partial<CaseSubjectFormInput> {
@@ -45,7 +45,7 @@ export function getCaseSubjectFormDefaults(item?: CaseSubject): Partial<CaseSubj
     materialLegalRole: item.materialLegalRole ?? '',
     legalRepresentativeId: item.legalRepresentativeId,
     caseFileNumber: item.caseFileNumber ?? '',
-    preferredContactIds: item.preferredContactIds.map(String),
+    preferredRelatedSubjectIds: item.preferredRelatedSubjectIds.map(String),
   };
 }
 
@@ -58,7 +58,7 @@ export function toCaseSubjectChanges(
     materialLegalRole: values.materialLegalRole || null,
     legalRepresentativeId: values.legalRepresentativeId,
     caseFileNumber: values.caseFileNumber.trim() || null,
-    preferredContactIds: values.preferredContactIds,
+    preferredRelatedSubjectIds: values.preferredRelatedSubjectIds,
   };
 }
 

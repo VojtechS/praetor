@@ -17,8 +17,10 @@ export function SubjectEconomicFields({
   hasLegalForm,
 }: Readonly<SubjectEconomicFieldsProps>) {
   const { register, formState } = form;
+
   const errors =
     'economicSubject' in formState.errors ? formState.errors.economicSubject : undefined;
+
   const legalForms = useCodelistQuery('legal-forms').data;
 
   return (
@@ -58,7 +60,7 @@ export function SubjectEconomicFields({
           </div>
         </div>
       ) : (
-        <LoadingOverlay label="Načítání číselníků" />
+        <LoadingOverlay label="Načítání" />
       )}
     </SubjectFormSection>
   );

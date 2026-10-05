@@ -4,7 +4,7 @@ import type { AresSubjectDetailResponse, AresSubjectListResponse } from './aresA
 export const aresApi = {
   search: async (query: string): Promise<AresSubjectListResponse> => {
     const response = await api.get<AresSubjectListResponse>('/ares/subjects', {
-      params: { query, country: 'CZ' },
+      params: { query },
     });
     return response.data;
   },

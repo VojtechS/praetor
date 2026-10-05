@@ -76,7 +76,7 @@ function withNewIds(request: SubjectRequest): Omit<Subject, 'id'> {
   return {
     ...request,
     addresses: request.addresses.map((address) => ({ ...address, id: nextId() })),
-    connections: request.connections.map((connection) => ({ ...connection, id: nextId() })),
+    contacts: request.contacts.map((contact) => ({ ...contact, id: nextId() })),
     physicalPerson: physicalPerson && {
       ...physicalPerson,
       documents: physicalPerson.documents.map((document) => ({ ...document, id: nextId() })),

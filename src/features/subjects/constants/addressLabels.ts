@@ -1,6 +1,8 @@
 import type { Address } from '../api/subjectApi/subjectApi.types.ts';
 
-type AddressTypeFlag = keyof Pick<Address, 'isSeat' | 'isDelivery' | 'isBranch' | 'isBilling'>;
+export type AddressFlags = Pick<Address, 'isSeat' | 'isDelivery' | 'isBranch' | 'isBilling'>;
+
+type AddressTypeFlag = keyof AddressFlags;
 
 export const ADDRESS_TYPE_FLAGS: { key: AddressTypeFlag; label: string }[] = [
   { key: 'isSeat', label: 'sídlo' },

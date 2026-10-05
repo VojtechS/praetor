@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import type { SelectOption } from '../../../../shared/components/SelectField/SelectField.tsx';
-import { useSubjectQuery } from '../../../subjects/hooks/useSubjectQueries.ts';
+import { useSubjectQuery } from '../../../subjects/hooks/queries/useSubjectQueries.ts';
 import { getSubjectDisplayName } from '../../../subjects/utils/subjectUtils.ts';
 import { caseSubjectFormSchema } from '../../schemas/caseSubjectForm.schema.ts';
 import type {
@@ -56,7 +56,7 @@ export function CaseSubjectRoleForm({
       setValue('legalRepresentativeId', pickedSubject.subjectId, { shouldValidate: true });
     } else if (pickedSubject.subjectId !== null) {
       if (pickedSubject.subjectId !== getValues('subjectId')) {
-        setValue('preferredContactIds', []);
+        setValue('preferredRelatedSubjectIds', []);
       }
 
       setValue('subjectId', pickedSubject.subjectId, { shouldValidate: true });
@@ -80,8 +80,8 @@ export function CaseSubjectRoleForm({
         onPickRepresentative={() => togglePicker('representative')}
       />
       <CaseSubjectRoleTabs
-        contacts={subject?.contacts ?? []}
-        registration={register('preferredContactIds')}
+        relatedSubjects={subject?.relatedSubjects ?? []}
+        registration={register('preferredRelatedSubjectIds')}
         hasSubject={!!subjectId}
       />
     </form>

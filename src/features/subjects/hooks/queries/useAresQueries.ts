@@ -1,8 +1,8 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { aresApi } from '../api/aresApi/aresApi.ts';
-import { dataBoxApi } from '../api/dataBoxApi/dataBoxApi.ts';
-import { useDataToast } from '../../../shared/hooks/useDataToast.ts';
+import { aresApi } from '../../api/aresApi/aresApi.ts';
+import { dataBoxApi } from '../../api/dataBoxApi/dataBoxApi.ts';
+import { useDataToast } from '../../../../shared/hooks/useDataToast.ts';
 
 const ARES_QUERY_KEY = ['ares'] as const;
 

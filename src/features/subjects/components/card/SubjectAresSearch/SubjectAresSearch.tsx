@@ -14,10 +14,13 @@ export interface SubjectAresSearchProps {
 export function SubjectAresSearch({ onSelect }: Readonly<SubjectAresSearchProps>) {
   const id = useId();
   const validationMessageId = `${id}-validation-message`;
+
   const [value, setValue] = useState('');
   const [submittedSearch, setSubmittedSearch] = useState<string | null>(null);
   const [isTooShort, setIsTooShort] = useState(false);
+
   const debounce = useSearchDebounce();
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   function handleChange(nextValue: string) {
@@ -78,8 +81,10 @@ export function SubjectAresSearch({ onSelect }: Readonly<SubjectAresSearchProps>
         <label className="visuallyHidden" htmlFor={id}>
           Název / IČO / IDS
         </label>
+
         <div className={styles.subjectAresSearch__field}>
           <Search className={styles.subjectAresSearch__icon} aria-hidden="true" />
+
           <input
             ref={inputRef}
             id={id}
@@ -92,6 +97,7 @@ export function SubjectAresSearch({ onSelect }: Readonly<SubjectAresSearchProps>
             aria-invalid={isTooShort}
             aria-describedby={isTooShort ? validationMessageId : undefined}
           />
+
           {value && (
             <button
               type="button"
@@ -107,11 +113,13 @@ export function SubjectAresSearch({ onSelect }: Readonly<SubjectAresSearchProps>
           Vyhledat v ARES (CZ)
         </Button>
       </form>
+
       {isTooShort && (
         <p id={validationMessageId} className={styles.subjectAresSearch__validation} role="alert">
           Zadejte alespoň {MIN_SEARCH_LENGTH} znaky
         </p>
       )}
+
       {submittedSearch !== null && (
         <div className={styles.subjectAresSearch__results} tabIndex={-1}>
           <SubjectPickerAresResults submittedSearch={submittedSearch} onChoose={handleSelect} />

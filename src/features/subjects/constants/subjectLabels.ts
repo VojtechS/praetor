@@ -1,4 +1,4 @@
-import type { ConnectionType, SubjectType } from '../api/subjectApi/subjectApi.types.ts';
+import type { ContactType, SubjectType } from '../api/subjectApi/subjectApi.types.ts';
 
 export const SUBJECT_TYPE_LABELS: Record<SubjectType, string> = {
   UNDETERMINED: 'Neurčeno',
@@ -7,7 +7,7 @@ export const SUBJECT_TYPE_LABELS: Record<SubjectType, string> = {
   PHYSICAL_NON_ENTREPRENEUR: 'Fyzická osoba – nepodnikatel',
 };
 
-export const CONNECTION_TYPE_LABELS: Record<ConnectionType, string> = {
+export const CONTACT_TYPE_LABELS: Record<ContactType, string> = {
   PHONE: 'Telefon',
   EMAIL: 'E-mail',
 };
@@ -19,6 +19,6 @@ export const SUBJECT_TYPE_OPTIONS = (Object.keys(SUBJECT_TYPE_LABELS) as Subject
   }),
 );
 
-export const CONNECTION_TYPE_OPTIONS = (
-  Object.keys(CONNECTION_TYPE_LABELS) as ConnectionType[]
-).map((type) => ({ value: type, label: CONNECTION_TYPE_LABELS[type] }));
+export const CONTACT_TYPE_OPTIONS = (Object.keys(CONTACT_TYPE_LABELS) as ContactType[]).map(
+  (type) => ({ value: type, label: CONTACT_TYPE_LABELS[type] }),
+);

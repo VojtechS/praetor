@@ -52,10 +52,10 @@ export function mapFormToRequest(values: SubjectFormValues): SubjectRequest {
       region: orNull(address.region),
       district: orNull(address.district),
     })),
-    connections: values.connections.map((connection) => ({
-      ...connection,
-      note: orNull(connection.note),
+    contacts: values.contacts.map((contact) => ({
+      ...contact,
+      note: orNull(contact.note),
     })),
-    contacts: [],
+    relatedSubjects: [],
   };
 }

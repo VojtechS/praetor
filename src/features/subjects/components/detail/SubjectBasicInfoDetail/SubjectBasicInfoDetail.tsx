@@ -2,7 +2,7 @@ import { checkValue } from '../../../../../shared/utils/checkValue.ts';
 import { useCodelistQuery } from '../../../../codelists/hooks/useCodelistQuery.ts';
 import { getCodelistLabel } from '../../../../codelists/utils/codelistUtils.ts';
 import { SUBJECT_TYPE_LABELS } from '../../../constants/subjectLabels.ts';
-import type { SubjectDetail } from '../../../model/subject.types.ts';
+import type { Subject } from '../../../api/subjectApi/subjectApi.types.ts';
 import {
   formatBirthDate,
   hasEconomicSubject,
@@ -13,7 +13,7 @@ import { DetailRow } from '../../../../../shared/components/DetailRow/DetailRow.
 import { DetailSection } from '../../../../../shared/components/DetailSection/DetailSection.tsx';
 
 export interface SubjectBasicInfoDetailProps {
-  subject: SubjectDetail;
+  subject: Subject;
 }
 
 function SubjectEconomicRows({ subject }: Readonly<SubjectBasicInfoDetailProps>) {

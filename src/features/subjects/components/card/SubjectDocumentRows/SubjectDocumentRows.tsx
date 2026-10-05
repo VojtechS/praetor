@@ -15,8 +15,11 @@ export interface SubjectDocumentRowsProps {
 
 export function SubjectDocumentRows({ form }: Readonly<SubjectDocumentRowsProps>) {
   const { register, control, formState } = form;
+
   const documentTypes = useCodelistQuery('document-types').data;
+
   const { fields, append, remove } = useFieldArray({ control, name: 'physicalPerson.documents' });
+
   const personErrors =
     'physicalPerson' in formState.errors ? formState.errors.physicalPerson : undefined;
 

@@ -7,7 +7,7 @@ import { useSubjectCardDefaults } from '../../../hooks/useSubjectCardDefaults.ts
 import {
   useCreateSubjectMutation,
   useUpdateSubjectMutation,
-} from '../../../hooks/useSubjectQueries.ts';
+} from '../../../hooks/queries/useSubjectQueries.ts';
 import type { SubjectFormValues } from '../../../schemas/subjectForm.schema.ts';
 import { mapFormToRequest } from '../../../utils/mapFormToRequest.ts';
 import { getSubjectDisplayName } from '../../../utils/subjectUtils.ts';
@@ -20,9 +20,12 @@ export function SubjectCardDialog() {
   const subjectCard = useCaseSubjectsUiStore((state) => state.subjectCard);
   const closeSubjectCard = useCaseSubjectsUiStore((state) => state.closeSubjectCard);
   const setPickedSubject = useCaseSubjectsUiStore((state) => state.setPickedSubject);
+
   const [aresRegNumber, setAresRegNumber] = useState<string | null>(null);
+
   const createMutation = useCreateSubjectMutation();
   const updateMutation = useUpdateSubjectMutation();
+
   const { defaultValues, subject, formKey } = useSubjectCardDefaults(subjectCard, aresRegNumber);
 
   const isSaving = createMutation.isPending || updateMutation.isPending;

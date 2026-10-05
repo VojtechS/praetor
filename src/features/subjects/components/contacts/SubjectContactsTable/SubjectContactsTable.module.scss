@@ -1,7 +1,7 @@
 @use '../../../../../styles/variables' as *;
 @use '../../../../../styles/mixins' as *;
 
-.subjectConnectionsTable {
+.subjectContactsTable {
   width: 100%;
   border-collapse: collapse;
 
@@ -29,8 +29,8 @@
     vertical-align: top;
   }
 
-  // The note is on its own line under the connection, the pair is separated by a line.
-  &__connection {
+  // The note is on its own line under the contact, the pair is separated by a line.
+  &__contact {
     border-bottom: 1px solid $color-border;
 
     tr:first-child td {

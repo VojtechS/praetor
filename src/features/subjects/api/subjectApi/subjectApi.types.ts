@@ -1,7 +1,7 @@
 export type SubjectType =
   'UNDETERMINED' | 'LEGAL' | 'PHYSICAL_ENTREPRENEUR' | 'PHYSICAL_NON_ENTREPRENEUR';
 
-export type ConnectionType = 'PHONE' | 'EMAIL';
+export type ContactType = 'PHONE' | 'EMAIL';
 
 export interface EconomicSubject {
   companyName: string;
@@ -49,15 +49,15 @@ export interface Address {
   isBilling: boolean;
 }
 
-export interface Connection {
+export interface Contact {
   id: number;
-  type: ConnectionType;
+  type: ContactType;
   value: string;
   note: string | null;
   isPreferred: boolean;
 }
 
-export interface Contact {
+export interface RelatedSubject {
   id: number;
   fullName: string;
   personalId: string | null;
@@ -80,8 +80,8 @@ export interface Subject {
   physicalPerson: PhysicalPerson | null;
   dataBoxId: string | null;
   addresses: Address[];
-  connections: Connection[];
   contacts: Contact[];
+  relatedSubjects: RelatedSubject[];
 }
 
 // The server assigns ids to subject and to its rows, a request does not carry any.
@@ -89,15 +89,12 @@ export type PhysicalPersonRequest = Omit<PhysicalPerson, 'documents'> & {
   documents: Omit<PersonDocument, 'id'>[];
 };
 export type AddressRequest = Omit<Address, 'id'>;
-export type ConnectionRequest = Omit<Connection, 'id'>;
+export type ContactRequest = Omit<Contact, 'id'>;
 
-export type SubjectRequest = Omit<
-  Subject,
-  'id' | 'physicalPerson' | 'addresses' | 'connections'
-> & {
+export type SubjectRequest = Omit<Subject, 'id' | 'physicalPerson' | 'addresses' | 'contacts'> & {
   physicalPerson: PhysicalPersonRequest | null;
   addresses: AddressRequest[];
-  connections: ConnectionRequest[];
+  contacts: ContactRequest[];
 };
 
 export interface SubjectListParams {

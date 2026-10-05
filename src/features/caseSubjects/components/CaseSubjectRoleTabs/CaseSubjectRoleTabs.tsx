@@ -1,28 +1,28 @@
 import { useId, useState } from 'react';
 import type { UseFormRegisterReturn } from 'react-hook-form';
-import type { Contact } from '../../../subjects/api/subjectApi/subjectApi.types.ts';
-import { CaseSubjectContactsChecklist } from '../CaseSubjectContactsChecklist/CaseSubjectContactsChecklist.tsx';
+import type { RelatedSubject } from '../../../subjects/api/subjectApi/subjectApi.types.ts';
+import { CaseSubjectRelatedSubjectsChecklist } from '../CaseSubjectRelatedSubjectsChecklist/CaseSubjectRelatedSubjectsChecklist.tsx';
 import styles from './CaseSubjectRoleTabs.module.scss';
 
-type RoleTab = 'contacts' | 'clientZone';
+type RoleTab = 'relatedSubjects' | 'clientZone';
 
 const TABS: { id: RoleTab; label: string }[] = [
-  { id: 'contacts', label: 'Preferované kontakty na spisu' },
+  { id: 'relatedSubjects', label: 'Preferované kontakty na spisu' },
   { id: 'clientZone', label: 'Klientská zóna' },
 ];
 
 export interface CaseSubjectRoleTabsProps {
-  contacts: Contact[];
+  relatedSubjects: RelatedSubject[];
   registration: UseFormRegisterReturn;
   hasSubject: boolean;
 }
 
 export function CaseSubjectRoleTabs({
-  contacts,
+  relatedSubjects,
   registration,
   hasSubject,
 }: Readonly<CaseSubjectRoleTabsProps>) {
-  const [activeTab, setActiveTab] = useState<RoleTab>('contacts');
+  const [activeTab, setActiveTab] = useState<RoleTab>('relatedSubjects');
   const id = useId();
 
   return (
@@ -51,9 +51,9 @@ export function CaseSubjectRoleTabs({
           aria-labelledby={`${id}-${tab.id}-tab`}
           hidden={activeTab !== tab.id}
         >
-          {tab.id === 'contacts' && (
-            <CaseSubjectContactsChecklist
-              contacts={contacts}
+          {tab.id === 'relatedSubjects' && (
+            <CaseSubjectRelatedSubjectsChecklist
+              relatedSubjects={relatedSubjects}
               registration={registration}
               hasSubject={hasSubject}
             />

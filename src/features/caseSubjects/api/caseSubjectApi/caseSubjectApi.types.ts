@@ -17,7 +17,7 @@ export interface CaseSubject {
   legalRepresentativeName: string | null;
   legalRepresentativeRegNumber: string | null;
   caseFileNumber: string | null;
-  preferredContactIds: number[];
+  preferredRelatedSubjectIds: number[];
   isMainClient: boolean;
   isMainPayer: boolean;
 }
@@ -30,7 +30,7 @@ export type CaseSubjectCreateRequest = Pick<
   | 'materialLegalRole'
   | 'legalRepresentativeId'
   | 'caseFileNumber'
-  | 'preferredContactIds'
+  | 'preferredRelatedSubjectIds'
 >;
 
 export type CaseSubjectUpdateRequest = Partial<

@@ -1,7 +1,7 @@
 import { X } from 'lucide-react';
 import { LoadingOverlay } from '../../../../shared/components/LoadingOverlay/LoadingOverlay.tsx';
 import { SUBJECT_TYPE_LABELS } from '../../../subjects/constants/subjectLabels.ts';
-import type { SubjectDetail } from '../../../subjects/model/subject.types.ts';
+import type { Subject } from '../../../subjects/api/subjectApi/subjectApi.types.ts';
 import {
   getSubjectDisplayName,
   getSubjectIdentification,
@@ -10,12 +10,12 @@ import type { CaseSubjectDetail } from '../../model/caseSubject.types.ts';
 import { CaseSubjectOnCaseSection } from '../CaseSubjectOnCaseSection/CaseSubjectOnCaseSection.tsx';
 import { SubjectAddressesDetail } from '../../../subjects/components/detail/SubjectAddressesDetail/SubjectAddressesDetail.tsx';
 import { SubjectBasicInfoDetail } from '../../../subjects/components/detail/SubjectBasicInfoDetail/SubjectBasicInfoDetail.tsx';
-import { SubjectConnectionsDetail } from '../../../subjects/components/detail/SubjectConnectionsDetail/SubjectConnectionsDetail.tsx';
+import { SubjectContactsDetail } from '../../../subjects/components/detail/SubjectContactsDetail/SubjectContactsDetail.tsx';
 import styles from './CaseSubjectDetailPanel.module.scss';
 
 export interface CaseSubjectDetailPanelProps {
   caseSubject?: CaseSubjectDetail;
-  subject?: SubjectDetail;
+  subject?: Subject;
   onClose: () => void;
   isOpen: boolean;
   isLoading?: boolean;
@@ -61,10 +61,13 @@ export function CaseSubjectDetailPanel({
           </button>
         </header>
 
-        <CaseSubjectOnCaseSection caseSubject={caseSubject} contacts={subject.contacts} />
+        <CaseSubjectOnCaseSection
+          caseSubject={caseSubject}
+          relatedSubjects={subject.relatedSubjects}
+        />
         <SubjectBasicInfoDetail subject={subject} />
         <SubjectAddressesDetail addresses={subject.addresses} />
-        <SubjectConnectionsDetail connections={subject.connections} />
+        <SubjectContactsDetail contacts={subject.contacts} />
       </div>
     );
   } else if (!isLoading) {

@@ -10,5 +10,9 @@ export function getCodelistLabel(
 }
 
 export function toSelectOptions(items: CodelistItem[] | undefined): SelectOption[] {
-  return (items ?? []).map(({ code, label }) => ({ value: code, label }));
+  if (!items) {
+    return [];
+  }
+
+  return items.map(({ code, label }) => ({ value: code, label }));
 }

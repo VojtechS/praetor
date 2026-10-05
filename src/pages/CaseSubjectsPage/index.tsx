@@ -12,7 +12,7 @@ import {
 import { useCaseSubjectsUiStore } from '../../features/caseSubjects/store/useCaseSubjectsUiStore.ts';
 import { useCodelistQuery } from '../../features/codelists/hooks/useCodelistQuery.ts';
 import { SubjectCardDialog } from '../../features/subjects/components/card/SubjectCardDialog/SubjectCardDialog.tsx';
-import { useSubjectQuery } from '../../features/subjects/hooks/useSubjectQueries.ts';
+import { useSubjectQuery } from '../../features/subjects/hooks/queries/useSubjectQueries.ts';
 import { Button } from '../../shared/components/Button/Button.tsx';
 import styles from './CaseSubjectsPage.module.scss';
 

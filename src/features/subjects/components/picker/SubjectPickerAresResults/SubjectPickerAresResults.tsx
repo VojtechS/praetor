@@ -1,4 +1,4 @@
-import { useAresSearchQuery } from '../../../hooks/useAresQueries.ts';
+import { useAresSearchQuery } from '../../../hooks/queries/useAresQueries.ts';
 import { SubjectPickerResults } from '../SubjectPickerResults/SubjectPickerResults.tsx';
 import styles from './SubjectPickerAresResults.module.scss';
 

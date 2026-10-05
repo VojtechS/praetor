@@ -46,8 +46,8 @@ function createSubjectRequest(
     physicalPerson: null,
     dataBoxId: null,
     addresses: [],
-    connections: [],
     contacts: [],
+    relatedSubjects: [],
     ...subject,
   };
 }
@@ -132,11 +132,11 @@ export const seedSubjects: Subject[] = [
         isDelivery: true,
       }),
     ],
-    connections: [
+    contacts: [
       { id: 1, type: 'PHONE', value: '+420 222 333 444', note: 'Ústředna', isPreferred: true },
       { id: 2, type: 'EMAIL', value: 'info@investit.example', note: null, isPreferred: false },
     ],
-    contacts: [
+    relatedSubjects: [
       { id: 1, fullName: 'Ing. Václav Kladenský', personalId: null, regNumber: null },
       { id: 2, fullName: 'Milan Pelikán', personalId: '720714425', regNumber: null },
       { id: 3, fullName: 'Ondřej Smutný', personalId: null, regNumber: null },
@@ -164,7 +164,7 @@ export const seedSubjects: Subject[] = [
         isBilling: true,
       }),
     ],
-    connections: [
+    contacts: [
       { id: 3, type: 'EMAIL', value: 'office@wolters.example', note: null, isPreferred: true },
     ],
   }),
@@ -258,7 +258,7 @@ export const seedSubjects: Subject[] = [
 export const seedCaseSubjects: CaseSubjectRecord[] = [
   caseSubject(1, 1, 'CLIENT', 'PLAINTIFF', 'BROKER', {
     legalRepresentativeId: 5,
-    preferredContactIds: [2, 3],
+    preferredRelatedSubjectIds: [2, 3],
     isMainClient: true,
     isMainPayer: true,
   }),
@@ -285,7 +285,7 @@ function caseSubject(
     materialLegalRole,
     legalRepresentativeId: null,
     caseFileNumber: null,
-    preferredContactIds: [],
+    preferredRelatedSubjectIds: [],
     isMainClient: false,
     isMainPayer: false,
     ...extra,

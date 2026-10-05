@@ -67,15 +67,15 @@ export const addressRowSchema = z
     }
   });
 
-const connectionRowSchema = z
+const contactRowSchema = z
   .object({
     type: z.enum(['PHONE', 'EMAIL']),
     value: z.string().trim().min(1, 'Zadejte hodnotu'),
     note: z.string(),
     isPreferred: z.boolean(),
   })
-  .superRefine((connection, context) => {
-    const { type, value } = connection;
+  .superRefine((contact, context) => {
+    const { type, value } = contact;
     const isValidPhone =
       PHONE_PATTERN.test(value) &&
       value.length >= PHONE_MIN_LENGTH &&
@@ -107,7 +107,7 @@ const commonShape = {
   group: z.string(),
   responsibleEmployee: z.string(),
   addresses: z.array(addressRowSchema),
-  connections: z.array(connectionRowSchema),
+  contacts: z.array(contactRowSchema),
   dataBoxId: z.string().regex(DATA_BOX_ID_PATTERN, 'ID datové schránky musí mít 7 znaků'),
 };
 

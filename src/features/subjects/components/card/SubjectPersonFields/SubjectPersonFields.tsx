@@ -10,6 +10,7 @@ export interface SubjectPersonFieldsProps {
 
 export function SubjectPersonFields({ form }: Readonly<SubjectPersonFieldsProps>) {
   const { register, formState } = form;
+
   const errors = 'physicalPerson' in formState.errors ? formState.errors.physicalPerson : undefined;
 
   return (

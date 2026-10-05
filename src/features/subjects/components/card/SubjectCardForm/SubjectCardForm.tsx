@@ -9,7 +9,7 @@ import {
 } from '../../../utils/subjectUtils.ts';
 import { SubjectAddressesFields } from '../../addresses/SubjectAddressesFields/SubjectAddressesFields.tsx';
 import { SubjectBasicFields } from '../SubjectBasicFields/SubjectBasicFields.tsx';
-import { SubjectConnectionsFields } from '../../connections/SubjectConnectionsFields/SubjectConnectionsFields.tsx';
+import { SubjectContactsFields } from '../../contacts/SubjectContactsFields/SubjectContactsFields.tsx';
 import { SubjectEconomicFields } from '../SubjectEconomicFields/SubjectEconomicFields.tsx';
 import { SubjectPersonFields } from '../SubjectPersonFields/SubjectPersonFields.tsx';
 import styles from './SubjectCardForm.module.scss';
@@ -39,7 +39,7 @@ export function SubjectCardForm({ formId, defaultValues, onSave }: Readonly<Subj
         </div>
         <div className={styles.subjectCardForm__column}>
           <SubjectAddressesFields form={form} />
-          <SubjectConnectionsFields form={form} />
+          <SubjectContactsFields form={form} />
         </div>
       </div>
     </form>

@@ -4,29 +4,29 @@ import { Button } from '../../../../../shared/components/Button/Button.tsx';
 import { CheckboxField } from '../../../../../shared/components/CheckboxField/CheckboxField.tsx';
 import { SelectField } from '../../../../../shared/components/SelectField/SelectField.tsx';
 import { TextField } from '../../../../../shared/components/TextField/TextField.tsx';
-import { CONNECTION_TYPE_OPTIONS } from '../../../constants/subjectLabels.ts';
+import { CONTACT_TYPE_OPTIONS } from '../../../constants/subjectLabels.ts';
 import type { SubjectForm, SubjectFormInput } from '../../../schemas/subjectForm.schema.ts';
-import styles from './SubjectConnectionsTable.module.scss';
+import styles from './SubjectContactsTable.module.scss';
 
-export interface SubjectConnectionsTableProps {
+export interface SubjectContactsTableProps {
   form: SubjectForm;
-  fields: UseFieldArrayReturn<SubjectFormInput, 'connections'>['fields'];
+  fields: UseFieldArrayReturn<SubjectFormInput, 'contacts'>['fields'];
   onRemove: (index: number) => void;
 }
 
-export function SubjectConnectionsTable({
+export function SubjectContactsTable({
   form,
   fields,
   onRemove,
-}: Readonly<SubjectConnectionsTableProps>) {
+}: Readonly<SubjectContactsTableProps>) {
   const { register, formState } = form;
 
   return (
-    <table className={styles.subjectConnectionsTable}>
+    <table className={styles.subjectContactsTable}>
       <thead>
         <tr>
-          <th scope="col">Spojení</th>
-          <th scope="col">Typ spojení</th>
+          <th scope="col">Kontakt</th>
+          <th scope="col">Typ kontaktu</th>
           <th scope="col">Pref.</th>
           <th scope="col">
             <span className="visuallyHidden">Odebrat</span>
@@ -34,28 +34,28 @@ export function SubjectConnectionsTable({
         </tr>
       </thead>
       {fields.map((field, index) => (
-        <tbody key={field.id} className={styles.subjectConnectionsTable__connection}>
+        <tbody key={field.id} className={styles.subjectContactsTable__contact}>
           <tr>
             <td>
               <TextField
-                label={`Spojení ${index + 1}`}
-                registration={register(`connections.${index}.value`)}
-                error={formState.errors.connections?.[index]?.value?.message}
+                label={`Kontakt ${index + 1}`}
+                registration={register(`contacts.${index}.value`)}
+                error={formState.errors.contacts?.[index]?.value?.message}
                 isLabelHidden
               />
             </td>
             <td>
               <SelectField
-                label={`Typ spojení ${index + 1}`}
-                registration={register(`connections.${index}.type`)}
-                options={CONNECTION_TYPE_OPTIONS}
+                label={`Typ kontaktu ${index + 1}`}
+                registration={register(`contacts.${index}.type`)}
+                options={CONTACT_TYPE_OPTIONS}
                 isLabelHidden
               />
             </td>
             <td>
               <CheckboxField
                 label={`Preferované ${index + 1}`}
-                registration={register(`connections.${index}.isPreferred`)}
+                registration={register(`contacts.${index}.isPreferred`)}
                 isLabelHidden
               />
             </td>
@@ -64,8 +64,8 @@ export function SubjectConnectionsTable({
                 variant="danger"
                 size="small"
                 icon={Trash2}
-                aria-label="Odebrat spojení"
-                title="Odebrat spojení"
+                aria-label="Odebrat kontakt"
+                title="Odebrat kontakt"
                 onClick={() => onRemove(index)}
               />
             </td>
@@ -74,7 +74,7 @@ export function SubjectConnectionsTable({
             <td colSpan={4}>
               <TextField
                 label={`Poznámka ${index + 1}`}
-                registration={register(`connections.${index}.note`)}
+                registration={register(`contacts.${index}.note`)}
                 placeholder="Poznámka"
                 isLabelHidden
               />

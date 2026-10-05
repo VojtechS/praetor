@@ -34,7 +34,7 @@ export type CaseSubjectDetail = Pick<
   | 'legalRepresentativeName'
   | 'legalRepresentativeRegNumber'
   | 'caseFileNumber'
-  | 'preferredContactIds'
+  | 'preferredRelatedSubjectIds'
   | 'isMainClient'
   | 'isMainPayer'
 >;

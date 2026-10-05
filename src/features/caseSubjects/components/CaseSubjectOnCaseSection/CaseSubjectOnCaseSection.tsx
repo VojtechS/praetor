@@ -1,7 +1,7 @@
 import { checkValue } from '../../../../shared/utils/checkValue.ts';
 import { useCodelistQuery } from '../../../codelists/hooks/useCodelistQuery.ts';
 import { getCodelistLabel } from '../../../codelists/utils/codelistUtils.ts';
-import type { Contact } from '../../../subjects/api/subjectApi/subjectApi.types.ts';
+import type { RelatedSubject } from '../../../subjects/api/subjectApi/subjectApi.types.ts';
 import { CASE_SUBJECT_ROLE_LABELS } from '../../constants/caseSubjectLabels.ts';
 import type { CaseSubjectDetail } from '../../model/caseSubject.types.ts';
 import { DetailRow } from '../../../../shared/components/DetailRow/DetailRow.tsx';
@@ -10,17 +10,17 @@ import styles from './CaseSubjectOnCaseSection.module.scss';
 
 export interface CaseSubjectOnCaseSectionProps {
   caseSubject: CaseSubjectDetail;
-  contacts: Contact[];
+  relatedSubjects: RelatedSubject[];
 }
 
 export function CaseSubjectOnCaseSection({
   caseSubject,
-  contacts,
+  relatedSubjects,
 }: Readonly<CaseSubjectOnCaseSectionProps>) {
   const proceduralRoles = useCodelistQuery('procedural-roles');
   const materialLegalRoles = useCodelistQuery('material-legal-roles');
-  const preferredContacts = contacts.filter((contact) =>
-    caseSubject.preferredContactIds.includes(contact.id),
+  const preferredRelatedSubjects = relatedSubjects.filter((relatedSubject) =>
+    caseSubject.preferredRelatedSubjectIds.includes(relatedSubject.id),
   );
 
   return (
@@ -42,12 +42,12 @@ export function CaseSubjectOnCaseSection({
         <DetailRow label="Spisová značka" value={checkValue(caseSubject.caseFileNumber)} />
       </div>
       <h3 className={styles.caseSubjectOnCaseSection__title}>Preferované kontakty</h3>
-      {preferredContacts.length === 0 ? (
+      {preferredRelatedSubjects.length === 0 ? (
         <p>{checkValue(null)}</p>
       ) : (
-        <ul className={styles.caseSubjectOnCaseSection__contacts}>
-          {preferredContacts.map((contact) => (
-            <li key={contact.id}>{contact.fullName}</li>
+        <ul className={styles.caseSubjectOnCaseSection__relatedSubjects}>
+          {preferredRelatedSubjects.map((relatedSubject) => (
+            <li key={relatedSubject.id}>{relatedSubject.fullName}</li>
           ))}
         </ul>
       )}

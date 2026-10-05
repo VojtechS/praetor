@@ -1,5 +1,6 @@
 import { Building2, Landmark, Scale, Star, User, Wallet } from 'lucide-react';
 import clsx from 'clsx';
+import { memo } from 'react';
 import columnStyles from '../../../../styles/caseSubjectListColumns.module.scss';
 import { checkValue } from '../../../../shared/utils/checkValue.ts';
 import type { CodelistItem } from '../../../codelists/api/codelistApi/codelistApi.types.ts';
@@ -34,7 +35,8 @@ function TypeIcon({ item }: Readonly<{ item: CaseSubjectListItem }>) {
   return item.subjectType.startsWith('PHYSICAL') ? <User {...props} /> : <Building2 {...props} />;
 }
 
-export function CaseSubjectListRow({
+// Memoized so selecting one row doesn't re-render the whole list; props are reference-stable.
+export const CaseSubjectListRow = memo(function CaseSubjectListRowView({
   caseId,
   item,
   materialLegalRoles,
@@ -107,4 +109,4 @@ export function CaseSubjectListRow({
       )}
     </>
   );
-}
+});

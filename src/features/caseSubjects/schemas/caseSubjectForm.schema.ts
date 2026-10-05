@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 const CASE_FILE_NUMBER_MAX_LENGTH = 50;
 
-function toContactIds(value: string[] | string | false): number[] {
+function toRelatedSubjectIds(value: string[] | string | false): number[] {
   if (Array.isArray(value)) {
     return value.map(Number);
   }
@@ -22,9 +22,9 @@ export const caseSubjectFormSchema = z
     caseFileNumber: z
       .string()
       .max(CASE_FILE_NUMBER_MAX_LENGTH, 'Spisová značka může mít nejvýše 50 znaků'),
-    preferredContactIds: z
+    preferredRelatedSubjectIds: z
       .union([z.array(z.string()), z.string(), z.literal(false)])
-      .transform(toContactIds),
+      .transform(toRelatedSubjectIds),
   })
   .refine((values) => values.legalRepresentativeId !== values.subjectId, {
     path: ['legalRepresentativeId'],

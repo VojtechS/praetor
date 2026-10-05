@@ -1,10 +1,10 @@
 import type { AresSubjectDetail } from '../api/aresApi/aresApi.types.ts';
-import type { SubjectDetail } from '../model/subject.types.ts';
+import type { Subject } from '../api/subjectApi/subjectApi.types.ts';
 import type { SubjectCardState } from '../../caseSubjects/store/useCaseSubjectsUiStore.ts';
 import type { SubjectFormInput } from '../schemas/subjectForm.schema.ts';
 import { getNewSubjectFormDefaults, mapSubjectToForm } from '../utils/subjectFormMapper.ts';
-import { useAresDetailQuery } from './useAresQueries.ts';
-import { useSubjectQuery } from './useSubjectQueries.ts';
+import { useAresDetailQuery } from './queries/useAresQueries.ts';
+import { useSubjectQuery } from './queries/useSubjectQueries.ts';
 
 interface CardParams {
   isEdit: boolean;
@@ -30,7 +30,7 @@ function getCardParams(
 
 function resolveDefaults(
   isEdit: boolean,
-  subject: SubjectDetail | undefined,
+  subject: Subject | undefined,
   aresDetail: AresSubjectDetail | undefined,
   isWaitingForAres: boolean,
 ): SubjectFormInput | null {
@@ -50,11 +50,15 @@ export function useSubjectCardDefaults(
   aresRegNumber: string | null,
 ) {
   const { isEdit, subjectId, regNumber, formKey } = getCardParams(subjectCard, aresRegNumber);
+
   const subjectQuery = useSubjectQuery(subjectId, isEdit);
   const aresQuery = useAresDetailQuery(regNumber);
+
   const subject = subjectQuery.data?.data;
+  const ares = aresQuery.data?.data;
   const isWaitingForAres = regNumber !== null && !aresQuery.isError;
-  const defaultValues = resolveDefaults(isEdit, subject, aresQuery.data?.data, isWaitingForAres);
+
+  const defaultValues = resolveDefaults(isEdit, subject, ares, isWaitingForAres);
 
   return { defaultValues, subject, formKey };
 }

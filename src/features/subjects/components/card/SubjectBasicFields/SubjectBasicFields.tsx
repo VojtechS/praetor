@@ -16,6 +16,7 @@ export interface SubjectBasicFieldsProps {
 
 export function SubjectBasicFields({ form }: Readonly<SubjectBasicFieldsProps>) {
   const { register, control, formState } = form;
+
   const countries = useCodelistQuery('countries').data;
   const languages = useCodelistQuery('languages').data;
   const labels = useCodelistQuery('labels').data;

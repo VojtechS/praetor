@@ -1,11 +1,10 @@
 import type { Address } from '../api/subjectApi/subjectApi.types.ts';
-import { ADDRESS_TYPE_FLAGS } from '../constants/addressLabels.ts';
+import { ADDRESS_TYPE_FLAGS, type AddressFlags } from '../constants/addressLabels.ts';
 
 type AddressLines = Pick<
   Address,
   'street' | 'houseNumber' | 'orientationNumber' | 'zipCode' | 'city' | 'country'
 >;
-type AddressFlags = Pick<Address, 'isSeat' | 'isDelivery' | 'isBranch' | 'isBilling'>;
 
 export function formatAddress(address: AddressLines): string {
   const numbers = [address.houseNumber, address.orientationNumber].filter(Boolean).join('/');

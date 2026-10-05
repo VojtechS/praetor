@@ -1,5 +1,5 @@
 import { checkValue } from '../../../../../shared/utils/checkValue.ts';
-import { useSubjectsSearchQuery } from '../../../hooks/useSubjectQueries.ts';
+import { useSubjectsSearchQuery } from '../../../hooks/queries/useSubjectQueries.ts';
 import { formatBirthDate, getSubjectDisplayName } from '../../../utils/subjectUtils.ts';
 import { SubjectPickerResults } from '../SubjectPickerResults/SubjectPickerResults.tsx';
 import styles from './SubjectPickerPraetorResults.module.scss';
