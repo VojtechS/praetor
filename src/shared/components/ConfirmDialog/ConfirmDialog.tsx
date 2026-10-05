@@ -1,3 +1,4 @@
+import { Trash2 } from 'lucide-react';
 import { Button } from '../Button/Button.tsx';
 import { Dialog } from '../Dialog/Dialog.tsx';
 
@@ -27,7 +28,7 @@ export function ConfirmDialog({
       size="sm"
       onClose={onCancel}
       footer={
-        <Button variant="primary" disabled={isLoading} onClick={onConfirm}>
+        <Button variant="dangerSolid" icon={Trash2} disabled={isLoading} onClick={onConfirm}>
           {confirmLabel}
         </Button>
       }

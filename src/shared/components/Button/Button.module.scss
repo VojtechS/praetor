@@ -96,6 +96,15 @@
     }
   }
 
+  &--dangerSolid {
+    color: $color-on-primary;
+    background-color: $color-danger;
+
+    &:hover:not(:disabled) {
+      background-color: $color-danger-hover;
+    }
+  }
+
   &--danger {
     color: $color-danger;
     background-color: transparent;

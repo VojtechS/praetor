@@ -4,7 +4,7 @@ import type { ComponentPropsWithoutRef } from 'react';
 import styles from './Button.module.scss';
 
 export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
-  variant?: 'primary' | 'success' | 'secondary' | 'ghost' | 'danger';
+  variant?: 'primary' | 'success' | 'secondary' | 'ghost' | 'danger' | 'dangerSolid';
   size?: 'default' | 'small';
   icon?: LucideIcon;
 }

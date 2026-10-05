@@ -10,7 +10,6 @@ export interface DropdownMenuItem {
 }
 
 export interface DropdownMenuProps {
-  /** Accessible name of the icon-only trigger button. */
   label: string;
   icon: LucideIcon;
   items: DropdownMenuItem[];
@@ -22,12 +21,10 @@ export function DropdownMenu({ label, icon: Icon, items }: Readonly<DropdownMenu
   const menuRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  // Runs before the menu is shown, so it never renders at a stale position.
   function handleBeforeToggle(event: ToggleEvent<HTMLDivElement>) {
     const rect = buttonRef.current?.getBoundingClientRect();
 
     if (rect && event.newState === 'open') {
-      // The menu is aligned to the right edge of the trigger.
       event.currentTarget.style.top = `${rect.bottom + 4}px`;
       event.currentTarget.style.left = 'auto';
       event.currentTarget.style.right = `${document.documentElement.clientWidth - rect.right}px`;

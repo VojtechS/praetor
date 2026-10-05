@@ -29,10 +29,6 @@ export function CaseSubjectRowActions({ caseId, item }: Readonly<CaseSubjectRowA
       onSelect: () => openRoleDialog('edit', item.id),
     },
     {
-      label: 'Odstranit subjekt ze spisu',
-      onSelect: () => requestRemove(item.id),
-    },
-    {
       label: 'Nastavit jako hlavního plátce',
       disabled: updateMutation.isPending,
       onSelect: () => updateMutation.mutate({ id: item.id, request: { isMainPayer: true } }),
@@ -41,6 +37,10 @@ export function CaseSubjectRowActions({ caseId, item }: Readonly<CaseSubjectRowA
       label: 'Nastavit jako hlavního klienta',
       disabled: updateMutation.isPending,
       onSelect: () => updateMutation.mutate({ id: item.id, request: { isMainClient: true } }),
+    },
+    {
+      label: 'Odstranit subjekt ze spisu',
+      onSelect: () => requestRemove(item.id),
     },
     {
       label: 'Zobrazit právního zástupce',
