@@ -21,6 +21,7 @@ $color-on-primary: #ffffff;
 $color-danger: #c8433a;
 $color-warning: #a16207;
 $color-success: #2f7d57;
+$color-success-hover: #256646;
 
 // Role groups (always together with an icon and text)
 $color-role-client: $color-primary-text;
@@ -63,6 +64,7 @@ $dialog-width-md: 560px;
 $dialog-width-lg: 1100px;
 $dialog-width-xl: 1320px;
 $detail-panel-width: 520px;
+$icon-size-sm: 12px;
 $icon-size: 16px;
 $icon-size-lg: 18px;
 // 12px label with line-height 1.5, used to align a control with a neighbouring input.

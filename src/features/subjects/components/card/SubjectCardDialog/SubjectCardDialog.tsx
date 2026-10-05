@@ -1,3 +1,4 @@
+import { Save } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '../../../../../shared/components/Button/Button.tsx';
 import { Dialog } from '../../../../../shared/components/Dialog/Dialog.tsx';
@@ -64,12 +65,15 @@ export function SubjectCardDialog() {
       onClose={close}
       headerExtra={<SubjectAresSearch onSelect={setAresRegNumber} />}
       footer={
-        <>
-          <Button type="submit" form={SUBJECT_FORM_ID} variant="primary" disabled={isSaving}>
-            Uložit
-          </Button>
-          <Button onClick={close}>Storno</Button>
-        </>
+        <Button
+          type="submit"
+          form={SUBJECT_FORM_ID}
+          variant="success"
+          icon={Save}
+          disabled={isSaving}
+        >
+          Uložit
+        </Button>
       }
     >
       {defaultValues ? (

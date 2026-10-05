@@ -1,3 +1,4 @@
+import { Save } from 'lucide-react';
 import { Button } from '../../../../shared/components/Button/Button.tsx';
 import { Dialog } from '../../../../shared/components/Dialog/Dialog.tsx';
 import { LoadingOverlay } from '../../../../shared/components/LoadingOverlay/LoadingOverlay.tsx';
@@ -83,12 +84,9 @@ export function CaseSubjectRoleDialog({
       size="lg"
       onClose={closeRoleDialog}
       footer={
-        <>
-          <Button type="submit" form={ROLE_FORM_ID} variant="primary" disabled={isSaving}>
-            Uložit
-          </Button>
-          <Button onClick={closeRoleDialog}>Storno</Button>
-        </>
+        <Button type="submit" form={ROLE_FORM_ID} variant="success" icon={Save} disabled={isSaving}>
+          Uložit
+        </Button>
       }
     >
       {content}

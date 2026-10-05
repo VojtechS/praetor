@@ -42,6 +42,11 @@
     padding: 0 $space-3;
 
     font-size: 13px;
+
+    .button__icon {
+      width: $icon-size-sm;
+      height: $icon-size-sm;
+    }
   }
 
   // Icon without text: a square button.
@@ -60,6 +65,15 @@
 
     &:hover:not(:disabled) {
       background-color: $color-primary-hover;
+    }
+  }
+
+  &--success {
+    color: $color-on-primary;
+    background-color: $color-success;
+
+    &:hover:not(:disabled) {
+      background-color: $color-success-hover;
     }
   }
 

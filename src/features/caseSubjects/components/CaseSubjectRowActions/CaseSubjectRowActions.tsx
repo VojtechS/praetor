@@ -1,4 +1,4 @@
-import { MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal, Pencil } from 'lucide-react';
 import { Button } from '../../../../shared/components/Button/Button.tsx';
 import { DropdownMenu } from '../../../../shared/components/DropdownMenu/DropdownMenu.tsx';
 import type { DropdownMenuItem } from '../../../../shared/components/DropdownMenu/DropdownMenu.tsx';
@@ -51,7 +51,7 @@ export function CaseSubjectRowActions({ caseId, item }: Readonly<CaseSubjectRowA
 
   return (
     <div className={styles.caseSubjectRowActions}>
-      <Button variant="primary" size="small" onClick={() => openCard(item.subjectId)}>
+      <Button variant="primary" size="small" icon={Pencil} onClick={() => openCard(item.subjectId)}>
         Upravit
       </Button>
       <DropdownMenu label="Další akce" icon={MoreHorizontal} items={menuItems} />

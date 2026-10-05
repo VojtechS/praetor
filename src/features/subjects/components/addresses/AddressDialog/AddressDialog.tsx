@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Save } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { Button } from '../../../../../shared/components/Button/Button.tsx';
 import { Dialog } from '../../../../../shared/components/Dialog/Dialog.tsx';
@@ -37,12 +38,9 @@ export function AddressDialog({
       size="md"
       onClose={onClose}
       footer={
-        <>
-          <Button variant="primary" onClick={() => void form.handleSubmit(onSave)()}>
-            Uložit
-          </Button>
-          <Button onClick={onClose}>Storno</Button>
-        </>
+        <Button variant="success" icon={Save} onClick={() => void form.handleSubmit(onSave)()}>
+          Uložit
+        </Button>
       }
     >
       {countries ? (
