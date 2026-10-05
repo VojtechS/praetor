@@ -60,7 +60,7 @@ export function SubjectPickerSearch({
         </div>
         {onAresSearch && (
           <Button icon={Globe} onClick={onAresSearch}>
-            Vyhledat v ARES (CZ)
+            Vyhledat v ARES
           </Button>
         )}
         <Button icon={Plus} onClick={onCreate}>

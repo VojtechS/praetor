@@ -12,11 +12,9 @@ export interface DialogProps {
   children: ReactNode;
   footer?: ReactNode;
   headerExtra?: ReactNode;
-  /** Focuses the dialog itself, not its first control (e.g. a search field in the header). */
   isFocusedOnOpen?: boolean;
 }
 
-// The top layer stacks in the order of opening, so the toaster must be reopened above the new dialog.
 function raiseToasterLayer() {
   const layer = document.querySelector<HTMLElement>('[data-toaster-layer]');
 
@@ -52,8 +50,7 @@ export function Dialog({
     }
   }, [isOpen, isFocusedOnOpen]);
 
-  // React bubbles the close event of a nested dialog to its parents, only the own closing counts.
-  function handleClose(event: SyntheticEvent<HTMLDialogElement>) {
+  function handleOwnEvent(event: SyntheticEvent<HTMLDialogElement>) {
     if (event.target === event.currentTarget) {
       onClose();
     }
@@ -65,7 +62,8 @@ export function Dialog({
       className={clsx(styles.dialog, styles[`dialog--${size}`])}
       aria-labelledby={titleId}
       tabIndex={isFocusedOnOpen ? -1 : undefined}
-      onClose={handleClose}
+      onClose={handleOwnEvent}
+      onMouseDown={handleOwnEvent}
     >
       {isOpen && (
         <>

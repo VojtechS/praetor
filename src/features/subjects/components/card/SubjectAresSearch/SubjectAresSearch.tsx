@@ -110,7 +110,7 @@ export function SubjectAresSearch({ onSelect }: Readonly<SubjectAresSearchProps>
           )}
         </div>
         <Button type="submit" icon={Globe}>
-          Vyhledat v ARES (CZ)
+          Vyhledat v ARES
         </Button>
       </form>
 
