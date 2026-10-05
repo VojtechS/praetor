@@ -1,4 +1,5 @@
 import { Building2, Landmark, Scale, Star, User, Wallet } from 'lucide-react';
+import clsx from 'clsx';
 import columnStyles from '../../../../styles/caseSubjectListColumns.module.scss';
 import { checkValue } from '../../../../shared/utils/checkValue.ts';
 import type { CodelistItem } from '../../../codelists/api/codelistApi/codelistApi.types.ts';
@@ -42,13 +43,20 @@ export function CaseSubjectListRow({
   onSelect,
 }: Readonly<CaseSubjectListRowProps>) {
   const hasRepresentative = item.legalRepresentativeId !== null;
-  const rowClass = `${styles.caseSubjectListRow} ${isSelected ? styles['caseSubjectListRow--selected'] : ''}`;
+  const rowClass = clsx(
+    styles.caseSubjectListRow,
+    isSelected && styles['caseSubjectListRow--selected'],
+  );
 
   return (
     <>
       <div
         role="row"
-        className={`${rowClass} ${columnStyles.caseSubjectListGrid} ${hasRepresentative ? styles['caseSubjectListRow--open'] : ''}`}
+        className={clsx(
+          rowClass,
+          columnStyles.caseSubjectListGrid,
+          hasRepresentative && styles['caseSubjectListRow--open'],
+        )}
       >
         <div role="rowheader" className={styles.caseSubjectListRow__nameCell}>
           <span className={styles.caseSubjectListRow__name}>
@@ -88,7 +96,7 @@ export function CaseSubjectListRow({
         </div>
       </div>
       {hasRepresentative && (
-        <div role="row" className={`${rowClass} ${styles.caseSubjectListRow__representativeRow}`}>
+        <div role="row" className={clsx(rowClass, styles.caseSubjectListRow__representativeRow)}>
           <div role="cell" aria-colspan={6}>
             <span className={styles.caseSubjectListRow__representative}>
               <Scale className={styles.caseSubjectListRow__icon} aria-hidden="true" />

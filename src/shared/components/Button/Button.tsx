@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import type { LucideIcon } from 'lucide-react';
 import type { ComponentPropsWithoutRef } from 'react';
 import styles from './Button.module.scss';
@@ -16,14 +17,15 @@ export function Button({
   children,
   ...rest
 }: Readonly<ButtonProps>) {
-  const variantClass = styles[`button--${variant}`];
-  const sizeClass = styles[`button--${size}`];
-  const iconOnlyClass = children ? '' : styles['button--iconOnly'];
-
   return (
     <button
       type={type}
-      className={`${styles.button} ${variantClass} ${sizeClass} ${iconOnlyClass}`}
+      className={clsx(
+        styles.button,
+        styles[`button--${variant}`],
+        styles[`button--${size}`],
+        !children && styles['button--iconOnly'],
+      )}
       {...rest}
     >
       {Icon && <Icon className={styles.button__icon} aria-hidden="true" />}

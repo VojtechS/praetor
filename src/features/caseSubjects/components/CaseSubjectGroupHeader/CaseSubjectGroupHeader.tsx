@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Landmark, ShieldCheck, Swords, Users } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Badge } from '../../../../shared/components/Badge/Badge.tsx';
@@ -19,14 +20,16 @@ export interface CaseSubjectGroupHeaderProps {
 
 export function CaseSubjectGroupHeader({ role, count }: Readonly<CaseSubjectGroupHeaderProps>) {
   const { icon: Icon, modifier } = GROUP_STYLES[role];
-  const modifierClass = styles[`caseSubjectGroupHeader--${modifier}`];
 
   return (
     <div role="row">
       <div
         role="rowheader"
         aria-colspan={6}
-        className={`${styles.caseSubjectGroupHeader} ${modifierClass}`}
+        className={clsx(
+          styles.caseSubjectGroupHeader,
+          styles[`caseSubjectGroupHeader--${modifier}`],
+        )}
       >
         <span className={styles.caseSubjectGroupHeader__content}>
           <Icon className={styles.caseSubjectGroupHeader__icon} aria-hidden="true" />

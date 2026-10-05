@@ -1,5 +1,6 @@
 import { X } from 'lucide-react';
 import { useEffect, useId, useRef } from 'react';
+import clsx from 'clsx';
 import type { ReactNode, SyntheticEvent } from 'react';
 import styles from './Dialog.module.scss';
 
@@ -27,7 +28,6 @@ export function Dialog({
 }: Readonly<DialogProps>) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const titleId = useId();
-  const modifier = styles[`dialog--${size}`];
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -53,7 +53,7 @@ export function Dialog({
   return (
     <dialog
       ref={dialogRef}
-      className={`${styles.dialog} ${modifier}`}
+      className={clsx(styles.dialog, styles[`dialog--${size}`])}
       aria-labelledby={titleId}
       tabIndex={isFocusedOnOpen ? -1 : undefined}
       onClose={handleClose}

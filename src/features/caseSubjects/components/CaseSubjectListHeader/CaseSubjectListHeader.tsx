@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import columnStyles from '../../../../styles/caseSubjectListColumns.module.scss';
 import styles from './CaseSubjectListHeader.module.scss';
 
@@ -6,7 +7,7 @@ export function CaseSubjectListHeader() {
     <div role="rowgroup">
       <div
         role="row"
-        className={`${styles.caseSubjectListHeader} ${columnStyles.caseSubjectListGrid}`}
+        className={clsx(styles.caseSubjectListHeader, columnStyles.caseSubjectListGrid)}
       >
         <div role="columnheader">Označení</div>
         <div role="columnheader">Identifikace</div>

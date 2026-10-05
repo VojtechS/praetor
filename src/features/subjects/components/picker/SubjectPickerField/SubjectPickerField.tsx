@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Search } from 'lucide-react';
 import { useId } from 'react';
 import { FieldError } from '../../../../../shared/components/FieldError/FieldError.tsx';
@@ -34,7 +35,10 @@ export function SubjectPickerField({
       </span>
       <button
         type="button"
-        className={`${styles.subjectPickerField__control} ${error ? styles['subjectPickerField__control--invalid'] : ''}`}
+        className={clsx(
+          styles.subjectPickerField__control,
+          error && styles['subjectPickerField__control--invalid'],
+        )}
         aria-expanded={isExpanded}
         aria-labelledby={`${labelId} ${valueId}`}
         aria-describedby={error ? errorId : undefined}
@@ -43,9 +47,9 @@ export function SubjectPickerField({
       >
         <span
           id={valueId}
-          className={
-            value ? styles.subjectPickerField__value : styles.subjectPickerField__placeholder
-          }
+          className={clsx(
+            value ? styles.subjectPickerField__value : styles.subjectPickerField__placeholder,
+          )}
         >
           {value ?? placeholder}
         </span>

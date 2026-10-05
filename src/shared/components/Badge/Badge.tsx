@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import type { ReactNode } from 'react';
 import styles from './Badge.module.scss';
 
@@ -7,7 +8,5 @@ export interface BadgeProps {
 }
 
 export function Badge({ children, variant = 'muted' }: Readonly<BadgeProps>) {
-  const modifier = styles[`badge--${variant}`];
-
-  return <span className={`${styles.badge} ${modifier}`}>{children}</span>;
+  return <span className={clsx(styles.badge, styles[`badge--${variant}`])}>{children}</span>;
 }

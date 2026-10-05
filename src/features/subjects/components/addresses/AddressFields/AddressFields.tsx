@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { useWatch } from 'react-hook-form';
 import { CheckboxField } from '../../../../../shared/components/CheckboxField/CheckboxField.tsx';
 import { SelectField } from '../../../../../shared/components/SelectField/SelectField.tsx';
@@ -33,7 +34,7 @@ export function AddressFields({ form, countryOptions }: Readonly<AddressFieldsPr
       <div className={styles.addressFields__full}>
         <TextField label="Řádek 3" registration={register('line3')} disabled={useSubjectName} />
       </div>
-      <div className={`${styles.addressFields__full} ${styles.addressFields__street}`}>
+      <div className={clsx(styles.addressFields__full, styles.addressFields__street)}>
         <TextField label="Ulice" registration={register('street')} />
         <TextField label="č.p." registration={register('houseNumber')} />
         <TextField label="č.o." registration={register('orientationNumber')} />
@@ -50,7 +51,7 @@ export function AddressFields({ form, countryOptions }: Readonly<AddressFieldsPr
         hasEmptyOption
       />
       <TextField label="Okres" registration={register('district')} />
-      <div className={`${styles.addressFields__full} ${styles.addressFields__footer}`}>
+      <div className={clsx(styles.addressFields__full, styles.addressFields__footer)}>
         <CheckboxField label="Sídlo" registration={register('isSeat')} />
         <CheckboxField label="Doručovací" registration={register('isDelivery')} />
         <CheckboxField label="Pobočka" registration={register('isBranch')} />

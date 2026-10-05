@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { useId } from 'react';
 import type { UseFormRegisterReturn } from 'react-hook-form';
 import { FieldError } from '../FieldError/FieldError.tsx';
@@ -27,7 +28,10 @@ export function TextField({
 
   return (
     <div className={styles.textField}>
-      <label htmlFor={id} className={isLabelHidden ? 'visuallyHidden' : styles.textField__label}>
+      <label
+        htmlFor={id}
+        className={clsx(isLabelHidden ? 'visuallyHidden' : styles.textField__label)}
+      >
         {label}
       </label>
       <input
