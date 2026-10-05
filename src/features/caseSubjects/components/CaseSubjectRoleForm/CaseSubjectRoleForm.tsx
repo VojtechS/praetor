@@ -9,13 +9,7 @@ import type {
   CaseSubjectFormInput,
   CaseSubjectFormValues,
 } from '../../schemas/caseSubjectForm.schema.ts';
-import {
-  selectClearPickedSubject,
-  selectPickedSubject,
-  selectPicker,
-  selectTogglePicker,
-  useCaseSubjectsUiStore,
-} from '../../store/useCaseSubjectsUiStore.ts';
+import { useCaseSubjectsUiStore } from '../../store/useCaseSubjectsUiStore.ts';
 import { CaseSubjectRoleFields } from '../CaseSubjectRoleFields/CaseSubjectRoleFields.tsx';
 import { CaseSubjectRoleTabs } from '../CaseSubjectRoleTabs/CaseSubjectRoleTabs.tsx';
 
@@ -36,10 +30,10 @@ export function CaseSubjectRoleForm({
   isEdit,
   onSave,
 }: Readonly<CaseSubjectRoleFormProps>) {
-  const picker = useCaseSubjectsUiStore(selectPicker);
-  const togglePicker = useCaseSubjectsUiStore(selectTogglePicker);
-  const pickedSubject = useCaseSubjectsUiStore(selectPickedSubject);
-  const clearPickedSubject = useCaseSubjectsUiStore(selectClearPickedSubject);
+  const picker = useCaseSubjectsUiStore((state) => state.picker);
+  const togglePicker = useCaseSubjectsUiStore((state) => state.togglePicker);
+  const pickedSubject = useCaseSubjectsUiStore((state) => state.pickedSubject);
+  const clearPickedSubject = useCaseSubjectsUiStore((state) => state.clearPickedSubject);
   const { register, handleSubmit, setValue, getValues, control, formState } = useForm<
     CaseSubjectFormInput,
     unknown,
@@ -81,7 +75,7 @@ export function CaseSubjectRoleForm({
         proceduralRoleOptions={proceduralRoleOptions}
         materialLegalRoleOptions={materialLegalRoleOptions}
         isEdit={isEdit}
-        openPickerTarget={picker?.target}
+        openPickerTarget={picker}
         onPickSubject={() => togglePicker('subject')}
         onPickRepresentative={() => togglePicker('representative')}
       />

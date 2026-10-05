@@ -4,12 +4,7 @@ import { DropdownMenu } from '../../../../shared/components/DropdownMenu/Dropdow
 import type { DropdownMenuItem } from '../../../../shared/components/DropdownMenu/DropdownMenu.tsx';
 import { useUpdateCaseSubjectMutation } from '../../hooks/useCaseSubjectQueries.ts';
 import type { CaseSubjectListItem } from '../../model/caseSubject.types.ts';
-import {
-  selectOpenRoleDialog,
-  selectOpenSubjectCard,
-  selectRequestRemove,
-  useCaseSubjectsUiStore,
-} from '../../store/useCaseSubjectsUiStore.ts';
+import { useCaseSubjectsUiStore } from '../../store/useCaseSubjectsUiStore.ts';
 import styles from './CaseSubjectRowActions.module.scss';
 
 export interface CaseSubjectRowActionsProps {
@@ -18,9 +13,9 @@ export interface CaseSubjectRowActionsProps {
 }
 
 export function CaseSubjectRowActions({ caseId, item }: Readonly<CaseSubjectRowActionsProps>) {
-  const openRoleDialog = useCaseSubjectsUiStore(selectOpenRoleDialog);
-  const openSubjectCard = useCaseSubjectsUiStore(selectOpenSubjectCard);
-  const requestRemove = useCaseSubjectsUiStore(selectRequestRemove);
+  const openRoleDialog = useCaseSubjectsUiStore((state) => state.openRoleDialog);
+  const openSubjectCard = useCaseSubjectsUiStore((state) => state.openSubjectCard);
+  const requestRemove = useCaseSubjectsUiStore((state) => state.requestRemove);
   const updateMutation = useUpdateCaseSubjectMutation(caseId);
 
   function openCard(subjectId: number) {

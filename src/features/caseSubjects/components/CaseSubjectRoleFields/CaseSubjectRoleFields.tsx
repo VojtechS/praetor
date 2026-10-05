@@ -16,7 +16,7 @@ export interface CaseSubjectRoleFieldsProps {
   proceduralRoleOptions: SelectOption[];
   materialLegalRoleOptions: SelectOption[];
   isEdit: boolean;
-  openPickerTarget?: 'subject' | 'representative';
+  openPickerTarget: 'subject' | 'representative' | null;
   onPickSubject: () => void;
   onPickRepresentative: () => void;
 }

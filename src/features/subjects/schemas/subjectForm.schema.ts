@@ -8,7 +8,7 @@ const PHONE_MAX_LENGTH = 15;
 const REG_NUMBER_PATTERN = /^(\d{8})?$/;
 const VAT_NUMBER_PATTERN = /^([A-Za-z]{2}\d+)?$/;
 const PERSONAL_ID_PATTERN = /^(\d{6}\/\d{3,4}|\d{9,10})?$/;
-const DATA_BOX_ID_PATTERN = /^([A-Za-z0-9]{7})?$/;
+export const DATA_BOX_ID_PATTERN = /^([A-Za-z0-9]{7})?$/;
 const ZIP_CODE_PATTERN = /^\d{3} \d{2}$/;
 const PHONE_PATTERN = /^\+?[\d ]+$/;
 
@@ -108,36 +108,24 @@ const commonShape = {
   responsibleEmployee: z.string(),
   addresses: z.array(addressRowSchema),
   connections: z.array(connectionRowSchema),
-};
-
-const dataBoxShape = {
   dataBoxId: z.string().regex(DATA_BOX_ID_PATTERN, 'ID datové schránky musí mít 7 znaků'),
 };
 
 export const subjectFormSchema = z.discriminatedUnion('type', [
   z.object({
-    type: z.literal('UNDETERMINED'),
+    type: z.literal(['UNDETERMINED', 'LEGAL']),
     ...commonShape,
-    ...dataBoxShape,
-    economicSubject: economicSubjectSchema,
-  }),
-  z.object({
-    type: z.literal('LEGAL'),
-    ...commonShape,
-    ...dataBoxShape,
     economicSubject: economicSubjectSchema,
   }),
   z.object({
     type: z.literal('PHYSICAL_ENTREPRENEUR'),
     ...commonShape,
-    ...dataBoxShape,
     economicSubject: economicSubjectSchema,
     physicalPerson: physicalPersonSchema,
   }),
   z.object({
     type: z.literal('PHYSICAL_NON_ENTREPRENEUR'),
     ...commonShape,
-    ...dataBoxShape,
     physicalPerson: physicalPersonSchema,
   }),
 ]);

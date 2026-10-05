@@ -36,13 +36,11 @@ function SubjectEconomicRows({ subject }: Readonly<SubjectBasicInfoDetailProps>)
 }
 
 function SubjectPersonRows({ subject }: Readonly<SubjectBasicInfoDetailProps>) {
-  const birthDate = subject.physicalPerson?.birthDate;
-
   return (
     <>
       <DetailRow
         label="Datum narození"
-        value={birthDate ? formatBirthDate(birthDate) : checkValue(null)}
+        value={formatBirthDate(subject.physicalPerson?.birthDate)}
       />
       <DetailRow label="Rodné číslo" value={checkValue(subject.physicalPerson?.personalId)} />
     </>

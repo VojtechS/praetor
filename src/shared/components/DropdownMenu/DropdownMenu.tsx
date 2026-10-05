@@ -14,15 +14,9 @@ export interface DropdownMenuProps {
   label: string;
   icon: LucideIcon;
   items: DropdownMenuItem[];
-  disabled?: boolean;
 }
 
-export function DropdownMenu({
-  label,
-  icon: Icon,
-  items,
-  disabled = false,
-}: Readonly<DropdownMenuProps>) {
+export function DropdownMenu({ label, icon: Icon, items }: Readonly<DropdownMenuProps>) {
   const menuId = useId();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -71,7 +65,6 @@ export function DropdownMenu({
         aria-haspopup="menu"
         aria-expanded={isOpen}
         aria-label={label}
-        disabled={disabled}
         popoverTarget={menuId}
       >
         <Icon className={styles.dropdownMenu__icon} aria-hidden="true" />

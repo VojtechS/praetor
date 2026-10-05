@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import { useId } from 'react';
 import type { UseFormRegisterReturn } from 'react-hook-form';
 import { FieldError } from '../FieldError/FieldError.tsx';
@@ -39,7 +38,7 @@ export function CheckboxField({
         />
         <label
           htmlFor={id}
-          className={clsx(isLabelHidden ? 'visuallyHidden' : styles.checkboxField__label)}
+          className={isLabelHidden ? 'visuallyHidden' : styles.checkboxField__label}
         >
           {label}
         </label>

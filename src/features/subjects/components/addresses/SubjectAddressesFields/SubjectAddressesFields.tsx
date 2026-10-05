@@ -14,46 +14,29 @@ export interface SubjectAddressesFieldsProps {
   form: SubjectForm;
 }
 
-interface AddressDialogState {
-  key: number;
-  index: number | null;
-  isOpen: boolean;
-}
-
 export function SubjectAddressesFields({ form }: Readonly<SubjectAddressesFieldsProps>) {
   const { fields, append, update, remove } = useFieldArray({
     control: form.control,
     name: 'addresses',
   });
   const countries = useCodelistQuery('countries').data;
-  const [dialog, setDialog] = useState<AddressDialogState | null>(null);
-  const editedIndex = dialog?.index ?? null;
+  const [dialog, setDialog] = useState<{ index: number | null } | null>(null);
 
-  function openDialog(index: number | null) {
-    setDialog((previous) => ({ key: (previous?.key ?? 0) + 1, index, isOpen: true }));
-  }
-
-  function closeDialog() {
-    setDialog((previous) => previous && { ...previous, isOpen: false });
-  }
-
-  function handleSave(values: AddressFormValues) {
-    if (editedIndex === null) {
+  function handleSave(index: number | null, values: AddressFormValues) {
+    if (index === null) {
       append(values);
     } else {
-      update(editedIndex, values);
+      update(index, values);
     }
 
-    closeDialog();
+    setDialog(null);
   }
-
-  const editedAddress = editedIndex === null ? undefined : fields[editedIndex];
 
   return (
     <SubjectFormSection
       title="Adresy"
       action={
-        <Button icon={Plus} onClick={() => openDialog(null)}>
+        <Button icon={Plus} onClick={() => setDialog({ index: null })}>
           Přidat adresu
         </Button>
       }
@@ -64,19 +47,18 @@ export function SubjectAddressesFields({ form }: Readonly<SubjectAddressesFields
         <SubjectAddressesTable
           fields={fields}
           countries={countries}
-          onEdit={openDialog}
+          onEdit={(index) => setDialog({ index })}
           onRemove={remove}
         />
       )}
       {dialog &&
         createPortal(
           <AddressDialog
-            key={dialog.key}
-            isOpen={dialog.isOpen}
-            isEdit={editedIndex !== null}
-            defaultValues={editedAddress ?? getNewAddressDefaults()}
-            onSave={handleSave}
-            onClose={closeDialog}
+            isOpen
+            isEdit={dialog.index !== null}
+            defaultValues={dialog.index === null ? getNewAddressDefaults() : fields[dialog.index]}
+            onSave={(values) => handleSave(dialog.index, values)}
+            onClose={() => setDialog(null)}
           />,
           document.body,
         )}

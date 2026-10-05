@@ -2,12 +2,7 @@ import { useState } from 'react';
 import { Button } from '../../../../../shared/components/Button/Button.tsx';
 import { Dialog } from '../../../../../shared/components/Dialog/Dialog.tsx';
 import { LoadingOverlay } from '../../../../../shared/components/LoadingOverlay/LoadingOverlay.tsx';
-import {
-  selectCloseSubjectCard,
-  selectSetPickedSubject,
-  selectSubjectCard,
-  useCaseSubjectsUiStore,
-} from '../../../../caseSubjects/store/useCaseSubjectsUiStore.ts';
+import { useCaseSubjectsUiStore } from '../../../../caseSubjects/store/useCaseSubjectsUiStore.ts';
 import { useSubjectCardDefaults } from '../../../hooks/useSubjectCardDefaults.ts';
 import {
   useCreateSubjectMutation,
@@ -22,9 +17,9 @@ import { SubjectCardForm } from '../SubjectCardForm/SubjectCardForm.tsx';
 const SUBJECT_FORM_ID = 'subjectCardForm';
 
 export function SubjectCardDialog() {
-  const subjectCard = useCaseSubjectsUiStore(selectSubjectCard);
-  const closeSubjectCard = useCaseSubjectsUiStore(selectCloseSubjectCard);
-  const setPickedSubject = useCaseSubjectsUiStore(selectSetPickedSubject);
+  const subjectCard = useCaseSubjectsUiStore((state) => state.subjectCard);
+  const closeSubjectCard = useCaseSubjectsUiStore((state) => state.closeSubjectCard);
+  const setPickedSubject = useCaseSubjectsUiStore((state) => state.setPickedSubject);
   const [aresRegNumber, setAresRegNumber] = useState<string | null>(null);
   const createMutation = useCreateSubjectMutation();
   const updateMutation = useUpdateSubjectMutation();

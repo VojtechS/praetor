@@ -35,28 +35,22 @@ export function SubjectPickerPraetorResults({
           </tr>
         </thead>
         <tbody>
-          {subjects.map((subject) => {
-            const birthDate = subject.physicalPerson?.birthDate;
-
-            return (
-              <tr key={subject.id}>
-                <td>
-                  <button
-                    type="button"
-                    className={styles.subjectPickerPraetorResults__choose}
-                    onClick={() => onChoose(subject.id)}
-                  >
-                    {getSubjectDisplayName(subject)}
-                  </button>
-                </td>
-                <td>{checkValue(subject.economicSubject?.regNumber)}</td>
-                <td>{checkValue(subject.physicalPerson?.personalId)}</td>
-                {showBirthDate && (
-                  <td>{birthDate ? formatBirthDate(birthDate) : checkValue(null)}</td>
-                )}
-              </tr>
-            );
-          })}
+          {subjects.map((subject) => (
+            <tr key={subject.id}>
+              <td>
+                <button
+                  type="button"
+                  className={styles.subjectPickerPraetorResults__choose}
+                  onClick={() => onChoose(subject.id)}
+                >
+                  {getSubjectDisplayName(subject)}
+                </button>
+              </td>
+              <td>{checkValue(subject.economicSubject?.regNumber)}</td>
+              <td>{checkValue(subject.physicalPerson?.personalId)}</td>
+              {showBirthDate && <td>{formatBirthDate(subject.physicalPerson?.birthDate)}</td>}
+            </tr>
+          ))}
         </tbody>
       </table>
     </SubjectPickerResults>

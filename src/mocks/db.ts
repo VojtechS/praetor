@@ -16,7 +16,6 @@ import type {
   Subject,
   SubjectRequest,
 } from '../features/subjects/api/subjectApi/subjectApi.types.ts';
-import { SUBJECT_SEARCH_LIMIT } from '../features/subjects/constants/subjectSearch.ts';
 import { getSubjectDisplayName } from '../features/subjects/utils/subjectUtils.ts';
 import {
   createAresDetail,
@@ -28,6 +27,8 @@ import {
   seedSubjects,
 } from './seed.ts';
 import type { CaseSubjectRecord } from './seed.ts';
+
+const SUBJECT_SEARCH_LIMIT = 50;
 
 const subjects = structuredClone(seedSubjects);
 const caseSubjects = structuredClone(seedCaseSubjects);

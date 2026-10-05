@@ -1,12 +1,10 @@
 import { useEffect } from 'react';
 import { toast } from 'sonner';
 
-type DataToastType = 'success' | 'error' | 'info' | 'warning' | 'loading';
-
-export function useDataToast(isActive: boolean, message: string, type: DataToastType = 'error') {
+export function useDataToast(isActive: boolean, message: string) {
   useEffect(() => {
     if (isActive) {
-      toast[type](message);
+      toast.error(message);
     }
-  }, [isActive, message, type]);
+  }, [isActive, message]);
 }

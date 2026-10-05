@@ -10,6 +10,13 @@
     margin-bottom: $space-5;
   }
 
+  &__toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $space-2;
+  }
+
   &__title {
     font-weight: 400;
   }

@@ -47,9 +47,9 @@ export function SubjectPickerField({
       >
         <span
           id={valueId}
-          className={clsx(
-            value ? styles.subjectPickerField__value : styles.subjectPickerField__placeholder,
-          )}
+          className={
+            value ? styles.subjectPickerField__value : styles.subjectPickerField__placeholder
+          }
         >
           {value ?? placeholder}
         </span>

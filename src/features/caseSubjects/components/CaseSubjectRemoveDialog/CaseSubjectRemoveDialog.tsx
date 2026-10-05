@@ -1,11 +1,7 @@
 import { ConfirmDialog } from '../../../../shared/components/ConfirmDialog/ConfirmDialog.tsx';
 import type { CaseSubject } from '../../api/caseSubjectApi/caseSubjectApi.types.ts';
 import { useRemoveCaseSubjectMutation } from '../../hooks/useCaseSubjectQueries.ts';
-import {
-  selectCancelRemove,
-  selectConfirmRemoveId,
-  useCaseSubjectsUiStore,
-} from '../../store/useCaseSubjectsUiStore.ts';
+import { useCaseSubjectsUiStore } from '../../store/useCaseSubjectsUiStore.ts';
 
 export interface CaseSubjectRemoveDialogProps {
   caseId: string;
@@ -18,8 +14,8 @@ export function CaseSubjectRemoveDialog({
   items,
   onRemoved,
 }: Readonly<CaseSubjectRemoveDialogProps>) {
-  const confirmRemoveId = useCaseSubjectsUiStore(selectConfirmRemoveId);
-  const cancelRemove = useCaseSubjectsUiStore(selectCancelRemove);
+  const confirmRemoveId = useCaseSubjectsUiStore((state) => state.confirmRemoveId);
+  const cancelRemove = useCaseSubjectsUiStore((state) => state.cancelRemove);
   const removeMutation = useRemoveCaseSubjectMutation(caseId);
   const item = items.find((candidate) => candidate.id === confirmRemoveId);
 

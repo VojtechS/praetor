@@ -13,7 +13,11 @@ export function getSubjectDisplayName(subject: Subject): string {
   return checkValue(subject.economicSubject?.companyName);
 }
 
-export function formatBirthDate(birthDate: string): string {
+export function formatBirthDate(birthDate: string | null | undefined): string {
+  if (!birthDate) {
+    return checkValue(null);
+  }
+
   const [year, month, day] = birthDate.split('-');
 
   return `${Number(day)}. ${Number(month)}. ${year}`;

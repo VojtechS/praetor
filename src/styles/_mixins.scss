@@ -103,11 +103,6 @@
     &:hover {
       background-color: $color-surface-muted;
     }
-
-    &[aria-selected='true'] {
-      background-color: $color-primary-light;
-      box-shadow: inset 2px 0 0 $color-primary;
-    }
   }
 
   // The button stretches over the whole row, so a click anywhere chooses it.

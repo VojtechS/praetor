@@ -2,17 +2,14 @@ import { Button } from '../../../../shared/components/Button/Button.tsx';
 import { Dialog } from '../../../../shared/components/Dialog/Dialog.tsx';
 import { LoadingOverlay } from '../../../../shared/components/LoadingOverlay/LoadingOverlay.tsx';
 import { useCodelistQuery } from '../../../codelists/hooks/useCodelistQuery.ts';
+import { toSelectOptions } from '../../../codelists/utils/codelistUtils.ts';
 import type { CaseSubject } from '../../api/caseSubjectApi/caseSubjectApi.types.ts';
 import {
   useAddCaseSubjectMutation,
   useUpdateCaseSubjectMutation,
 } from '../../hooks/useCaseSubjectQueries.ts';
 import type { CaseSubjectFormValues } from '../../schemas/caseSubjectForm.schema.ts';
-import {
-  selectCloseRoleDialog,
-  selectRoleDialog,
-  useCaseSubjectsUiStore,
-} from '../../store/useCaseSubjectsUiStore.ts';
+import { useCaseSubjectsUiStore } from '../../store/useCaseSubjectsUiStore.ts';
 import {
   getCaseSubjectFormDefaults,
   toCaseSubjectChanges,
@@ -33,8 +30,8 @@ export function CaseSubjectRoleDialog({
   items,
   onSaved,
 }: Readonly<CaseSubjectRoleDialogProps>) {
-  const roleDialog = useCaseSubjectsUiStore(selectRoleDialog);
-  const closeRoleDialog = useCaseSubjectsUiStore(selectCloseRoleDialog);
+  const roleDialog = useCaseSubjectsUiStore((state) => state.roleDialog);
+  const closeRoleDialog = useCaseSubjectsUiStore((state) => state.closeRoleDialog);
   const proceduralRoles = useCodelistQuery('procedural-roles').data;
   const materialLegalRoles = useCodelistQuery('material-legal-roles').data;
   const addMutation = useAddCaseSubjectMutation(caseId);
@@ -69,11 +66,8 @@ export function CaseSubjectRoleDialog({
       <CaseSubjectRoleForm
         formId={ROLE_FORM_ID}
         defaultValues={getCaseSubjectFormDefaults(editItem)}
-        proceduralRoleOptions={proceduralRoles.map(({ code, label }) => ({ value: code, label }))}
-        materialLegalRoleOptions={materialLegalRoles.map(({ code, label }) => ({
-          value: code,
-          label,
-        }))}
+        proceduralRoleOptions={toSelectOptions(proceduralRoles)}
+        materialLegalRoleOptions={toSelectOptions(materialLegalRoles)}
         isEdit={isEdit}
         onSave={handleSave}
       />
