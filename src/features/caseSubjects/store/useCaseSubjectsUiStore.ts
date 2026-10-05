@@ -18,7 +18,6 @@ export interface SubjectCardState {
   returnTarget: PickerTarget | null;
 }
 
-// A null subjectId of the representative means "Smazat" (remove the representative).
 interface PickedSubjectState {
   target: PickerTarget;
   subjectId: number | null;

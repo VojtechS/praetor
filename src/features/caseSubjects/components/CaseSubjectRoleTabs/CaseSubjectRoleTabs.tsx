@@ -17,7 +17,6 @@ export interface CaseSubjectRoleTabsProps {
   hasSubject: boolean;
 }
 
-// Both panels stay mounted so the checked contacts survive switching tabs.
 export function CaseSubjectRoleTabs({
   contacts,
   registration,

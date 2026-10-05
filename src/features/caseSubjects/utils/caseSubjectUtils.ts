@@ -33,7 +33,6 @@ const NEW_CASE_SUBJECT_DEFAULTS: Partial<CaseSubjectFormInput> = {
   preferredContactIds: [],
 };
 
-// The subject is not set for a new case subject, the user picks it in the dialog.
 export function getCaseSubjectFormDefaults(item?: CaseSubject): Partial<CaseSubjectFormInput> {
   if (!item) {
     return NEW_CASE_SUBJECT_DEFAULTS;

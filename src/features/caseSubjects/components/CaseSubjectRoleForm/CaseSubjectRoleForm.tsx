@@ -46,7 +46,6 @@ export function CaseSubjectRoleForm({
     CaseSubjectFormValues
   >({ resolver: zodResolver(caseSubjectFormSchema), defaultValues });
 
-  // Undefined until the user picks a subject of a new case subject, the query skips id 0.
   const subjectId: number | undefined = useWatch({ control, name: 'subjectId' });
   const representativeId = useWatch({ control, name: 'legalRepresentativeId' });
   const subjectQuery = useSubjectQuery(subjectId ?? 0);
@@ -54,7 +53,6 @@ export function CaseSubjectRoleForm({
   const subject = subjectQuery.data?.data;
   const representative = representativeQuery.data?.data;
 
-  // The picker stores its result in the UI store, the form takes it over and clears it.
   useEffect(() => {
     if (!pickedSubject) {
       return;

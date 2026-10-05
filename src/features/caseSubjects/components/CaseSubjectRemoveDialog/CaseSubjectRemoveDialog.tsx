@@ -13,7 +13,6 @@ export interface CaseSubjectRemoveDialogProps {
   onRemoved: (subjectId: number) => void;
 }
 
-// Only the link of the subject to the case is removed, the subject itself stays.
 export function CaseSubjectRemoveDialog({
   caseId,
   items,

@@ -2,7 +2,6 @@ import { z } from 'zod';
 
 const CASE_FILE_NUMBER_MAX_LENGTH = 50;
 
-// A single checkbox of a group is read by react-hook-form as a string (checked) or false.
 function toContactIds(value: string[] | string | false): number[] {
   if (Array.isArray(value)) {
     return value.map(Number);
