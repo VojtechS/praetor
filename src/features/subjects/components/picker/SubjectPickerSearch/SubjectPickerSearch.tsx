@@ -1,5 +1,5 @@
 import { Globe, Plus, Search } from 'lucide-react';
-import { useId } from 'react';
+import { useEffect, useId, useRef } from 'react';
 import type { SyntheticEvent } from 'react';
 import { Button } from '../../../../../shared/components/Button/Button.tsx';
 import { MIN_SEARCH_LENGTH } from '../../../constants/subjectSearch.ts';
@@ -25,7 +25,12 @@ export function SubjectPickerSearch({
   isAresTooShort = false,
 }: Readonly<SubjectPickerSearchProps>) {
   const id = useId();
+  const inputRef = useRef<HTMLInputElement>(null);
   const validationMessageId = `${id}-validation-message`;
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   function handleSubmit(event: SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -42,6 +47,7 @@ export function SubjectPickerSearch({
           <Search className={styles.subjectPickerSearch__icon} aria-hidden="true" />
           <input
             id={id}
+            ref={inputRef}
             className={styles.subjectPickerSearch__input}
             type="text"
             value={value}
@@ -52,7 +58,6 @@ export function SubjectPickerSearch({
             aria-describedby={isAresTooShort ? validationMessageId : undefined}
           />
         </div>
-        <Button type="submit">Najít</Button>
         {onAresSearch && (
           <Button icon={Globe} onClick={onAresSearch}>
             Vyhledat v ARES (CZ)

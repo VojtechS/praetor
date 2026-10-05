@@ -16,6 +16,14 @@ export interface DialogProps {
   isFocusedOnOpen?: boolean;
 }
 
+// The top layer stacks in the order of opening, so the toaster must be reopened above the new dialog.
+function raiseToasterLayer() {
+  const layer = document.querySelector<HTMLElement>('[data-toaster-layer]');
+
+  layer?.hidePopover();
+  layer?.showPopover();
+}
+
 export function Dialog({
   isOpen,
   title,
@@ -34,6 +42,7 @@ export function Dialog({
 
     if (isOpen && !dialog?.open) {
       dialog?.showModal();
+      raiseToasterLayer();
 
       if (isFocusedOnOpen) {
         dialog?.focus();

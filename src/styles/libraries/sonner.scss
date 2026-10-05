@@ -19,6 +19,23 @@ body [data-sonner-toaster][data-sonner-theme='dark'] {
   --error-text: #{$color-on-primary};
 }
 
+body [data-toaster-layer] {
+  position: fixed;
+  inset: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  pointer-events: none;
+}
+
+body [data-toaster-layer] [data-sonner-toast] {
+  pointer-events: auto;
+}
+
 body [data-sonner-toast] {
   font-family: inherit;
   border-radius: $radius-control;
