@@ -17,8 +17,6 @@ export interface AddressDialogProps {
   onClose: () => void;
 }
 
-// It has no <form> element on purpose: the dialog lives inside the subject card, so a nested
-// form would submit the card. The parent mounts it again (new key) for every opening.
 export function AddressDialog({
   isOpen,
   isEdit,

@@ -14,7 +14,6 @@ export interface SubjectConnectionsTableProps {
   onRemove: (index: number) => void;
 }
 
-// The labels are hidden, the column headers describe the cells.
 export function SubjectConnectionsTable({
   form,
   fields,

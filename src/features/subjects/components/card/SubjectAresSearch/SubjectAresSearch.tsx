@@ -1,8 +1,9 @@
 import { Globe, Search, X } from 'lucide-react';
-import { useEffect, useId, useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import type { FocusEvent, KeyboardEvent, SyntheticEvent } from 'react';
 import { Button } from '../../../../../shared/components/Button/Button.tsx';
-import { MIN_SEARCH_LENGTH, SEARCH_DEBOUNCE_MS } from '../../../constants/subjectSearch.ts';
+import { MIN_SEARCH_LENGTH } from '../../../constants/subjectSearch.ts';
+import { useSearchDebounce } from '../../../hooks/useSearchDebounce.ts';
 import { SubjectPickerAresResults } from '../../picker/SubjectPickerAresResults/SubjectPickerAresResults.tsx';
 import styles from './SubjectAresSearch.module.scss';
 
@@ -16,24 +17,20 @@ export function SubjectAresSearch({ onSelect }: Readonly<SubjectAresSearchProps>
   const [value, setValue] = useState('');
   const [submittedSearch, setSubmittedSearch] = useState<string | null>(null);
   const [isTooShort, setIsTooShort] = useState(false);
-  const debounceTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const debounce = useSearchDebounce();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => () => clearTimeout(debounceTimer.current), []);
-
-  // Typing searches after a pause once there are at least MIN_SEARCH_LENGTH characters, a shorter
-  // text keeps the previous results, an empty one closes them. The button searches immediately.
   function handleChange(nextValue: string) {
     const trimmed = nextValue.trim();
 
     setValue(nextValue);
     setIsTooShort(false);
-    clearTimeout(debounceTimer.current);
+    debounce.cancel();
 
     if (trimmed.length === 0) {
       setSubmittedSearch(null);
     } else if (trimmed.length >= MIN_SEARCH_LENGTH) {
-      debounceTimer.current = setTimeout(() => setSubmittedSearch(trimmed), SEARCH_DEBOUNCE_MS);
+      debounce.schedule(() => setSubmittedSearch(trimmed));
     }
   }
 
@@ -44,7 +41,7 @@ export function SubjectAresSearch({ onSelect }: Readonly<SubjectAresSearchProps>
 
   function handleSubmit(event: SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
-    clearTimeout(debounceTimer.current);
+    debounce.cancel();
 
     const trimmed = value.trim();
 
@@ -62,7 +59,6 @@ export function SubjectAresSearch({ onSelect }: Readonly<SubjectAresSearchProps>
     onSelect(regNumber);
   }
 
-  // Escape closes only the results, not the whole dialog.
   function handleKeyDown(event: KeyboardEvent<HTMLElement>) {
     if (event.key === 'Escape' && submittedSearch !== null) {
       event.preventDefault();

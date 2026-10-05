@@ -39,7 +39,6 @@ export function SubjectCardDialog() {
     closeSubjectCard();
   }
 
-  // A subject created from the picker is handed back to the field the picker was opened from.
   function handleCreated(subjectId: number) {
     if (subjectCard?.returnTarget) {
       setPickedSubject(subjectCard.returnTarget, subjectId);

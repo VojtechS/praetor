@@ -1,6 +1,4 @@
-import { MapPin } from 'lucide-react';
 import { useWatch } from 'react-hook-form';
-import { Button } from '../../../../../shared/components/Button/Button.tsx';
 import { CheckboxField } from '../../../../../shared/components/CheckboxField/CheckboxField.tsx';
 import { SelectField } from '../../../../../shared/components/SelectField/SelectField.tsx';
 import type { SelectOption } from '../../../../../shared/components/SelectField/SelectField.tsx';
@@ -57,10 +55,6 @@ export function AddressFields({ form, countryOptions }: Readonly<AddressFieldsPr
         <CheckboxField label="Doručovací" registration={register('isDelivery')} />
         <CheckboxField label="Pobočka" registration={register('isBranch')} />
         <CheckboxField label="Fakturační" registration={register('isBilling')} />
-        {/* Disabled on purpose: the map search is out of scope of the prototype (spec chapter 9). */}
-        <Button icon={MapPin} disabled>
-          Vyhledat na mapě
-        </Button>
       </div>
     </div>
   );

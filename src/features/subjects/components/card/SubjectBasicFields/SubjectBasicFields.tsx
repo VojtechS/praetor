@@ -24,7 +24,6 @@ export function SubjectBasicFields({ form }: Readonly<SubjectBasicFieldsProps>) 
   const employees = useCodelistQuery('employees').data;
   const selectedLabels = useWatch({ control, name: 'labels' });
 
-  // The selects are rendered after their options are loaded, so the saved values are kept.
   if (!countries || !languages || !labels || !categories || !groups || !employees) {
     return (
       <SubjectFormSection title="Základní údaje">

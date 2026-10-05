@@ -10,7 +10,6 @@ export interface SubjectPickerPraetorResultsProps {
   onChoose: (id: number) => void;
 }
 
-// Mounted only while the picker is open, so the list is loaded right after opening.
 export function SubjectPickerPraetorResults({
   submittedSearch,
   showBirthDate,

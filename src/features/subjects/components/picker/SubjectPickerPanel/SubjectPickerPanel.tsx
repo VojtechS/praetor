@@ -14,7 +14,6 @@ export interface SubjectPickerPanelProps {
   target: 'subject' | 'representative';
 }
 
-// Rendered by its parent only while open, so the search state starts fresh every time.
 export function SubjectPickerPanel({ target }: Readonly<SubjectPickerPanelProps>) {
   const closePicker = useCaseSubjectsUiStore(selectClosePicker);
   const setPickedSubject = useCaseSubjectsUiStore(selectSetPickedSubject);
@@ -28,7 +27,6 @@ export function SubjectPickerPanel({ target }: Readonly<SubjectPickerPanelProps>
     closePicker();
   }
 
-  // The card loads the ARES detail itself, the store keeps only the reg. number.
   function openCard(aresPrefill: string | null) {
     openSubjectCard({ mode: 'create', subjectId: null, aresPrefill, returnTarget: target });
     closePicker();
