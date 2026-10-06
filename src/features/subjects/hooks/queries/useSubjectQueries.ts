@@ -3,53 +3,45 @@ import { toast } from 'sonner';
 import { CASE_SUBJECTS_QUERY_KEY } from '../../../caseSubjects/hooks/useCaseSubjectQueries.ts';
 import { subjectApi } from '../../api/subjectApi/subjectApi.ts';
 import type { SubjectRequest } from '../../api/subjectApi/subjectApi.types.ts';
-import { useDataToast } from '../../../../shared/hooks/useDataToast.ts';
 
 const SUBJECTS_QUERY_KEY = ['subjects'] as const;
 const SUBJECT_QUERY_KEY = (id: number) => [...SUBJECTS_QUERY_KEY, id] as const;
 
 export function useSubjectsSearchQuery(submittedSearch: string) {
-  const query = useQuery({
+  return useQuery({
     queryKey: [...SUBJECTS_QUERY_KEY, 'search', submittedSearch],
     queryFn: () => subjectApi.getAll(submittedSearch ? { fulltext: submittedSearch } : undefined),
     placeholderData: keepPreviousData,
+    meta: { errorMessage: 'Nepodařilo se vyhledat subjekty.' },
   });
-
-  useDataToast(query.isError, 'Nepodařilo se vyhledat subjekty.');
-
-  return query;
 }
 
 export function useSubjectQuery(id: number, enabled: boolean = true) {
-  const query = useQuery({
+  return useQuery({
     queryKey: SUBJECT_QUERY_KEY(id),
     queryFn: () => subjectApi.getById(id),
     enabled: enabled && !!id,
+    meta: { errorMessage: 'Nepodařil se načíst subjekt.' },
   });
-
-  useDataToast(query.isError, 'Nepodařil se načíst subjekt.');
-
-  return query;
 }
 
 export function useCreateSubjectMutation() {
   const queryClient = useQueryClient();
-  const mutation = useMutation({
+
+  return useMutation({
     mutationFn: (request: SubjectRequest) => subjectApi.create(request),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: SUBJECTS_QUERY_KEY });
       toast.success('Subjekt byl založen.');
     },
+    meta: { errorMessage: 'Nepodařilo se založit subjekt.' },
   });
-
-  useDataToast(mutation.isError, 'Nepodařilo se založit subjekt.');
-
-  return mutation;
 }
 
 export function useUpdateSubjectMutation() {
   const queryClient = useQueryClient();
-  const mutation = useMutation({
+
+  return useMutation({
     mutationFn: ({ id, request }: { id: number; request: SubjectRequest }) =>
       subjectApi.update(id, request),
     onSuccess: async () => {
@@ -59,9 +51,6 @@ export function useUpdateSubjectMutation() {
       ]);
       toast.success('Subjekt byl uložen.');
     },
+    meta: { errorMessage: 'Nepodařilo se uložit subjekt.' },
   });
-
-  useDataToast(mutation.isError, 'Nepodařilo se uložit subjekt.');
-
-  return mutation;
 }

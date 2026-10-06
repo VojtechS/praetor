@@ -20,7 +20,7 @@ export function CaseSubjectRowActions({ caseId, item }: Readonly<CaseSubjectRowA
   const updateMutation = useUpdateCaseSubjectMutation(caseId);
 
   function openCard(subjectId: number, mode: 'edit' | 'view' = 'edit') {
-    openSubjectCard({ mode, subjectId, aresPrefill: null, returnTarget: null });
+    openSubjectCard({ mode, subjectId, aresPrefill: null });
   }
 
   const menuItems: DropdownMenuItem[] = [

@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect } from 'react';
+import { useState } from 'react';
+import type { SyntheticEvent } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import type { SelectOption } from '../../../../shared/components/SelectField/SelectField.tsx';
 import { useSubjectQuery } from '../../../subjects/hooks/queries/useSubjectQueries.ts';
@@ -9,10 +10,11 @@ import type {
   CaseSubjectFormInput,
   CaseSubjectFormValues,
 } from '../../schemas/caseSubjectForm.schema.ts';
-import { useCaseSubjectsUiStore } from '../../store/useCaseSubjectsUiStore.ts';
 import { NEW_CASE_SUBJECT_DEFAULTS } from '../../utils/caseSubjectUtils.ts';
 import { CaseSubjectRoleFields } from '../CaseSubjectRoleFields/CaseSubjectRoleFields.tsx';
 import { CaseSubjectRoleTabs } from '../CaseSubjectRoleTabs/CaseSubjectRoleTabs.tsx';
+
+type PickerTarget = 'subject' | 'representative';
 
 export interface CaseSubjectRoleFormProps {
   formId: string;
@@ -27,10 +29,7 @@ export function CaseSubjectRoleForm({
   materialLegalRoleOptions,
   onSave,
 }: Readonly<CaseSubjectRoleFormProps>) {
-  const picker = useCaseSubjectsUiStore((state) => state.picker);
-  const togglePicker = useCaseSubjectsUiStore((state) => state.togglePicker);
-  const pickedSubject = useCaseSubjectsUiStore((state) => state.pickedSubject);
-  const clearPickedSubject = useCaseSubjectsUiStore((state) => state.clearPickedSubject);
+  const [picker, setPicker] = useState<PickerTarget | null>(null);
 
   const { register, handleSubmit, setValue, getValues, control, formState } = useForm<
     CaseSubjectFormInput,
@@ -47,26 +46,34 @@ export function CaseSubjectRoleForm({
   const subject = subjectQuery.data?.data;
   const representative = representativeQuery.data?.data;
 
-  useEffect(() => {
-    if (!pickedSubject) {
-      return;
-    }
+  function togglePicker(target: PickerTarget) {
+    setPicker((current) => (current === target ? null : target));
+  }
 
-    if (pickedSubject.target === 'representative') {
-      setValue('legalRepresentativeId', pickedSubject.subjectId, { shouldValidate: true });
-    } else if (pickedSubject.subjectId !== null) {
-      if (pickedSubject.subjectId !== getValues('subjectId')) {
+  function handleChoose(target: PickerTarget, chosenId: number | null) {
+    setPicker(null);
+
+    if (target === 'representative') {
+      setValue('legalRepresentativeId', chosenId, { shouldValidate: true });
+    } else if (chosenId !== null) {
+      if (chosenId !== getValues('subjectId')) {
         setValue('preferredRelatedSubjectIds', []);
       }
 
-      setValue('subjectId', pickedSubject.subjectId, { shouldValidate: true });
+      setValue('subjectId', chosenId, { shouldValidate: true });
+    }
+  }
+
+  function handleFormSubmit(event: SyntheticEvent<HTMLFormElement>) {
+    if (event.target !== event.currentTarget) {
+      return;
     }
 
-    clearPickedSubject();
-  }, [pickedSubject, setValue, getValues, clearPickedSubject]);
+    void handleSubmit(onSave)(event);
+  }
 
   return (
-    <form id={formId} onSubmit={(event) => void handleSubmit(onSave)(event)} noValidate>
+    <form id={formId} onSubmit={handleFormSubmit} noValidate>
       <CaseSubjectRoleFields
         register={register}
         errors={formState.errors}
@@ -75,8 +82,8 @@ export function CaseSubjectRoleForm({
         proceduralRoleOptions={proceduralRoleOptions}
         materialLegalRoleOptions={materialLegalRoleOptions}
         openPickerTarget={picker}
-        onPickSubject={() => togglePicker('subject')}
-        onPickRepresentative={() => togglePicker('representative')}
+        onTogglePicker={togglePicker}
+        onChoose={handleChoose}
       />
       <CaseSubjectRoleTabs
         relatedSubjects={subject?.relatedSubjects ?? []}

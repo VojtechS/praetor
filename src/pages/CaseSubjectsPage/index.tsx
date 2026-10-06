@@ -20,7 +20,10 @@ export function CaseSubjectsPage() {
   const { caseId = '' } = useParams<{ caseId: string }>();
   const caseQuery = useCaseQuery(caseId);
   const caseSubjectsQuery = useCaseSubjectsQuery(caseId);
+
   const openRoleDialog = useCaseSubjectsUiStore((state) => state.openRoleDialog);
+  const subjectCard = useCaseSubjectsUiStore((state) => state.subjectCard);
+  const closeSubjectCard = useCaseSubjectsUiStore((state) => state.closeSubjectCard);
 
   const items = caseSubjectsQuery.data?.data ?? [];
   const [selectedSubjectId, setSelectedSubjectId] = useState<number | null>(null);
@@ -111,7 +114,7 @@ export function CaseSubjectsPage() {
         items={items}
         onRemoved={(subjectId) => subjectId === selectedSubjectId && setSelectedSubjectId(null)}
       />
-      <SubjectCardDialog />
+      <SubjectCardDialog subjectCard={subjectCard} onClose={closeSubjectCard} />
     </>
   );
 }

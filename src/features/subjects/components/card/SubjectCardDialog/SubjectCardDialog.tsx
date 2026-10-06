@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { Button } from '../../../../../shared/components/Button/Button.tsx';
 import { Dialog } from '../../../../../shared/components/Dialog/Dialog.tsx';
 import { LoadingOverlay } from '../../../../../shared/components/LoadingOverlay/LoadingOverlay.tsx';
-import { useCaseSubjectsUiStore } from '../../../../caseSubjects/store/useCaseSubjectsUiStore.ts';
 import { useSubjectCardDefaults } from '../../../hooks/useSubjectCardDefaults.ts';
+import type { SubjectCardState } from '../../../hooks/useSubjectCardDefaults.ts';
 import {
   useCreateSubjectMutation,
   useUpdateSubjectMutation,
@@ -17,11 +17,17 @@ import { SubjectCardForm } from '../SubjectCardForm/SubjectCardForm.tsx';
 
 const SUBJECT_FORM_ID = 'subjectCardForm';
 
-export function SubjectCardDialog() {
-  const subjectCard = useCaseSubjectsUiStore((state) => state.subjectCard);
-  const closeSubjectCard = useCaseSubjectsUiStore((state) => state.closeSubjectCard);
-  const setPickedSubject = useCaseSubjectsUiStore((state) => state.setPickedSubject);
+export interface SubjectCardDialogProps {
+  subjectCard: SubjectCardState | null;
+  onClose: () => void;
+  onCreated?: (subjectId: number) => void;
+}
 
+export function SubjectCardDialog({
+  subjectCard,
+  onClose,
+  onCreated,
+}: Readonly<SubjectCardDialogProps>) {
   const [aresRegNumber, setAresRegNumber] = useState<string | null>(null);
 
   const createMutation = useCreateSubjectMutation();
@@ -36,14 +42,11 @@ export function SubjectCardDialog() {
 
   function close() {
     setAresRegNumber(null);
-    closeSubjectCard();
+    onClose();
   }
 
   function handleCreated(subjectId: number) {
-    if (subjectCard?.returnTarget) {
-      setPickedSubject(subjectCard.returnTarget, subjectId);
-    }
-
+    onCreated?.(subjectId);
     close();
   }
 

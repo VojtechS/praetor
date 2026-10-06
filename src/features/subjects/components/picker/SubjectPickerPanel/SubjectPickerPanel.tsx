@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { useCaseSubjectsUiStore } from '../../../../caseSubjects/store/useCaseSubjectsUiStore.ts';
 import { MIN_SEARCH_LENGTH } from '../../../constants/subjectSearch.ts';
 import { useSearchDebounce } from '../../../hooks/useSearchDebounce.ts';
+import type { SubjectCardState } from '../../../hooks/useSubjectCardDefaults.ts';
+import { SubjectCardDialog } from '../../card/SubjectCardDialog/SubjectCardDialog.tsx';
 import { SubjectPickerAresResults } from '../SubjectPickerAresResults/SubjectPickerAresResults.tsx';
 import { SubjectPickerPraetorResults } from '../SubjectPickerPraetorResults/SubjectPickerPraetorResults.tsx';
 import { SubjectPickerSearch } from '../SubjectPickerSearch/SubjectPickerSearch.tsx';
@@ -14,11 +15,11 @@ interface SubmittedSearch {
 
 export interface SubjectPickerPanelProps {
   target: 'subject' | 'representative';
+  onChoose: (subjectId: number | null) => void;
 }
 
-export function SubjectPickerPanel({ target }: Readonly<SubjectPickerPanelProps>) {
-  const setPickedSubject = useCaseSubjectsUiStore((state) => state.setPickedSubject);
-  const openSubjectCard = useCaseSubjectsUiStore((state) => state.openSubjectCard);
+export function SubjectPickerPanel({ target, onChoose }: Readonly<SubjectPickerPanelProps>) {
+  const [subjectCard, setSubjectCard] = useState<SubjectCardState | null>(null);
   const [search, setSearch] = useState('');
   const [submitted, setSubmitted] = useState<SubmittedSearch>({ source: 'praetor', term: '' });
   const [isAresTooShort, setIsAresTooShort] = useState(false);
@@ -59,7 +60,7 @@ export function SubjectPickerPanel({ target }: Readonly<SubjectPickerPanelProps>
   }
 
   function openCard(aresPrefill: string | null) {
-    openSubjectCard({ mode: 'create', subjectId: null, aresPrefill, returnTarget: target });
+    setSubjectCard({ mode: 'create', subjectId: null, aresPrefill });
   }
 
   return (
@@ -70,7 +71,7 @@ export function SubjectPickerPanel({ target }: Readonly<SubjectPickerPanelProps>
         onSearch={searchPraetor}
         onAresSearch={isRepresentative ? undefined : searchAres}
         onCreate={() => openCard(null)}
-        onRemove={isRepresentative ? () => setPickedSubject(target, null) : undefined}
+        onRemove={isRepresentative ? () => onChoose(null) : undefined}
         isAresTooShort={isAresTooShort}
       />
       {submitted.source === 'ares' ? (
@@ -79,9 +80,14 @@ export function SubjectPickerPanel({ target }: Readonly<SubjectPickerPanelProps>
         <SubjectPickerPraetorResults
           submittedSearch={submitted.term}
           showBirthDate={isRepresentative}
-          onChoose={(subjectId) => setPickedSubject(target, subjectId)}
+          onChoose={onChoose}
         />
       )}
+      <SubjectCardDialog
+        subjectCard={subjectCard}
+        onClose={() => setSubjectCard(null)}
+        onCreated={onChoose}
+      />
     </div>
   );
 }

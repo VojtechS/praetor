@@ -1,10 +1,15 @@
 import type { AresSubjectDetail } from '../api/aresApi/aresApi.types.ts';
 import type { Subject } from '../api/subjectApi/subjectApi.types.ts';
-import type { SubjectCardState } from '../../caseSubjects/store/useCaseSubjectsUiStore.ts';
 import type { SubjectFormInput } from '../schemas/subjectForm.schema.ts';
 import { getNewSubjectFormDefaults, mapSubjectToForm } from '../utils/subjectFormMapper.ts';
 import { useAresDetailQuery } from './queries/useAresQueries.ts';
 import { useSubjectQuery } from './queries/useSubjectQueries.ts';
+
+export interface SubjectCardState {
+  mode: 'create' | 'edit' | 'view';
+  subjectId: number | null;
+  aresPrefill: string | null;
+}
 
 interface CardParams {
   isEdit: boolean;
