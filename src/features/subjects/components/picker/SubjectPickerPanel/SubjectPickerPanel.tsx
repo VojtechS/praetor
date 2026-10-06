@@ -13,16 +13,17 @@ interface SubmittedSearch {
 }
 
 export interface SubjectPickerPanelProps {
-  target: 'subject' | 'representative';
+  isRepresentative?: boolean;
   onChoose: (subjectId: number) => void;
 }
 
-export function SubjectPickerPanel({ target, onChoose }: Readonly<SubjectPickerPanelProps>) {
+export function SubjectPickerPanel({
+  isRepresentative = false,
+  onChoose,
+}: Readonly<SubjectPickerPanelProps>) {
   const [subjectCard, setSubjectCard] = useState<SubjectCardState | null>(null);
   const [submitted, setSubmitted] = useState<SubmittedSearch>({ source: 'praetor', term: '' });
   const search = useSubjectSearch((term) => setSubmitted({ source: 'praetor', term }));
-
-  const isRepresentative = target === 'representative';
 
   function searchAres() {
     const term = search.validateTerm();

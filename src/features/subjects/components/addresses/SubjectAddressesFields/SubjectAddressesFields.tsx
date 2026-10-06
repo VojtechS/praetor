@@ -1,6 +1,5 @@
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
-import { createPortal } from 'react-dom';
 import { useFieldArray } from 'react-hook-form';
 import { Button } from '../../../../../shared/components/Button/Button.tsx';
 import { useCodelistQuery } from '../../../../codelists/hooks/useCodelistQuery.ts';
@@ -59,17 +58,14 @@ export function SubjectAddressesFields({
         />
       )}
 
-      {dialog &&
-        createPortal(
-          <AddressDialog
-            isOpen
-            isEdit={dialog.index !== null}
-            defaultValues={dialog.index === null ? getNewAddressDefaults() : fields[dialog.index]}
-            onSave={(values) => handleSave(dialog.index, values)}
-            onClose={() => setDialog(null)}
-          />,
-          document.body,
-        )}
+      {dialog && (
+        <AddressDialog
+          isEdit={dialog.index !== null}
+          defaultValues={dialog.index === null ? getNewAddressDefaults() : fields[dialog.index]}
+          onSave={(values) => handleSave(dialog.index, values)}
+          onClose={() => setDialog(null)}
+        />
+      )}
     </SubjectFormSection>
   );
 }

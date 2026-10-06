@@ -11,7 +11,6 @@ import type { AddressFormInput, AddressFormValues } from '../../../schemas/subje
 import { AddressFields } from '../AddressFields/AddressFields.tsx';
 
 export interface AddressDialogProps {
-  isOpen: boolean;
   isEdit: boolean;
   defaultValues: AddressFormInput;
   onSave: (values: AddressFormValues) => void;
@@ -19,7 +18,6 @@ export interface AddressDialogProps {
 }
 
 export function AddressDialog({
-  isOpen,
   isEdit,
   defaultValues,
   onSave,
@@ -33,7 +31,7 @@ export function AddressDialog({
 
   return (
     <Dialog
-      isOpen={isOpen}
+      isOpen
       title={isEdit ? 'Úprava adresy' : 'Založení nové adresy'}
       size="md"
       onClose={onClose}

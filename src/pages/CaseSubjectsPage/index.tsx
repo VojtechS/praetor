@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { CaseSubjectDetailPanel } from '../../features/caseSubjects/components/CaseSubjectDetailPanel/CaseSubjectDetailPanel.tsx';
 import { CaseSubjectList } from '../../features/caseSubjects/components/CaseSubjectList/CaseSubjectList.tsx';
@@ -40,34 +40,6 @@ export function CaseSubjectsPage() {
     void queryClient.invalidateQueries({ queryKey: CASE_SUBJECTS_QUERY_KEY });
   }
 
-  const detailRef = useRef<HTMLDivElement>(null);
-  const [closingSubjectId, setClosingSubjectId] = useState<number | null>(null);
-  const isDetailClosing = closingSubjectId !== null && closingSubjectId === selectedSubjectId;
-
-  const handleDetailClose = () => setClosingSubjectId(selectedSubjectId);
-
-  useEffect(() => {
-    if (!isDetailClosing) {
-      return;
-    }
-
-    let isCancelled = false;
-
-    const animations = detailRef.current?.getAnimations() ?? [];
-
-    void Promise.allSettled(animations.map((animation) => animation.finished)).then(() => {
-      if (isCancelled) {
-        return;
-      }
-
-      setClosingSubjectId(null);
-      setSelectedSubjectId(null);
-    });
-    return () => {
-      isCancelled = true;
-    };
-  }, [isDetailClosing]);
-
   const caseHeader = caseQuery.data?.data;
   const isDetailOpen = selectedItem !== undefined;
 
@@ -100,15 +72,11 @@ export function CaseSubjectsPage() {
           isError={caseSubjectsQuery.isError}
         />
 
-        <div
-          className={styles.caseSubjectsPage__detail}
-          ref={detailRef}
-          data-closing={isDetailClosing}
-        >
+        <div className={styles.caseSubjectsPage__detail}>
           <CaseSubjectDetailPanel
             caseSubject={selectedItem}
             subject={subjectQuery.data?.data}
-            onClose={handleDetailClose}
+            onClose={() => setSelectedSubjectId(null)}
             isOpen={isDetailOpen}
             isLoading={subjectQuery.isLoading}
           />

@@ -17,8 +17,6 @@ import {
 import { CaseSubjectRoleFields } from '../CaseSubjectRoleFields/CaseSubjectRoleFields.tsx';
 import { CaseSubjectRoleTabs } from '../CaseSubjectRoleTabs/CaseSubjectRoleTabs.tsx';
 
-type PickerTarget = 'subject' | 'representative';
-
 export interface CaseSubjectRoleFormProps {
   formId: string;
   proceduralRoleOptions: SelectOption[];
@@ -52,16 +50,16 @@ export function CaseSubjectRoleForm({
   const subject = subjectQuery.data?.data;
   const representative = representativeQuery.data?.data;
 
-  function handleChoose(target: PickerTarget, chosenId: number | null) {
-    if (target === 'representative') {
-      setValue('legalRepresentativeId', chosenId, { shouldValidate: true });
-    } else if (chosenId !== null) {
-      if (chosenId !== getValues('subjectId')) {
-        setValue('preferredRelatedSubjectIds', []);
-      }
-
-      setValue('subjectId', chosenId, { shouldValidate: true });
+  function handleChooseSubject(chosenId: number) {
+    if (chosenId !== getValues('subjectId')) {
+      setValue('preferredRelatedSubjectIds', []);
     }
+
+    setValue('subjectId', chosenId, { shouldValidate: true });
+  }
+
+  function handleChooseRepresentative(chosenId: number | null) {
+    setValue('legalRepresentativeId', chosenId, { shouldValidate: true });
   }
 
   function handleFormSubmit(event: SyntheticEvent<HTMLFormElement>) {
@@ -81,7 +79,8 @@ export function CaseSubjectRoleForm({
         representativeName={representative && getSubjectDisplayName(representative)}
         proceduralRoleOptions={proceduralRoleOptions}
         materialLegalRoleOptions={materialLegalRoleOptions}
-        onChoose={handleChoose}
+        onChooseSubject={handleChooseSubject}
+        onChooseRepresentative={handleChooseRepresentative}
         isEditMode={!!editedItem}
       />
       <CaseSubjectRoleTabs

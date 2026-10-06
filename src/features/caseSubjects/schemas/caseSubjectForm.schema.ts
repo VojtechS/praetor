@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { CASE_SUBJECT_ROLE_ORDER } from '../constants/caseSubjectLabels.ts';
 
 const CASE_FILE_NUMBER_MAX_LENGTH = 50;
 
@@ -10,10 +11,7 @@ function toRelatedSubjectIds(value: string[] | string | false): number[] {
   return value ? [Number(value)] : [];
 }
 
-export const caseSubjectRoleSchema = z.enum(
-  ['CLIENT', 'OPPOSING_PARTY', 'PARTICIPANT', 'DECIDING_AUTHORITY'],
-  { error: 'Vyberte roli' },
-);
+export const caseSubjectRoleSchema = z.enum(CASE_SUBJECT_ROLE_ORDER, { error: 'Vyberte roli' });
 
 export const caseSubjectFormSchema = z
   .object({

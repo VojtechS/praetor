@@ -1,11 +1,11 @@
 import type { CaseSubjectRole } from '../api/caseSubjectApi/caseSubjectApi.types.ts';
 
-export const CASE_SUBJECT_ROLE_ORDER: CaseSubjectRole[] = [
+export const CASE_SUBJECT_ROLE_ORDER = [
   'CLIENT',
   'OPPOSING_PARTY',
   'PARTICIPANT',
   'DECIDING_AUTHORITY',
-];
+] as const satisfies readonly CaseSubjectRole[];
 
 export const CASE_SUBJECT_ROLE_LABELS: Record<CaseSubjectRole, string> = {
   CLIENT: 'Klient',

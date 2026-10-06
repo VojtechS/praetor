@@ -20,7 +20,8 @@ export interface CaseSubjectRoleFieldsProps {
   representativeName?: string;
   proceduralRoleOptions: SelectOption[];
   materialLegalRoleOptions: SelectOption[];
-  onChoose: (target: PickerTarget, subjectId: number | null) => void;
+  onChooseSubject: (subjectId: number) => void;
+  onChooseRepresentative: (subjectId: number | null) => void;
   isEditMode?: boolean;
 }
 
@@ -31,7 +32,8 @@ export function CaseSubjectRoleFields({
   representativeName,
   proceduralRoleOptions,
   materialLegalRoleOptions,
-  onChoose,
+  onChooseSubject,
+  onChooseRepresentative,
   isEditMode = false,
 }: Readonly<CaseSubjectRoleFieldsProps>) {
   const [openPickerTarget, setOpenPickerTarget] = useState<PickerTarget | null>(null);
@@ -40,9 +42,14 @@ export function CaseSubjectRoleFields({
     setOpenPickerTarget((current) => (current === target ? null : target));
   }
 
-  function handleChoose(target: PickerTarget, subjectId: number | null) {
+  function handleChooseSubject(subjectId: number) {
     setOpenPickerTarget(null);
-    onChoose(target, subjectId);
+    onChooseSubject(subjectId);
+  }
+
+  function handleChooseRepresentative(subjectId: number | null) {
+    setOpenPickerTarget(null);
+    onChooseRepresentative(subjectId);
   }
 
   return (
@@ -62,10 +69,7 @@ export function CaseSubjectRoleFields({
       )}
       {openPickerTarget === 'subject' && (
         <div className={styles.caseSubjectRoleFields__full}>
-          <SubjectPickerPanel
-            target="subject"
-            onChoose={(subjectId) => handleChoose('subject', subjectId)}
-          />
+          <SubjectPickerPanel onChoose={handleChooseSubject} />
         </div>
       )}
       <SelectField
@@ -102,15 +106,12 @@ export function CaseSubjectRoleFields({
           isExpanded={openPickerTarget === 'representative'}
         />
         {representativeName && (
-          <Button onClick={() => handleChoose('representative', null)}>Odebrat zástupce</Button>
+          <Button onClick={() => handleChooseRepresentative(null)}>Odebrat zástupce</Button>
         )}
       </div>
       {openPickerTarget === 'representative' && (
         <div className={styles.caseSubjectRoleFields__full}>
-          <SubjectPickerPanel
-            target="representative"
-            onChoose={(subjectId) => handleChoose('representative', subjectId)}
-          />
+          <SubjectPickerPanel isRepresentative onChoose={handleChooseRepresentative} />
         </div>
       )}
       <div className={styles.caseSubjectRoleFields__full}>

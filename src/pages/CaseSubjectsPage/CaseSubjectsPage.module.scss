@@ -87,15 +87,8 @@
 
       animation: caseSubjectsPage-slide-in $transition-duration ease-out;
 
-      &[data-closing='true'] {
-        animation: caseSubjectsPage-slide-out $transition-duration ease-in forwards;
-      }
-
       @media (prefers-reduced-motion: reduce) {
-        &,
-        &[data-closing='true'] {
-          animation-duration: 0.01ms;
-        }
+        animation-duration: 0.01ms;
       }
     }
   }
@@ -103,12 +96,6 @@
 
 @keyframes caseSubjectsPage-slide-in {
   from {
-    transform: translateX(100%);
-  }
-}
-
-@keyframes caseSubjectsPage-slide-out {
-  to {
     transform: translateX(100%);
   }
 }
