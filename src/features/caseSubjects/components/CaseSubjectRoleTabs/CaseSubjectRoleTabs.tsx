@@ -24,6 +24,7 @@ export function CaseSubjectRoleTabs({
   hasSubject,
 }: Readonly<CaseSubjectRoleTabsProps>) {
   const [activeTab, setActiveTab] = useState<RoleTab>('relatedSubjects');
+
   const id = useId();
 
   return (

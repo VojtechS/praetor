@@ -33,6 +33,7 @@ export function CaseSubjectRoleEditDialog({ caseId }: Readonly<CaseSubjectRoleEd
   const updateMutation = useUpdateCaseSubjectMutation(caseId);
 
   const items = useCaseSubjectsQuery(caseId).data?.data ?? [];
+
   const item = items.find((candidate) => candidate.id === roleEditId);
 
   function handleSave(values: CaseSubjectRoleEditFormValues) {

@@ -37,6 +37,7 @@ export function CaseSubjectRoleDialog({ caseId, onSaved }: Readonly<CaseSubjectR
   const editedItem = useCaseSubjectsQuery(caseId).data?.data.find(
     (candidate) => candidate.id === editId,
   );
+
   const isEditMode = editId !== null;
   const isOpen = isAddOpen || isEditMode;
 

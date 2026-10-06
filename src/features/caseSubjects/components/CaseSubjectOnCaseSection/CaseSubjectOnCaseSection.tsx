@@ -19,6 +19,7 @@ export function CaseSubjectOnCaseSection({
 }: Readonly<CaseSubjectOnCaseSectionProps>) {
   const proceduralRoles = useCodelistQuery('procedural-roles');
   const materialLegalRoles = useCodelistQuery('material-legal-roles');
+
   const preferredRelatedSubjects = relatedSubjects.filter((relatedSubject) =>
     caseSubject.preferredRelatedSubjectIds.includes(relatedSubject.id),
   );
