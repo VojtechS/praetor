@@ -11,7 +11,6 @@ const scssOptions = {
   loadPaths: [stylesPath],
 };
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   test: {

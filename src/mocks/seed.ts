@@ -18,7 +18,6 @@ import type {
   Subject,
 } from '../features/subjects/api/subjectApi/subjectApi.types.ts';
 
-// Summary fields of a case subject are derived from the subject on read.
 export type CaseSubjectRecord = Omit<
   CaseSubject,
   | 'subjectName'
@@ -315,7 +314,6 @@ export const seedAresSubjects: AresSubject[] = [
   },
 ];
 
-// Only this record has a full detail, other records are pre-filled with name and reg. number.
 export const seedAresDetails: Record<string, AresSubjectDetail> = {
   '26200651': createSubjectRequest({
     type: 'LEGAL',

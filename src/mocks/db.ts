@@ -40,7 +40,6 @@ function nextId(): number {
   return lastId;
 }
 
-// Removes diacritics and case, so the search ignores both.
 function normalize(value: string): string {
   return value.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
 }
@@ -122,7 +121,6 @@ export function updateCaseSubject(
 
   Object.assign(record, request);
 
-  // There is at most one main client and one main payer on a case.
   caseSubjects.forEach((item) => {
     if (item !== record && request.isMainClient) {
       item.isMainClient = false;

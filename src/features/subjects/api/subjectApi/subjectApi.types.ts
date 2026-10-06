@@ -84,7 +84,6 @@ export interface Subject {
   relatedSubjects: RelatedSubject[];
 }
 
-// The server assigns ids to subject and to its rows, a request does not carry any.
 export type PhysicalPersonRequest = Omit<PhysicalPerson, 'documents'> & {
   documents: Omit<PersonDocument, 'id'>[];
 };
