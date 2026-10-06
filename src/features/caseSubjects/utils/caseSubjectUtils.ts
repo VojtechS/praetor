@@ -19,12 +19,6 @@ export interface CaseSubjectGroup {
   items: CaseSubject[];
 }
 
-export function parseSubjectId(value: string | null): number | null {
-  const id = Number(value);
-
-  return Number.isInteger(id) && id > 0 ? id : null;
-}
-
 export function groupCaseSubjectsByRole(items: CaseSubject[]): CaseSubjectGroup[] {
   return CASE_SUBJECT_ROLE_ORDER.map((role) => ({
     role,

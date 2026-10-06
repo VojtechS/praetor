@@ -51,7 +51,7 @@ export function SelectField({
         aria-describedby={error ? errorId : undefined}
         {...registration}
       >
-        {hasEmptyOption && <option value=""></option>}
+        {hasEmptyOption && <option value="">Nevybráno</option>}
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
