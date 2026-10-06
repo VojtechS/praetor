@@ -18,8 +18,8 @@ export interface CaseSubjectRoleDialogProps {
 }
 
 export function CaseSubjectRoleDialog({ caseId, onSaved }: Readonly<CaseSubjectRoleDialogProps>) {
-  const isOpen = useCaseSubjectsUiStore((state) => state.isRoleDialogOpen);
-  const closeRoleDialog = useCaseSubjectsUiStore((state) => state.closeRoleDialog);
+  const isOpen = useCaseSubjectsUiStore((state) => state.dialog?.type === 'roleAdd');
+  const closeDialog = useCaseSubjectsUiStore((state) => state.closeDialog);
 
   const proceduralRoles = useCodelistQuery('procedural-roles').data;
   const materialLegalRoles = useCodelistQuery('material-legal-roles').data;
@@ -29,7 +29,7 @@ export function CaseSubjectRoleDialog({ caseId, onSaved }: Readonly<CaseSubjectR
   function handleSave(values: CaseSubjectFormValues) {
     addMutation.mutate(toCaseSubjectRequest(values), {
       onSuccess: () => {
-        closeRoleDialog();
+        closeDialog();
         onSaved(values.subjectId);
       },
     });
@@ -53,7 +53,7 @@ export function CaseSubjectRoleDialog({ caseId, onSaved }: Readonly<CaseSubjectR
       isOpen={isOpen}
       title="Přidání subjektu"
       size="lg"
-      onClose={closeRoleDialog}
+      onClose={closeDialog}
       footer={
         <Button
           type="submit"

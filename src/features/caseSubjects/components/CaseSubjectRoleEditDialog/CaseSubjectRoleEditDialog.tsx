@@ -23,8 +23,10 @@ export interface CaseSubjectRoleEditDialogProps {
 }
 
 export function CaseSubjectRoleEditDialog({ caseId }: Readonly<CaseSubjectRoleEditDialogProps>) {
-  const roleEditId = useCaseSubjectsUiStore((state) => state.roleEditId);
-  const closeRoleEdit = useCaseSubjectsUiStore((state) => state.closeRoleEdit);
+  const roleEditId = useCaseSubjectsUiStore((state) =>
+    state.dialog?.type === 'roleEdit' ? state.dialog.caseSubjectId : null,
+  );
+  const closeDialog = useCaseSubjectsUiStore((state) => state.closeDialog);
 
   const proceduralRoles = useCodelistQuery('procedural-roles').data;
   const materialLegalRoles = useCodelistQuery('material-legal-roles').data;
@@ -40,7 +42,7 @@ export function CaseSubjectRoleEditDialog({ caseId }: Readonly<CaseSubjectRoleEd
 
     updateMutation.mutate(
       { id: item.id, request: toCaseSubjectRoleChanges(values) },
-      { onSuccess: closeRoleEdit },
+      { onSuccess: closeDialog },
     );
   }
 
@@ -63,7 +65,7 @@ export function CaseSubjectRoleEditDialog({ caseId }: Readonly<CaseSubjectRoleEd
       isOpen={roleEditId !== null}
       title="Nastavení rolí"
       size="sm"
-      onClose={closeRoleEdit}
+      onClose={closeDialog}
       footer={
         <Button
           type="submit"

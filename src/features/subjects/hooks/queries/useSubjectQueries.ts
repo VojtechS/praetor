@@ -1,6 +1,5 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { CASE_SUBJECTS_QUERY_KEY } from '../../../caseSubjects/hooks/useCaseSubjectQueries.ts';
 import { subjectApi } from '../../api/subjectApi/subjectApi.ts';
 import type { SubjectRequest } from '../../api/subjectApi/subjectApi.types.ts';
 
@@ -45,10 +44,7 @@ export function useUpdateSubjectMutation() {
     mutationFn: ({ id, request }: { id: number; request: SubjectRequest }) =>
       subjectApi.update(id, request),
     onSuccess: async () => {
-      await Promise.all([
-        queryClient.invalidateQueries({ queryKey: SUBJECTS_QUERY_KEY }),
-        queryClient.invalidateQueries({ queryKey: CASE_SUBJECTS_QUERY_KEY }),
-      ]);
+      await queryClient.invalidateQueries({ queryKey: SUBJECTS_QUERY_KEY });
       toast.success('Subjekt byl uložen.');
     },
     meta: { errorMessage: 'Nepodařilo se uložit subjekt.' },

@@ -21,12 +21,14 @@ export interface SubjectCardDialogProps {
   subjectCard: SubjectCardState | null;
   onClose: () => void;
   onCreated?: (subjectId: number) => void;
+  onUpdated?: () => void;
 }
 
 export function SubjectCardDialog({
   subjectCard,
   onClose,
   onCreated,
+  onUpdated,
 }: Readonly<SubjectCardDialogProps>) {
   const [aresRegNumber, setAresRegNumber] = useState<string | null>(null);
 
@@ -50,11 +52,16 @@ export function SubjectCardDialog({
     close();
   }
 
+  function handleUpdated() {
+    onUpdated?.();
+    close();
+  }
+
   function handleSave(values: SubjectFormValues) {
     const request = mapFormToRequest(values);
 
     if (subjectCard?.mode === 'edit' && subjectCard.subjectId !== null) {
-      updateMutation.mutate({ id: subjectCard.subjectId, request }, { onSuccess: close });
+      updateMutation.mutate({ id: subjectCard.subjectId, request }, { onSuccess: handleUpdated });
     } else {
       createMutation.mutate(request, { onSuccess: (response) => handleCreated(response.data.id) });
     }

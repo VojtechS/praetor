@@ -1,32 +1,20 @@
 import { create } from 'zustand';
 import type { SubjectCardState } from '../../subjects/hooks/useSubjectCardDefaults.ts';
 
+export type CaseSubjectsDialog =
+  | { type: 'roleAdd' }
+  | { type: 'roleEdit'; caseSubjectId: number }
+  | { type: 'remove'; caseSubjectId: number }
+  | { type: 'subjectCard'; subjectCard: SubjectCardState };
+
 interface CaseSubjectsUiState {
-  isRoleDialogOpen: boolean;
-  roleEditId: number | null;
-  subjectCard: SubjectCardState | null;
-  confirmRemoveId: number | null;
-  openRoleDialog: () => void;
-  closeRoleDialog: () => void;
-  openRoleEdit: (caseSubjectId: number) => void;
-  closeRoleEdit: () => void;
-  openSubjectCard: (subjectCard: SubjectCardState) => void;
-  closeSubjectCard: () => void;
-  requestRemove: (caseSubjectId: number) => void;
-  cancelRemove: () => void;
+  dialog: CaseSubjectsDialog | null;
+  openDialog: (dialog: CaseSubjectsDialog) => void;
+  closeDialog: () => void;
 }
 
 export const useCaseSubjectsUiStore = create<CaseSubjectsUiState>()((set) => ({
-  isRoleDialogOpen: false,
-  roleEditId: null,
-  subjectCard: null,
-  confirmRemoveId: null,
-  openRoleDialog: () => set({ isRoleDialogOpen: true }),
-  closeRoleDialog: () => set({ isRoleDialogOpen: false }),
-  openRoleEdit: (caseSubjectId) => set({ roleEditId: caseSubjectId }),
-  closeRoleEdit: () => set({ roleEditId: null }),
-  openSubjectCard: (subjectCard) => set({ subjectCard }),
-  closeSubjectCard: () => set({ subjectCard: null }),
-  requestRemove: (caseSubjectId) => set({ confirmRemoveId: caseSubjectId }),
-  cancelRemove: () => set({ confirmRemoveId: null }),
+  dialog: null,
+  openDialog: (dialog) => set({ dialog }),
+  closeDialog: () => set({ dialog: null }),
 }));

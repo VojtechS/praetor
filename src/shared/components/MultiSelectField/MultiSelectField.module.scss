@@ -27,7 +27,6 @@
       display: none;
     }
 
-    // Not expandable, but the selected labels stay legible and copyable.
     &--disabled {
       background-color: $color-surface-muted;
       user-select: text;

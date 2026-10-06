@@ -3,7 +3,7 @@ import { useId, useRef, useState } from 'react';
 import type { FocusEvent, KeyboardEvent, SyntheticEvent } from 'react';
 import { Button } from '../../../../../shared/components/Button/Button.tsx';
 import { MIN_SEARCH_LENGTH } from '../../../constants/subjectSearch.ts';
-import { useSearchDebounce } from '../../../hooks/useSearchDebounce.ts';
+import { useSubjectSearch } from '../../../hooks/useSubjectSearch.ts';
 import { SubjectPickerAresResults } from '../../picker/SubjectPickerAresResults/SubjectPickerAresResults.tsx';
 import styles from './SubjectAresSearch.module.scss';
 
@@ -15,46 +15,26 @@ export function SubjectAresSearch({ onSelect }: Readonly<SubjectAresSearchProps>
   const id = useId();
   const validationMessageId = `${id}-validation-message`;
 
-  const [value, setValue] = useState('');
   const [submittedSearch, setSubmittedSearch] = useState<string | null>(null);
-  const [isTooShort, setIsTooShort] = useState(false);
-
-  const debounce = useSearchDebounce();
+  const search = useSubjectSearch((term) => setSubmittedSearch(term === '' ? null : term));
+  const { value, isTooShort } = search;
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  function handleChange(nextValue: string) {
-    const trimmed = nextValue.trim();
-
-    setValue(nextValue);
-    setIsTooShort(false);
-    debounce.cancel();
-
-    if (trimmed.length === 0) {
-      setSubmittedSearch(null);
-    } else if (trimmed.length >= MIN_SEARCH_LENGTH) {
-      debounce.schedule(() => setSubmittedSearch(trimmed));
-    }
-  }
-
   function handleClear() {
-    handleChange('');
+    search.change('');
+    setSubmittedSearch(null);
     inputRef.current?.focus();
   }
 
   function handleSubmit(event: SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
-    debounce.cancel();
 
-    const trimmed = value.trim();
+    const term = search.validateTerm();
 
-    if (trimmed.length < MIN_SEARCH_LENGTH) {
-      setIsTooShort(true);
-
-      return;
+    if (term !== null) {
+      setSubmittedSearch(term);
     }
-
-    setSubmittedSearch(trimmed);
   }
 
   function handleSelect(regNumber: string) {
@@ -91,7 +71,7 @@ export function SubjectAresSearch({ onSelect }: Readonly<SubjectAresSearchProps>
             className={styles.subjectAresSearch__input}
             type="text"
             value={value}
-            onChange={(event) => handleChange(event.target.value)}
+            onChange={(event) => search.change(event.target.value)}
             placeholder="Název / IČO / IDS"
             autoComplete="off"
             aria-invalid={isTooShort}

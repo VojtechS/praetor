@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
@@ -7,6 +8,7 @@ import { CaseSubjectRemoveDialog } from '../../features/caseSubjects/components/
 import { CaseSubjectRoleEditDialog } from '../../features/caseSubjects/components/CaseSubjectRoleEditDialog/CaseSubjectRoleEditDialog.tsx';
 import { CaseSubjectRoleDialog } from '../../features/caseSubjects/components/CaseSubjectRoleDialog/CaseSubjectRoleDialog.tsx';
 import {
+  CASE_SUBJECTS_QUERY_KEY,
   useCaseQuery,
   useCaseSubjectsQuery,
 } from '../../features/caseSubjects/hooks/useCaseSubjectQueries.ts';
@@ -22,9 +24,13 @@ export function CaseSubjectsPage() {
   const caseQuery = useCaseQuery(caseId);
   const caseSubjectsQuery = useCaseSubjectsQuery(caseId);
 
-  const openRoleDialog = useCaseSubjectsUiStore((state) => state.openRoleDialog);
-  const subjectCard = useCaseSubjectsUiStore((state) => state.subjectCard);
-  const closeSubjectCard = useCaseSubjectsUiStore((state) => state.closeSubjectCard);
+  const queryClient = useQueryClient();
+
+  const openDialog = useCaseSubjectsUiStore((state) => state.openDialog);
+  const closeDialog = useCaseSubjectsUiStore((state) => state.closeDialog);
+  const subjectCard = useCaseSubjectsUiStore((state) =>
+    state.dialog?.type === 'subjectCard' ? state.dialog.subjectCard : null,
+  );
 
   const items = caseSubjectsQuery.data?.data ?? [];
   const [searchParams, setSearchParams] = useSearchParams();
@@ -34,6 +40,10 @@ export function CaseSubjectsPage() {
 
   function selectSubject(subjectId: number) {
     setSearchParams({ subjectId: String(subjectId) }, { replace: true });
+  }
+
+  function refreshCaseSubjects() {
+    void queryClient.invalidateQueries({ queryKey: CASE_SUBJECTS_QUERY_KEY });
   }
 
   const detailRef = useRef<HTMLDivElement>(null);
@@ -51,7 +61,7 @@ export function CaseSubjectsPage() {
 
     const animations = detailRef.current?.getAnimations() ?? [];
 
-    Promise.allSettled(animations.map((animation) => animation.finished)).then(() => {
+    void Promise.allSettled(animations.map((animation) => animation.finished)).then(() => {
       if (isCancelled) {
         return;
       }
@@ -81,7 +91,7 @@ export function CaseSubjectsPage() {
           role="toolbar"
           aria-label="Akce nad subjekty"
         >
-          <Button variant="primary" icon={Plus} onClick={openRoleDialog}>
+          <Button variant="primary" icon={Plus} onClick={() => openDialog({ type: 'roleAdd' })}>
             Přidat subjekt
           </Button>
         </div>
@@ -114,7 +124,11 @@ export function CaseSubjectsPage() {
       <CaseSubjectRoleDialog caseId={caseId} onSaved={selectSubject} />
       <CaseSubjectRoleEditDialog caseId={caseId} />
       <CaseSubjectRemoveDialog caseId={caseId} />
-      <SubjectCardDialog subjectCard={subjectCard} onClose={closeSubjectCard} />
+      <SubjectCardDialog
+        subjectCard={subjectCard}
+        onClose={closeDialog}
+        onUpdated={refreshCaseSubjects}
+      />
     </>
   );
 }
