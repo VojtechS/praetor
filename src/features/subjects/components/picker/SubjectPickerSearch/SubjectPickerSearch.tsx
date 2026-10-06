@@ -11,7 +11,6 @@ export interface SubjectPickerSearchProps {
   onSearch: () => void;
   onAresSearch?: () => void;
   onCreate: () => void;
-  onRemove?: () => void;
   isAresTooShort?: boolean;
 }
 
@@ -21,7 +20,6 @@ export function SubjectPickerSearch({
   onSearch,
   onAresSearch,
   onCreate,
-  onRemove,
   isAresTooShort = false,
 }: Readonly<SubjectPickerSearchProps>) {
   const id = useId();
@@ -66,7 +64,6 @@ export function SubjectPickerSearch({
         <Button icon={Plus} onClick={onCreate}>
           Založit nový
         </Button>
-        {onRemove && <Button onClick={onRemove}>Smazat</Button>}
       </form>
       {isAresTooShort && (
         <p id={validationMessageId} className={styles.subjectPickerSearch__validation} role="alert">

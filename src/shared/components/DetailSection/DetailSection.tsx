@@ -18,7 +18,7 @@ export function DetailSection({
   return (
     <details className={styles.detailSection} open={isOpen}>
       <summary className={styles.detailSection__summary}>
-        {count === undefined ? title : `${title} · ${count}`}
+        {count === undefined ? title : `${title} (${count})`}
         <ChevronDown className={styles.detailSection__icon} aria-hidden="true" />
       </summary>
       <div className={styles.detailSection__body}>{children}</div>

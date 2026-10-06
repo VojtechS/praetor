@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { useWatch } from 'react-hook-form';
+import { useFormState, useWatch } from 'react-hook-form';
 import { CheckboxField } from '../../../../../shared/components/CheckboxField/CheckboxField.tsx';
 import { SelectField } from '../../../../../shared/components/SelectField/SelectField.tsx';
 import type { SelectOption } from '../../../../../shared/components/SelectField/SelectField.tsx';
@@ -13,8 +13,8 @@ export interface AddressFieldsProps {
 }
 
 export function AddressFields({ form, countryOptions }: Readonly<AddressFieldsProps>) {
-  const { register, control, formState } = form;
-  const { errors } = formState;
+  const { register, control } = form;
+  const { errors } = useFormState({ control });
   const useSubjectName = useWatch({ control, name: 'useSubjectName' });
 
   return (

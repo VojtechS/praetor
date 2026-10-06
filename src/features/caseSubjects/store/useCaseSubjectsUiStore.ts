@@ -3,6 +3,7 @@ import type { SubjectCardState } from '../../subjects/hooks/useSubjectCardDefaul
 
 export type CaseSubjectsDialog =
   | { type: 'roleAdd' }
+  | { type: 'caseSubjectEdit'; caseSubjectId: number }
   | { type: 'roleEdit'; caseSubjectId: number }
   | { type: 'remove'; caseSubjectId: number }
   | { type: 'subjectCard'; subjectCard: SubjectCardState };

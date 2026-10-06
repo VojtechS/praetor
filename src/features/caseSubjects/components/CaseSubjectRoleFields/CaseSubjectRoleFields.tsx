@@ -1,5 +1,7 @@
+import clsx from 'clsx';
 import { useState } from 'react';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { Button } from '../../../../shared/components/Button/Button.tsx';
 import { SelectField } from '../../../../shared/components/SelectField/SelectField.tsx';
 import type { SelectOption } from '../../../../shared/components/SelectField/SelectField.tsx';
 import { TextField } from '../../../../shared/components/TextField/TextField.tsx';
@@ -19,6 +21,7 @@ export interface CaseSubjectRoleFieldsProps {
   proceduralRoleOptions: SelectOption[];
   materialLegalRoleOptions: SelectOption[];
   onChoose: (target: PickerTarget, subjectId: number | null) => void;
+  isEditMode?: boolean;
 }
 
 export function CaseSubjectRoleFields({
@@ -29,6 +32,7 @@ export function CaseSubjectRoleFields({
   proceduralRoleOptions,
   materialLegalRoleOptions,
   onChoose,
+  isEditMode = false,
 }: Readonly<CaseSubjectRoleFieldsProps>) {
   const [openPickerTarget, setOpenPickerTarget] = useState<PickerTarget | null>(null);
 
@@ -43,17 +47,19 @@ export function CaseSubjectRoleFields({
 
   return (
     <div className={styles.caseSubjectRoleFields}>
-      <div className={styles.caseSubjectRoleFields__full}>
-        <SubjectPickerField
-          label="Subjekt / osoba"
-          value={subjectName}
-          placeholder="Vyberte subjekt"
-          onClick={() => togglePicker('subject')}
-          error={errors.subjectId?.message}
-          isExpanded={openPickerTarget === 'subject'}
-          isRequired
-        />
-      </div>
+      {!isEditMode && (
+        <div className={styles.caseSubjectRoleFields__full}>
+          <SubjectPickerField
+            label="Subjekt / osoba"
+            value={subjectName}
+            placeholder="Vyberte subjekt"
+            onClick={() => togglePicker('subject')}
+            error={errors.subjectId?.message}
+            isExpanded={openPickerTarget === 'subject'}
+            isRequired
+          />
+        </div>
+      )}
       {openPickerTarget === 'subject' && (
         <div className={styles.caseSubjectRoleFields__full}>
           <SubjectPickerPanel
@@ -81,7 +87,12 @@ export function CaseSubjectRoleFields({
         options={materialLegalRoleOptions}
         hasEmptyOption
       />
-      <div className={styles.caseSubjectRoleFields__full}>
+      <div
+        className={clsx(
+          styles.caseSubjectRoleFields__full,
+          styles.caseSubjectRoleFields__representative,
+        )}
+      >
         <SubjectPickerField
           label="Právní zástupce"
           value={representativeName}
@@ -90,6 +101,9 @@ export function CaseSubjectRoleFields({
           error={errors.legalRepresentativeId?.message}
           isExpanded={openPickerTarget === 'representative'}
         />
+        {representativeName && (
+          <Button onClick={() => handleChoose('representative', null)}>Odebrat zástupce</Button>
+        )}
       </div>
       {openPickerTarget === 'representative' && (
         <div className={styles.caseSubjectRoleFields__full}>

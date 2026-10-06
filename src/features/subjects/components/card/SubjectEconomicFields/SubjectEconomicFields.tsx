@@ -1,3 +1,4 @@
+import { useFormState } from 'react-hook-form';
 import { LoadingOverlay } from '../../../../../shared/components/LoadingOverlay/LoadingOverlay.tsx';
 import { SelectField } from '../../../../../shared/components/SelectField/SelectField.tsx';
 import { TextField } from '../../../../../shared/components/TextField/TextField.tsx';
@@ -16,10 +17,10 @@ export function SubjectEconomicFields({
   form,
   hasLegalForm,
 }: Readonly<SubjectEconomicFieldsProps>) {
-  const { register, formState } = form;
+  const { register, control } = form;
+  const { errors: formErrors } = useFormState({ control });
 
-  const errors =
-    'economicSubject' in formState.errors ? formState.errors.economicSubject : undefined;
+  const errors = 'economicSubject' in formErrors ? formErrors.economicSubject : undefined;
 
   const legalForms = useCodelistQuery('legal-forms').data;
 

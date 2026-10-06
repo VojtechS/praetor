@@ -1,4 +1,4 @@
-import { useWatch } from 'react-hook-form';
+import { useFormState, useWatch } from 'react-hook-form';
 import { LoadingOverlay } from '../../../../../shared/components/LoadingOverlay/LoadingOverlay.tsx';
 import { MultiSelectField } from '../../../../../shared/components/MultiSelectField/MultiSelectField.tsx';
 import { SelectField } from '../../../../../shared/components/SelectField/SelectField.tsx';
@@ -16,7 +16,8 @@ export interface SubjectBasicFieldsProps {
 }
 
 export function SubjectBasicFields({ form, isReadOnly }: Readonly<SubjectBasicFieldsProps>) {
-  const { register, control, formState } = form;
+  const { register, control } = form;
+  const { errors } = useFormState({ control });
 
   const countries = useCodelistQuery('countries').data;
   const languages = useCodelistQuery('languages').data;
@@ -64,7 +65,7 @@ export function SubjectBasicFields({ form, isReadOnly }: Readonly<SubjectBasicFi
             registration={register('labels')}
             options={toSelectOptions(labels)}
             selectedValues={selectedLabels}
-            error={formState.errors.labels?.message}
+            error={errors.labels?.message}
             isDisabled={isReadOnly}
           />
         </div>

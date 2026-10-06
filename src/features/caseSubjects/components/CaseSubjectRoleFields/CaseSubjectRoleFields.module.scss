@@ -8,4 +8,14 @@
   &__full {
     grid-column: 1 / -1;
   }
+
+  &__representative {
+    display: flex;
+    align-items: flex-end;
+    gap: $space-4;
+
+    > :first-child {
+      flex: 1;
+    }
+  }
 }

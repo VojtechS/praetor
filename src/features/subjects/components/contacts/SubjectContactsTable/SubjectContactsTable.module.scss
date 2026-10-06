@@ -33,6 +33,10 @@
     vertical-align: top;
   }
 
+  tr:first-child td:nth-child(3) {
+    padding-top: calc(#{$space-2} + (#{$control-height} - #{$checkbox-size}) / 2);
+  }
+
   &__contact {
     border-bottom: 1px solid $color-border;
 

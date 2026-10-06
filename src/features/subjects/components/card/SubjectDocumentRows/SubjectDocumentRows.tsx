@@ -1,5 +1,5 @@
 import { Plus, Trash2 } from 'lucide-react';
-import { useFieldArray } from 'react-hook-form';
+import { useFieldArray, useFormState } from 'react-hook-form';
 import { Button } from '../../../../../shared/components/Button/Button.tsx';
 import { LoadingOverlay } from '../../../../../shared/components/LoadingOverlay/LoadingOverlay.tsx';
 import { SelectField } from '../../../../../shared/components/SelectField/SelectField.tsx';
@@ -15,14 +15,14 @@ export interface SubjectDocumentRowsProps {
 }
 
 export function SubjectDocumentRows({ form, isReadOnly }: Readonly<SubjectDocumentRowsProps>) {
-  const { register, control, formState } = form;
+  const { register, control } = form;
+  const { errors: formErrors } = useFormState({ control });
 
   const documentTypes = useCodelistQuery('document-types').data;
 
   const { fields, append, remove } = useFieldArray({ control, name: 'physicalPerson.documents' });
 
-  const personErrors =
-    'physicalPerson' in formState.errors ? formState.errors.physicalPerson : undefined;
+  const personErrors = 'physicalPerson' in formErrors ? formErrors.physicalPerson : undefined;
 
   if (!documentTypes) {
     return <LoadingOverlay label="Načítání číselníků" />;

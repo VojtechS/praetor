@@ -48,7 +48,8 @@ export function CaseSubjectDetailPanel({
               {getSubjectDisplayName(subject)}
             </h2>
             <p className={styles.caseSubjectDetailPanel__subtitle}>
-              {SUBJECT_TYPE_LABELS[subject.type]} · {identification}
+              {SUBJECT_TYPE_LABELS[subject.type]}{' '}
+              <span className={styles.caseSubjectDetailPanel__separator}>·</span> {identification}
             </p>
           </div>
           <button

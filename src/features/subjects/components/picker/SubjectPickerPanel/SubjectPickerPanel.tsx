@@ -14,7 +14,7 @@ interface SubmittedSearch {
 
 export interface SubjectPickerPanelProps {
   target: 'subject' | 'representative';
-  onChoose: (subjectId: number | null) => void;
+  onChoose: (subjectId: number) => void;
 }
 
 export function SubjectPickerPanel({ target, onChoose }: Readonly<SubjectPickerPanelProps>) {
@@ -44,7 +44,6 @@ export function SubjectPickerPanel({ target, onChoose }: Readonly<SubjectPickerP
         onSearch={search.searchNow}
         onAresSearch={isRepresentative ? undefined : searchAres}
         onCreate={() => openCard(null)}
-        onRemove={isRepresentative ? () => onChoose(null) : undefined}
         isAresTooShort={search.isTooShort}
       />
       {submitted.source === 'ares' ? (

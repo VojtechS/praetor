@@ -1,3 +1,4 @@
+import { useFormState } from 'react-hook-form';
 import { TextField } from '../../../../../shared/components/TextField/TextField.tsx';
 import type { SubjectForm } from '../../../schemas/subjectForm.schema.ts';
 import { SubjectDocumentRows } from '../SubjectDocumentRows/SubjectDocumentRows.tsx';
@@ -10,9 +11,10 @@ export interface SubjectPersonFieldsProps {
 }
 
 export function SubjectPersonFields({ form, isReadOnly }: Readonly<SubjectPersonFieldsProps>) {
-  const { register, formState } = form;
+  const { register, control } = form;
+  const { errors: formErrors } = useFormState({ control });
 
-  const errors = 'physicalPerson' in formState.errors ? formState.errors.physicalPerson : undefined;
+  const errors = 'physicalPerson' in formErrors ? formErrors.physicalPerson : undefined;
 
   return (
     <SubjectFormSection title="Fyzická osoba">

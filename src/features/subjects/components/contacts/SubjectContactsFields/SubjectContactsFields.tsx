@@ -1,5 +1,5 @@
 import { Plus, Search } from 'lucide-react';
-import { useFieldArray, useWatch } from 'react-hook-form';
+import { useFieldArray, useFormState, useWatch } from 'react-hook-form';
 import { Button } from '../../../../../shared/components/Button/Button.tsx';
 import { TextField } from '../../../../../shared/components/TextField/TextField.tsx';
 import { useDataBoxLookupMutation } from '../../../hooks/queries/useAresQueries.ts';
@@ -17,6 +17,8 @@ export interface SubjectContactsFieldsProps {
 
 export function SubjectContactsFields({ form, isReadOnly }: Readonly<SubjectContactsFieldsProps>) {
   const type = useWatch({ control: form.control, name: 'type' });
+
+  const { errors } = useFormState({ control: form.control });
 
   const dataBoxId = useWatch({ control: form.control, name: 'dataBoxId' });
 
@@ -41,7 +43,7 @@ export function SubjectContactsFields({ form, isReadOnly }: Readonly<SubjectCont
           <TextField
             label="ID datové schránky"
             registration={form.register('dataBoxId')}
-            error={form.formState.errors.dataBoxId?.message}
+            error={errors.dataBoxId?.message}
           />
           {hasEconomicSubject(type) && !isReadOnly && (
             <Button

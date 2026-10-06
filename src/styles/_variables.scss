@@ -24,6 +24,7 @@ $color-role-client: $color-primary-text;
 $color-role-opposing: $color-danger;
 $color-role-authority: $color-text-muted;
 
+$space-half: 2px;
 $space-1: 4px;
 $space-2: 8px;
 $space-3: 12px;
@@ -47,9 +48,9 @@ $media-breakpoint-lg: 1100px;
 $content-max-width: 1600px;
 
 $color-overlay: rgba($color-text, 0.4);
-$control-height: 36px;
+$control-height: 32px;
 $control-height-small: 28px;
-$checkbox-size: 20px;
+$checkbox-size: 16px;
 $color-danger-light: #fbeeec;
 $transition-duration: 120ms;
 $dialog-width-sm: 440px;

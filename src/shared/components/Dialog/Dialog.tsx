@@ -1,5 +1,6 @@
 import { X } from 'lucide-react';
 import { useEffect, useId, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import clsx from 'clsx';
 import type { ReactNode, SyntheticEvent } from 'react';
 import styles from './Dialog.module.scss';
@@ -56,7 +57,7 @@ export function Dialog({
     }
   }
 
-  return (
+  return createPortal(
     // Backdrop click is a mouse-only shortcut; keyboard users close the modal natively with Esc.
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <dialog
@@ -87,6 +88,7 @@ export function Dialog({
           {footer && <footer className={styles.dialog__footer}>{footer}</footer>}
         </>
       )}
-    </dialog>
+    </dialog>,
+    document.body,
   );
 }

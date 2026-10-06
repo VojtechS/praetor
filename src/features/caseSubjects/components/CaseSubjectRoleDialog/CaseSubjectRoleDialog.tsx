@@ -4,7 +4,11 @@ import { Dialog } from '../../../../shared/components/Dialog/Dialog.tsx';
 import { LoadingOverlay } from '../../../../shared/components/LoadingOverlay/LoadingOverlay.tsx';
 import { useCodelistQuery } from '../../../codelists/hooks/useCodelistQuery.ts';
 import { toSelectOptions } from '../../../codelists/utils/codelistUtils.ts';
-import { useAddCaseSubjectMutation } from '../../hooks/useCaseSubjectQueries.ts';
+import {
+  useAddCaseSubjectMutation,
+  useCaseSubjectsQuery,
+  useUpdateCaseSubjectMutation,
+} from '../../hooks/useCaseSubjectQueries.ts';
 import type { CaseSubjectFormValues } from '../../schemas/caseSubjectForm.schema.ts';
 import { useCaseSubjectsUiStore } from '../../store/useCaseSubjectsUiStore.ts';
 import { toCaseSubjectRequest } from '../../utils/caseSubjectUtils.ts';
@@ -18,16 +22,33 @@ export interface CaseSubjectRoleDialogProps {
 }
 
 export function CaseSubjectRoleDialog({ caseId, onSaved }: Readonly<CaseSubjectRoleDialogProps>) {
-  const isOpen = useCaseSubjectsUiStore((state) => state.dialog?.type === 'roleAdd');
+  const isAddOpen = useCaseSubjectsUiStore((state) => state.dialog?.type === 'roleAdd');
+  const editId = useCaseSubjectsUiStore((state) =>
+    state.dialog?.type === 'caseSubjectEdit' ? state.dialog.caseSubjectId : null,
+  );
   const closeDialog = useCaseSubjectsUiStore((state) => state.closeDialog);
 
   const proceduralRoles = useCodelistQuery('procedural-roles').data;
   const materialLegalRoles = useCodelistQuery('material-legal-roles').data;
 
   const addMutation = useAddCaseSubjectMutation(caseId);
+  const updateMutation = useUpdateCaseSubjectMutation(caseId);
+
+  const editedItem = useCaseSubjectsQuery(caseId).data?.data.find(
+    (candidate) => candidate.id === editId,
+  );
+  const isEditMode = editId !== null;
+  const isOpen = isAddOpen || isEditMode;
 
   function handleSave(values: CaseSubjectFormValues) {
-    addMutation.mutate(toCaseSubjectRequest(values), {
+    const request = toCaseSubjectRequest(values);
+
+    if (editedItem) {
+      updateMutation.mutate({ id: editedItem.id, request }, { onSuccess: closeDialog });
+      return;
+    }
+
+    addMutation.mutate(request, {
       onSuccess: () => {
         closeDialog();
         onSaved(values.subjectId);
@@ -37,10 +58,12 @@ export function CaseSubjectRoleDialog({ caseId, onSaved }: Readonly<CaseSubjectR
 
   let content = <LoadingOverlay label="Načítání formuláře" />;
 
-  if (proceduralRoles && materialLegalRoles) {
+  if (proceduralRoles && materialLegalRoles && (!isEditMode || editedItem)) {
     content = (
       <CaseSubjectRoleForm
+        key={editedItem?.id}
         formId={ROLE_FORM_ID}
+        editedItem={editedItem}
         proceduralRoleOptions={toSelectOptions(proceduralRoles)}
         materialLegalRoleOptions={toSelectOptions(materialLegalRoles)}
         onSave={handleSave}
@@ -51,7 +74,7 @@ export function CaseSubjectRoleDialog({ caseId, onSaved }: Readonly<CaseSubjectR
   return (
     <Dialog
       isOpen={isOpen}
-      title="Přidání subjektu"
+      title={isEditMode ? 'Úprava subjektu na spisu' : 'Přidání subjektu'}
       size="lg"
       onClose={closeDialog}
       footer={
@@ -60,7 +83,7 @@ export function CaseSubjectRoleDialog({ caseId, onSaved }: Readonly<CaseSubjectR
           form={ROLE_FORM_ID}
           variant="success"
           icon={Save}
-          disabled={addMutation.isPending}
+          disabled={addMutation.isPending || updateMutation.isPending}
         >
           Uložit
         </Button>

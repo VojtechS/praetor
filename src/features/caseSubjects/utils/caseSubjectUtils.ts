@@ -55,6 +55,18 @@ export function toCaseSubjectRequest(values: CaseSubjectFormValues): CaseSubject
   };
 }
 
+export function getCaseSubjectEditDefaults(item: CaseSubject): Partial<CaseSubjectFormInput> {
+  return {
+    subjectId: item.subjectId,
+    role: item.role,
+    proceduralRole: item.proceduralRole ?? '',
+    materialLegalRole: item.materialLegalRole ?? '',
+    legalRepresentativeId: item.legalRepresentativeId,
+    caseFileNumber: item.caseFileNumber ?? '',
+    preferredRelatedSubjectIds: item.preferredRelatedSubjectIds.map(String),
+  };
+}
+
 export function getCaseSubjectRoleEditDefaults(item: CaseSubject): CaseSubjectRoleEditFormInput {
   return {
     role: item.role,

@@ -24,6 +24,10 @@ export function CaseSubjectRowActions({ item }: Readonly<CaseSubjectRowActionsPr
 
   const menuItems: DropdownMenuItem[] = [
     {
+      label: 'Upravit subjekt / osobu',
+      onSelect: () => openCard(item.subjectId),
+    },
+    {
       label: 'Nastavit role',
       onSelect: () => openDialog({ type: 'roleEdit', caseSubjectId: item.id }),
     },
@@ -50,7 +54,12 @@ export function CaseSubjectRowActions({ item }: Readonly<CaseSubjectRowActionsPr
 
   return (
     <div className={styles.caseSubjectRowActions}>
-      <Button variant="primary" size="small" icon={Pencil} onClick={() => openCard(item.subjectId)}>
+      <Button
+        variant="primary"
+        size="small"
+        icon={Pencil}
+        onClick={() => openDialog({ type: 'caseSubjectEdit', caseSubjectId: item.id })}
+      >
         Upravit
       </Button>
       <DropdownMenu label="Další akce" icon={MoreHorizontal} items={menuItems} />

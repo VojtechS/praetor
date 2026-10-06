@@ -8,6 +8,12 @@
     font-size: 12px;
   }
 
+  &__separator {
+    font-size: 1.5em;
+    line-height: 1;
+    vertical-align: middle;
+  }
+
   &__table {
     position: relative;
 
@@ -15,6 +21,7 @@
     max-height: 240px;
     overflow-y: auto;
 
+    background-color: $color-surface;
     border: 1px solid $color-border;
     border-radius: $radius-control;
   }

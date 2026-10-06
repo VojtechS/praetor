@@ -36,7 +36,8 @@ export function SubjectPickerResults({
   return (
     <div>
       <p className={styles.subjectPickerResults__source}>
-        {sourceLabel} · {formatRecordCount(count)}
+        {sourceLabel} <span className={styles.subjectPickerResults__separator}>·</span>{' '}
+        {formatRecordCount(count)}
       </p>
       <div className={styles.subjectPickerResults__table} aria-busy={isLoading}>
         {isLoading && <LoadingOverlay label="Načítání výsledků" />}

@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import type { SyntheticEvent } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import type { SelectOption } from '../../../../shared/components/SelectField/SelectField.tsx';
+import type { CaseSubject } from '../../api/caseSubjectApi/caseSubjectApi.types.ts';
 import { useSubjectQuery } from '../../../subjects/hooks/queries/useSubjectQueries.ts';
 import { getSubjectDisplayName } from '../../../subjects/utils/subjectUtils.ts';
 import { caseSubjectFormSchema } from '../../schemas/caseSubjectForm.schema.ts';
@@ -9,7 +10,10 @@ import type {
   CaseSubjectFormInput,
   CaseSubjectFormValues,
 } from '../../schemas/caseSubjectForm.schema.ts';
-import { NEW_CASE_SUBJECT_DEFAULTS } from '../../utils/caseSubjectUtils.ts';
+import {
+  getCaseSubjectEditDefaults,
+  NEW_CASE_SUBJECT_DEFAULTS,
+} from '../../utils/caseSubjectUtils.ts';
 import { CaseSubjectRoleFields } from '../CaseSubjectRoleFields/CaseSubjectRoleFields.tsx';
 import { CaseSubjectRoleTabs } from '../CaseSubjectRoleTabs/CaseSubjectRoleTabs.tsx';
 
@@ -20,6 +24,7 @@ export interface CaseSubjectRoleFormProps {
   proceduralRoleOptions: SelectOption[];
   materialLegalRoleOptions: SelectOption[];
   onSave: (values: CaseSubjectFormValues) => void;
+  editedItem?: CaseSubject;
 }
 
 export function CaseSubjectRoleForm({
@@ -27,12 +32,16 @@ export function CaseSubjectRoleForm({
   proceduralRoleOptions,
   materialLegalRoleOptions,
   onSave,
+  editedItem,
 }: Readonly<CaseSubjectRoleFormProps>) {
   const { register, handleSubmit, setValue, getValues, control, formState } = useForm<
     CaseSubjectFormInput,
     unknown,
     CaseSubjectFormValues
-  >({ resolver: zodResolver(caseSubjectFormSchema), defaultValues: NEW_CASE_SUBJECT_DEFAULTS });
+  >({
+    resolver: zodResolver(caseSubjectFormSchema),
+    defaultValues: editedItem ? getCaseSubjectEditDefaults(editedItem) : NEW_CASE_SUBJECT_DEFAULTS,
+  });
 
   const subjectId: number | undefined = useWatch({ control, name: 'subjectId' });
   const representativeId = useWatch({ control, name: 'legalRepresentativeId' });
@@ -73,6 +82,7 @@ export function CaseSubjectRoleForm({
         proceduralRoleOptions={proceduralRoleOptions}
         materialLegalRoleOptions={materialLegalRoleOptions}
         onChoose={handleChoose}
+        isEditMode={!!editedItem}
       />
       <CaseSubjectRoleTabs
         relatedSubjects={subject?.relatedSubjects ?? []}

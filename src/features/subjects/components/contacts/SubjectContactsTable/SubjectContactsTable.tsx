@@ -1,4 +1,5 @@
 import { Trash2 } from 'lucide-react';
+import { useFormState } from 'react-hook-form';
 import type { UseFieldArrayReturn } from 'react-hook-form';
 import { Button } from '../../../../../shared/components/Button/Button.tsx';
 import { CheckboxField } from '../../../../../shared/components/CheckboxField/CheckboxField.tsx';
@@ -21,7 +22,8 @@ export function SubjectContactsTable({
   isReadOnly,
   onRemove,
 }: Readonly<SubjectContactsTableProps>) {
-  const { register, formState } = form;
+  const { register, control } = form;
+  const { errors } = useFormState({ control });
 
   return (
     <table className={styles.subjectContactsTable}>
@@ -30,7 +32,7 @@ export function SubjectContactsTable({
           <th scope="col" className={styles.subjectContactsTable__required}>
             Kontakt
           </th>
-          <th scope="col">Typ kontaktu</th>
+          <th scope="col">Typ</th>
           <th scope="col">Pref.</th>
           {!isReadOnly && (
             <th scope="col">
@@ -46,7 +48,7 @@ export function SubjectContactsTable({
               <TextField
                 label={`Kontakt ${index + 1}`}
                 registration={register(`contacts.${index}.value`)}
-                error={formState.errors.contacts?.[index]?.value?.message}
+                error={errors.contacts?.[index]?.value?.message}
                 isLabelHidden
               />
             </td>
