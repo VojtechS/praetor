@@ -21,7 +21,6 @@ export function SubjectCardDialog() {
   const subjectCard = useCaseSubjectsUiStore((state) => state.subjectCard);
   const closeSubjectCard = useCaseSubjectsUiStore((state) => state.closeSubjectCard);
   const setPickedSubject = useCaseSubjectsUiStore((state) => state.setPickedSubject);
-  const closePicker = useCaseSubjectsUiStore((state) => state.closePicker);
 
   const [aresRegNumber, setAresRegNumber] = useState<string | null>(null);
 
@@ -43,7 +42,6 @@ export function SubjectCardDialog() {
   function handleCreated(subjectId: number) {
     if (subjectCard?.returnTarget) {
       setPickedSubject(subjectCard.returnTarget, subjectId);
-      closePicker();
     }
 
     close();

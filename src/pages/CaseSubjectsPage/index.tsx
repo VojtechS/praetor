@@ -11,7 +11,6 @@ import {
   useCaseSubjectsQuery,
 } from '../../features/caseSubjects/hooks/useCaseSubjectQueries.ts';
 import { useCaseSubjectsUiStore } from '../../features/caseSubjects/store/useCaseSubjectsUiStore.ts';
-import { useCodelistQuery } from '../../features/codelists/hooks/useCodelistQuery.ts';
 import { SubjectCardDialog } from '../../features/subjects/components/card/SubjectCardDialog/SubjectCardDialog.tsx';
 import { useSubjectQuery } from '../../features/subjects/hooks/queries/useSubjectQueries.ts';
 import { Button } from '../../shared/components/Button/Button.tsx';
@@ -21,8 +20,6 @@ export function CaseSubjectsPage() {
   const { caseId = '' } = useParams<{ caseId: string }>();
   const caseQuery = useCaseQuery(caseId);
   const caseSubjectsQuery = useCaseSubjectsQuery(caseId);
-  const proceduralRolesQuery = useCodelistQuery('procedural-roles');
-  const materialLegalRolesQuery = useCodelistQuery('material-legal-roles');
   const openRoleDialog = useCaseSubjectsUiStore((state) => state.openRoleDialog);
 
   const items = caseSubjectsQuery.data?.data ?? [];
@@ -86,8 +83,6 @@ export function CaseSubjectsPage() {
         <CaseSubjectList
           caseId={caseId}
           items={items}
-          materialLegalRoles={materialLegalRolesQuery.data}
-          proceduralRoles={proceduralRolesQuery.data}
           selectedSubjectId={selectedSubjectId}
           onSelect={setSelectedSubjectId}
           isLoading={caseSubjectsQuery.isPending}

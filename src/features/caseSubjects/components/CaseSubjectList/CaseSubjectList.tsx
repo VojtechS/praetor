@@ -1,5 +1,5 @@
 import { LoadingOverlay } from '../../../../shared/components/LoadingOverlay/LoadingOverlay.tsx';
-import type { CodelistItem } from '../../../codelists/api/codelistApi/codelistApi.types.ts';
+import { useCodelistQuery } from '../../../codelists/hooks/useCodelistQuery.ts';
 import type { CaseSubject } from '../../api/caseSubjectApi/caseSubjectApi.types.ts';
 import { groupCaseSubjectsByRole } from '../../utils/caseSubjectUtils.ts';
 import { CaseSubjectGroupHeader } from '../CaseSubjectGroupHeader/CaseSubjectGroupHeader.tsx';
@@ -9,8 +9,6 @@ import styles from './CaseSubjectList.module.scss';
 export interface CaseSubjectListProps {
   caseId: string;
   items: CaseSubject[];
-  materialLegalRoles: CodelistItem[] | undefined;
-  proceduralRoles: CodelistItem[] | undefined;
   selectedSubjectId: number | null;
   onSelect: (subjectId: number) => void;
   isLoading?: boolean;
@@ -20,13 +18,14 @@ export interface CaseSubjectListProps {
 export function CaseSubjectList({
   caseId,
   items,
-  materialLegalRoles,
-  proceduralRoles,
   selectedSubjectId,
   onSelect,
   isLoading = false,
   isError = false,
 }: Readonly<CaseSubjectListProps>) {
+  const proceduralRoles = useCodelistQuery('procedural-roles').data;
+  const materialLegalRoles = useCodelistQuery('material-legal-roles').data;
+
   return (
     <div className={styles.caseSubjectList__wrapper} aria-busy={isLoading}>
       {isLoading && <LoadingOverlay label="Načítání seznamu subjektů" />}

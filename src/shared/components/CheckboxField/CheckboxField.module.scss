@@ -2,14 +2,8 @@
 
 .checkboxField {
   display: flex;
-  flex-direction: column;
-  gap: $space-1;
-
-  &__row {
-    display: flex;
-    align-items: center;
-    gap: $space-2;
-  }
+  align-items: center;
+  gap: $space-2;
 
   &__control {
     flex-shrink: 0;
@@ -44,10 +38,6 @@
     &:focus-visible {
       outline: none;
       box-shadow: $focus-ring;
-    }
-
-    &[aria-invalid='true'] {
-      outline: 1px solid $color-danger;
     }
 
     &:disabled {

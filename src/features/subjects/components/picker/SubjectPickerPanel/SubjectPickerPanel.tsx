@@ -17,7 +17,6 @@ export interface SubjectPickerPanelProps {
 }
 
 export function SubjectPickerPanel({ target }: Readonly<SubjectPickerPanelProps>) {
-  const closePicker = useCaseSubjectsUiStore((state) => state.closePicker);
   const setPickedSubject = useCaseSubjectsUiStore((state) => state.setPickedSubject);
   const openSubjectCard = useCaseSubjectsUiStore((state) => state.openSubjectCard);
   const [search, setSearch] = useState('');
@@ -59,18 +58,8 @@ export function SubjectPickerPanel({ target }: Readonly<SubjectPickerPanelProps>
     setSubmitted({ source: 'ares', term: trimmed });
   }
 
-  function chooseSubject(subjectId: number) {
-    setPickedSubject(target, subjectId);
-    closePicker();
-  }
-
   function openCard(aresPrefill: string | null) {
     openSubjectCard({ mode: 'create', subjectId: null, aresPrefill, returnTarget: target });
-  }
-
-  function removeRepresentative() {
-    setPickedSubject('representative', null);
-    closePicker();
   }
 
   return (
@@ -81,7 +70,7 @@ export function SubjectPickerPanel({ target }: Readonly<SubjectPickerPanelProps>
         onSearch={searchPraetor}
         onAresSearch={isRepresentative ? undefined : searchAres}
         onCreate={() => openCard(null)}
-        onRemove={isRepresentative ? removeRepresentative : undefined}
+        onRemove={isRepresentative ? () => setPickedSubject(target, null) : undefined}
         isAresTooShort={isAresTooShort}
       />
       {submitted.source === 'ares' ? (
@@ -90,7 +79,7 @@ export function SubjectPickerPanel({ target }: Readonly<SubjectPickerPanelProps>
         <SubjectPickerPraetorResults
           submittedSearch={submitted.term}
           showBirthDate={isRepresentative}
-          onChoose={chooseSubject}
+          onChoose={(subjectId) => setPickedSubject(target, subjectId)}
         />
       )}
     </div>

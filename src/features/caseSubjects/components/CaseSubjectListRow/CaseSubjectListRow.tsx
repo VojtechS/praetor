@@ -1,6 +1,5 @@
 import { Building2, Landmark, Scale, Star, User, Wallet } from 'lucide-react';
 import clsx from 'clsx';
-import { memo } from 'react';
 import { checkValue } from '../../../../shared/utils/checkValue.ts';
 import type { CodelistItem } from '../../../codelists/api/codelistApi/codelistApi.types.ts';
 import { getCodelistLabel } from '../../../codelists/utils/codelistUtils.ts';
@@ -34,7 +33,7 @@ function TypeIcon({ item }: Readonly<{ item: CaseSubject }>) {
   return item.subjectType.startsWith('PHYSICAL') ? <User {...props} /> : <Building2 {...props} />;
 }
 
-export const CaseSubjectListRow = memo(function CaseSubjectListRowView({
+export function CaseSubjectListRow({
   caseId,
   item,
   materialLegalRoles,
@@ -98,4 +97,4 @@ export const CaseSubjectListRow = memo(function CaseSubjectListRowView({
       )}
     </>
   );
-});
+}

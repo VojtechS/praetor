@@ -26,7 +26,6 @@ interface CaseSubjectsUiState {
   openRoleEdit: (caseSubjectId: number) => void;
   closeRoleEdit: () => void;
   togglePicker: (target: PickerTarget) => void;
-  closePicker: () => void;
   openSubjectCard: (subjectCard: SubjectCardState) => void;
   closeSubjectCard: () => void;
   setPickedSubject: (target: PickerTarget, subjectId: number | null) => void;
@@ -47,10 +46,10 @@ export const useCaseSubjectsUiStore = create<CaseSubjectsUiState>()((set) => ({
   openRoleEdit: (caseSubjectId) => set({ roleEditId: caseSubjectId }),
   closeRoleEdit: () => set({ roleEditId: null }),
   togglePicker: (target) => set((state) => ({ picker: state.picker === target ? null : target })),
-  closePicker: () => set({ picker: null }),
   openSubjectCard: (subjectCard) => set({ subjectCard }),
   closeSubjectCard: () => set({ subjectCard: null }),
-  setPickedSubject: (target, subjectId) => set({ pickedSubject: { target, subjectId } }),
+  setPickedSubject: (target, subjectId) =>
+    set({ pickedSubject: { target, subjectId }, picker: null }),
   clearPickedSubject: () => set({ pickedSubject: null }),
   requestRemove: (caseSubjectId) => set({ confirmRemoveId: caseSubjectId }),
   cancelRemove: () => set({ confirmRemoveId: null }),

@@ -36,7 +36,7 @@ export function useDataBoxLookupMutation() {
     onSuccess: (response) => toast.success(response.data.name),
   });
 
-  useDataToast(mutation.isError, 'Datová schránka nenalezena');
+  useDataToast(mutation.isError, 'Datová schránka nebyla nalezena.');
 
   return mutation;
 }

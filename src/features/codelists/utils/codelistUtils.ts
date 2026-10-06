@@ -9,10 +9,6 @@ export function getCodelistLabel(
   return checkValue(items?.find((item) => item.code === code)?.label ?? code);
 }
 
-export function toSelectOptions(items: CodelistItem[] | undefined): SelectOption[] {
-  if (!items) {
-    return [];
-  }
-
+export function toSelectOptions(items: CodelistItem[]): SelectOption[] {
   return items.map(({ code, label }) => ({ value: code, label }));
 }

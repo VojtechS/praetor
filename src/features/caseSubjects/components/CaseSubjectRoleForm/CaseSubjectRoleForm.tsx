@@ -10,12 +10,12 @@ import type {
   CaseSubjectFormValues,
 } from '../../schemas/caseSubjectForm.schema.ts';
 import { useCaseSubjectsUiStore } from '../../store/useCaseSubjectsUiStore.ts';
+import { NEW_CASE_SUBJECT_DEFAULTS } from '../../utils/caseSubjectUtils.ts';
 import { CaseSubjectRoleFields } from '../CaseSubjectRoleFields/CaseSubjectRoleFields.tsx';
 import { CaseSubjectRoleTabs } from '../CaseSubjectRoleTabs/CaseSubjectRoleTabs.tsx';
 
 export interface CaseSubjectRoleFormProps {
   formId: string;
-  defaultValues: Partial<CaseSubjectFormInput>;
   proceduralRoleOptions: SelectOption[];
   materialLegalRoleOptions: SelectOption[];
   onSave: (values: CaseSubjectFormValues) => void;
@@ -23,7 +23,6 @@ export interface CaseSubjectRoleFormProps {
 
 export function CaseSubjectRoleForm({
   formId,
-  defaultValues,
   proceduralRoleOptions,
   materialLegalRoleOptions,
   onSave,
@@ -37,7 +36,7 @@ export function CaseSubjectRoleForm({
     CaseSubjectFormInput,
     unknown,
     CaseSubjectFormValues
-  >({ resolver: zodResolver(caseSubjectFormSchema), defaultValues });
+  >({ resolver: zodResolver(caseSubjectFormSchema), defaultValues: NEW_CASE_SUBJECT_DEFAULTS });
 
   const subjectId: number | undefined = useWatch({ control, name: 'subjectId' });
   const representativeId = useWatch({ control, name: 'legalRepresentativeId' });

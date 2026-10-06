@@ -10,7 +10,6 @@ export interface SubjectPickerFieldProps {
   placeholder: string;
   onClick: () => void;
   error?: string;
-  disabled?: boolean;
   isExpanded?: boolean;
   isRequired?: boolean;
 }
@@ -21,7 +20,6 @@ export function SubjectPickerField({
   placeholder,
   onClick,
   error,
-  disabled = false,
   isExpanded = false,
   isRequired = false,
 }: Readonly<SubjectPickerFieldProps>) {
@@ -50,7 +48,6 @@ export function SubjectPickerField({
         aria-expanded={isExpanded}
         aria-labelledby={`${labelId} ${valueId}`}
         aria-describedby={error ? errorId : undefined}
-        disabled={disabled}
         onClick={onClick}
       >
         <span

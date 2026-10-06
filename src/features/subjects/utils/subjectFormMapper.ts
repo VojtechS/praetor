@@ -16,6 +16,8 @@ type PhysicalPersonInput = Extract<SubjectFormInput, { physicalPerson: unknown }
 type AddressInput = SubjectFormInput['addresses'][number];
 type ContactInput = SubjectFormInput['contacts'][number];
 
+const CZECH_LANGUAGE_CODE = 'CS';
+
 function orEmpty(value: string | null | undefined): string {
   return value ?? '';
 }
@@ -45,40 +47,29 @@ function toPhysicalPersonInput(person: PhysicalPersonRequest | null): PhysicalPe
 
 function toAddressInput(address: AddressRequest): AddressInput {
   return {
+    ...address,
     line1: orEmpty(address.line1),
     line2: orEmpty(address.line2),
     line3: orEmpty(address.line3),
-    useSubjectName: address.useSubjectName,
     street: orEmpty(address.street),
     houseNumber: orEmpty(address.houseNumber),
     orientationNumber: orEmpty(address.orientationNumber),
-    city: address.city,
     cityPart: orEmpty(address.cityPart),
     zipCode: orEmpty(address.zipCode),
     region: orEmpty(address.region),
     district: orEmpty(address.district),
-    country: address.country,
-    isSeat: address.isSeat,
-    isDelivery: address.isDelivery,
-    isBranch: address.isBranch,
-    isBilling: address.isBilling,
   };
 }
 
 function toContactInput(contact: ContactRequest): ContactInput {
-  return {
-    type: contact.type,
-    value: contact.value,
-    note: orEmpty(contact.note),
-    isPreferred: contact.isPreferred,
-  };
+  return { ...contact, note: orEmpty(contact.note) };
 }
 
 export function getNewSubjectFormDefaults(): SubjectFormInput {
   return {
     type: 'LEGAL',
-    country: 'CZ',
-    language: 'CS',
+    country: CZECH_COUNTRY_CODE,
+    language: CZECH_LANGUAGE_CODE,
     clientNumber: '',
     abbreviation: '',
     labels: [],

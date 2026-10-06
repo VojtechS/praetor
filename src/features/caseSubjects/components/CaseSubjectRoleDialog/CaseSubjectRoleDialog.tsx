@@ -7,7 +7,7 @@ import { toSelectOptions } from '../../../codelists/utils/codelistUtils.ts';
 import { useAddCaseSubjectMutation } from '../../hooks/useCaseSubjectQueries.ts';
 import type { CaseSubjectFormValues } from '../../schemas/caseSubjectForm.schema.ts';
 import { useCaseSubjectsUiStore } from '../../store/useCaseSubjectsUiStore.ts';
-import { NEW_CASE_SUBJECT_DEFAULTS, toCaseSubjectRequest } from '../../utils/caseSubjectUtils.ts';
+import { toCaseSubjectRequest } from '../../utils/caseSubjectUtils.ts';
 import { CaseSubjectRoleForm } from '../CaseSubjectRoleForm/CaseSubjectRoleForm.tsx';
 
 const ROLE_FORM_ID = 'caseSubjectRoleForm';
@@ -41,7 +41,6 @@ export function CaseSubjectRoleDialog({ caseId, onSaved }: Readonly<CaseSubjectR
     content = (
       <CaseSubjectRoleForm
         formId={ROLE_FORM_ID}
-        defaultValues={NEW_CASE_SUBJECT_DEFAULTS}
         proceduralRoleOptions={toSelectOptions(proceduralRoles)}
         materialLegalRoleOptions={toSelectOptions(materialLegalRoles)}
         onSave={handleSave}

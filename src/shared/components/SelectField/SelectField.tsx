@@ -17,7 +17,6 @@ export interface SelectFieldProps {
   hasEmptyOption?: boolean;
   isLabelHidden?: boolean;
   isRequired?: boolean;
-  disabled?: boolean;
 }
 
 export function SelectField({
@@ -28,7 +27,6 @@ export function SelectField({
   hasEmptyOption = false,
   isLabelHidden = false,
   isRequired = false,
-  disabled = false,
 }: Readonly<SelectFieldProps>) {
   const id = useId();
   const errorId = `${id}-error`;
@@ -51,7 +49,6 @@ export function SelectField({
         aria-required={isRequired}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? errorId : undefined}
-        disabled={disabled}
         {...registration}
       >
         {hasEmptyOption && <option value=""></option>}

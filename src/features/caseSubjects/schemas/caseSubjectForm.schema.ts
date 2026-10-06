@@ -24,7 +24,10 @@ export const caseSubjectFormSchema = z
     legalRepresentativeId: z.number().nullable(),
     caseFileNumber: z
       .string()
-      .max(CASE_FILE_NUMBER_MAX_LENGTH, 'Spisová značka může mít nejvýše 50 znaků'),
+      .max(
+        CASE_FILE_NUMBER_MAX_LENGTH,
+        `Spisová značka může mít nejvýše ${CASE_FILE_NUMBER_MAX_LENGTH} znaků`,
+      ),
     preferredRelatedSubjectIds: z
       .union([z.array(z.string()), z.string(), z.literal(false)])
       .transform(toRelatedSubjectIds),

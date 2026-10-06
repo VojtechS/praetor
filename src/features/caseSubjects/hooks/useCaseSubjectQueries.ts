@@ -53,7 +53,7 @@ export function useAddCaseSubjectMutation(caseId: string) {
 
   useDataToast(
     mutation.isError,
-    isConflict ? 'Subjekt už na spisu je' : 'Nepodařilo se přidat subjekt na spis.',
+    isConflict ? 'Subjekt už na spisu je.' : 'Nepodařilo se přidat subjekt na spis.',
   );
 
   return mutation;
@@ -79,8 +79,8 @@ export function useRemoveCaseSubjectMutation(caseId: string) {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (id: number) => caseSubjectApi.remove(caseId, id),
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: CASE_SUBJECTS_QUERY_KEY });
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: CASE_SUBJECTS_QUERY_KEY });
       toast.success('Subjekt byl odebrán ze spisu.');
     },
   });

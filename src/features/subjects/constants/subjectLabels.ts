@@ -12,13 +12,12 @@ export const CONTACT_TYPE_LABELS: Record<ContactType, string> = {
   EMAIL: 'E-mail',
 };
 
-export const SUBJECT_TYPE_OPTIONS = (Object.keys(SUBJECT_TYPE_LABELS) as SubjectType[]).map(
-  (type) => ({
-    value: type,
-    label: SUBJECT_TYPE_LABELS[type],
-  }),
-);
+export const SUBJECT_TYPE_OPTIONS = Object.entries(SUBJECT_TYPE_LABELS).map(([value, label]) => ({
+  value,
+  label,
+}));
 
-export const CONTACT_TYPE_OPTIONS = (Object.keys(CONTACT_TYPE_LABELS) as ContactType[]).map(
-  (type) => ({ value: type, label: CONTACT_TYPE_LABELS[type] }),
-);
+export const CONTACT_TYPE_OPTIONS = Object.entries(CONTACT_TYPE_LABELS).map(([value, label]) => ({
+  value,
+  label,
+}));
