@@ -1,4 +1,5 @@
 import { MoreHorizontal, Pencil } from 'lucide-react';
+import { useParams } from 'react-router-dom';
 import { Button } from '../../../../shared/components/Button/Button.tsx';
 import { DropdownMenu } from '../../../../shared/components/DropdownMenu/DropdownMenu.tsx';
 import type { DropdownMenuItem } from '../../../../shared/components/DropdownMenu/DropdownMenu.tsx';
@@ -8,11 +9,11 @@ import { useCaseSubjectsUiStore } from '../../store/useCaseSubjectsUiStore.ts';
 import styles from './CaseSubjectRowActions.module.scss';
 
 export interface CaseSubjectRowActionsProps {
-  caseId: string;
   item: CaseSubject;
 }
 
-export function CaseSubjectRowActions({ caseId, item }: Readonly<CaseSubjectRowActionsProps>) {
+export function CaseSubjectRowActions({ item }: Readonly<CaseSubjectRowActionsProps>) {
+  const { caseId = '' } = useParams<{ caseId: string }>();
   const openRoleEdit = useCaseSubjectsUiStore((state) => state.openRoleEdit);
   const openSubjectCard = useCaseSubjectsUiStore((state) => state.openSubjectCard);
   const requestRemove = useCaseSubjectsUiStore((state) => state.requestRemove);

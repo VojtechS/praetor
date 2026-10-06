@@ -1,6 +1,6 @@
 import { Plus } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { CaseSubjectDetailPanel } from '../../features/caseSubjects/components/CaseSubjectDetailPanel/CaseSubjectDetailPanel.tsx';
 import { CaseSubjectList } from '../../features/caseSubjects/components/CaseSubjectList/CaseSubjectList.tsx';
 import { CaseSubjectRemoveDialog } from '../../features/caseSubjects/components/CaseSubjectRemoveDialog/CaseSubjectRemoveDialog.tsx';
@@ -11,6 +11,7 @@ import {
   useCaseSubjectsQuery,
 } from '../../features/caseSubjects/hooks/useCaseSubjectQueries.ts';
 import { useCaseSubjectsUiStore } from '../../features/caseSubjects/store/useCaseSubjectsUiStore.ts';
+import { parseSubjectId } from '../../features/caseSubjects/utils/caseSubjectUtils.ts';
 import { SubjectCardDialog } from '../../features/subjects/components/card/SubjectCardDialog/SubjectCardDialog.tsx';
 import { useSubjectQuery } from '../../features/subjects/hooks/queries/useSubjectQueries.ts';
 import { Button } from '../../shared/components/Button/Button.tsx';
@@ -26,9 +27,14 @@ export function CaseSubjectsPage() {
   const closeSubjectCard = useCaseSubjectsUiStore((state) => state.closeSubjectCard);
 
   const items = caseSubjectsQuery.data?.data ?? [];
-  const [selectedSubjectId, setSelectedSubjectId] = useState<number | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedSubjectId = parseSubjectId(searchParams.get('subjectId'));
   const selectedItem = items.find((item) => item.subjectId === selectedSubjectId);
   const subjectQuery = useSubjectQuery(selectedSubjectId ?? 0, selectedItem !== undefined);
+
+  function selectSubject(subjectId: number) {
+    setSearchParams({ subjectId: String(subjectId) }, { replace: true });
+  }
 
   const detailRef = useRef<HTMLDivElement>(null);
   const [closingSubjectId, setClosingSubjectId] = useState<number | null>(null);
@@ -51,16 +57,15 @@ export function CaseSubjectsPage() {
       }
 
       setClosingSubjectId(null);
-      setSelectedSubjectId(null);
+      setSearchParams({}, { replace: true });
     });
     return () => {
       isCancelled = true;
     };
-  }, [isDetailClosing]);
+  }, [isDetailClosing, setSearchParams]);
 
   const caseHeader = caseQuery.data?.data;
-  const isDetailOpen = selectedSubjectId !== null;
-  const isDetailLoading = caseSubjectsQuery.isPending || subjectQuery.isLoading;
+  const isDetailOpen = selectedItem !== undefined;
 
   return (
     <>
@@ -84,10 +89,9 @@ export function CaseSubjectsPage() {
 
       <div className={styles.caseSubjectsPage__layout} data-detail-open={isDetailOpen}>
         <CaseSubjectList
-          caseId={caseId}
           items={items}
           selectedSubjectId={selectedSubjectId}
-          onSelect={setSelectedSubjectId}
+          onSelect={selectSubject}
           isLoading={caseSubjectsQuery.isPending}
           isError={caseSubjectsQuery.isError}
         />
@@ -102,18 +106,14 @@ export function CaseSubjectsPage() {
             subject={subjectQuery.data?.data}
             onClose={handleDetailClose}
             isOpen={isDetailOpen}
-            isLoading={isDetailLoading}
+            isLoading={subjectQuery.isLoading}
           />
         </div>
       </div>
 
-      <CaseSubjectRoleDialog caseId={caseId} onSaved={setSelectedSubjectId} />
-      <CaseSubjectRoleEditDialog caseId={caseId} items={items} />
-      <CaseSubjectRemoveDialog
-        caseId={caseId}
-        items={items}
-        onRemoved={(subjectId) => subjectId === selectedSubjectId && setSelectedSubjectId(null)}
-      />
+      <CaseSubjectRoleDialog caseId={caseId} onSaved={selectSubject} />
+      <CaseSubjectRoleEditDialog caseId={caseId} />
+      <CaseSubjectRemoveDialog caseId={caseId} />
       <SubjectCardDialog subjectCard={subjectCard} onClose={closeSubjectCard} />
     </>
   );

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { SelectField } from '../../../../shared/components/SelectField/SelectField.tsx';
 import type { SelectOption } from '../../../../shared/components/SelectField/SelectField.tsx';
@@ -17,8 +18,6 @@ export interface CaseSubjectRoleFieldsProps {
   representativeName?: string;
   proceduralRoleOptions: SelectOption[];
   materialLegalRoleOptions: SelectOption[];
-  openPickerTarget: PickerTarget | null;
-  onTogglePicker: (target: PickerTarget) => void;
   onChoose: (target: PickerTarget, subjectId: number | null) => void;
 }
 
@@ -29,10 +28,19 @@ export function CaseSubjectRoleFields({
   representativeName,
   proceduralRoleOptions,
   materialLegalRoleOptions,
-  openPickerTarget,
-  onTogglePicker,
   onChoose,
 }: Readonly<CaseSubjectRoleFieldsProps>) {
+  const [openPickerTarget, setOpenPickerTarget] = useState<PickerTarget | null>(null);
+
+  function togglePicker(target: PickerTarget) {
+    setOpenPickerTarget((current) => (current === target ? null : target));
+  }
+
+  function handleChoose(target: PickerTarget, subjectId: number | null) {
+    setOpenPickerTarget(null);
+    onChoose(target, subjectId);
+  }
+
   return (
     <div className={styles.caseSubjectRoleFields}>
       <div className={styles.caseSubjectRoleFields__full}>
@@ -40,7 +48,7 @@ export function CaseSubjectRoleFields({
           label="Subjekt / osoba"
           value={subjectName}
           placeholder="Vyberte subjekt"
-          onClick={() => onTogglePicker('subject')}
+          onClick={() => togglePicker('subject')}
           error={errors.subjectId?.message}
           isExpanded={openPickerTarget === 'subject'}
           isRequired
@@ -50,7 +58,7 @@ export function CaseSubjectRoleFields({
         <div className={styles.caseSubjectRoleFields__full}>
           <SubjectPickerPanel
             target="subject"
-            onChoose={(subjectId) => onChoose('subject', subjectId)}
+            onChoose={(subjectId) => handleChoose('subject', subjectId)}
           />
         </div>
       )}
@@ -78,7 +86,7 @@ export function CaseSubjectRoleFields({
           label="Právní zástupce"
           value={representativeName}
           placeholder="Vyberte právního zástupce"
-          onClick={() => onTogglePicker('representative')}
+          onClick={() => togglePicker('representative')}
           error={errors.legalRepresentativeId?.message}
           isExpanded={openPickerTarget === 'representative'}
         />
@@ -87,7 +95,7 @@ export function CaseSubjectRoleFields({
         <div className={styles.caseSubjectRoleFields__full}>
           <SubjectPickerPanel
             target="representative"
-            onChoose={(subjectId) => onChoose('representative', subjectId)}
+            onChoose={(subjectId) => handleChoose('representative', subjectId)}
           />
         </div>
       )}

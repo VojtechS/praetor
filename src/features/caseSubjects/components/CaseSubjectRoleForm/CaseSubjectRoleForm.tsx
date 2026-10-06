@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
 import type { SyntheticEvent } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import type { SelectOption } from '../../../../shared/components/SelectField/SelectField.tsx';
@@ -29,8 +28,6 @@ export function CaseSubjectRoleForm({
   materialLegalRoleOptions,
   onSave,
 }: Readonly<CaseSubjectRoleFormProps>) {
-  const [picker, setPicker] = useState<PickerTarget | null>(null);
-
   const { register, handleSubmit, setValue, getValues, control, formState } = useForm<
     CaseSubjectFormInput,
     unknown,
@@ -46,13 +43,7 @@ export function CaseSubjectRoleForm({
   const subject = subjectQuery.data?.data;
   const representative = representativeQuery.data?.data;
 
-  function togglePicker(target: PickerTarget) {
-    setPicker((current) => (current === target ? null : target));
-  }
-
   function handleChoose(target: PickerTarget, chosenId: number | null) {
-    setPicker(null);
-
     if (target === 'representative') {
       setValue('legalRepresentativeId', chosenId, { shouldValidate: true });
     } else if (chosenId !== null) {
@@ -81,8 +72,6 @@ export function CaseSubjectRoleForm({
         representativeName={representative && getSubjectDisplayName(representative)}
         proceduralRoleOptions={proceduralRoleOptions}
         materialLegalRoleOptions={materialLegalRoleOptions}
-        openPickerTarget={picker}
-        onTogglePicker={togglePicker}
         onChoose={handleChoose}
       />
       <CaseSubjectRoleTabs

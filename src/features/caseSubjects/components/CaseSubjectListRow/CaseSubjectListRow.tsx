@@ -11,7 +11,6 @@ import { CaseSubjectRowActions } from '../CaseSubjectRowActions/CaseSubjectRowAc
 import styles from './CaseSubjectListRow.module.scss';
 
 export interface CaseSubjectListRowProps {
-  caseId: string;
   item: CaseSubject;
   materialLegalRoles: CodelistItem[] | undefined;
   proceduralRoles: CodelistItem[] | undefined;
@@ -34,7 +33,6 @@ function TypeIcon({ item }: Readonly<{ item: CaseSubject }>) {
 }
 
 export function CaseSubjectListRow({
-  caseId,
   item,
   materialLegalRoles,
   proceduralRoles,
@@ -82,7 +80,7 @@ export function CaseSubjectListRow({
         <td>{getCodelistLabel(proceduralRoles, item.proceduralRole)}</td>
         <td>{checkValue(item.caseFileNumber)}</td>
         <td rowSpan={hasRepresentative ? 2 : 1} className={styles.caseSubjectListRow__actions}>
-          <CaseSubjectRowActions caseId={caseId} item={item} />
+          <CaseSubjectRowActions item={item} />
         </td>
       </tr>
       {hasRepresentative && (

@@ -7,7 +7,6 @@ import { CaseSubjectListRow } from '../CaseSubjectListRow/CaseSubjectListRow.tsx
 import styles from './CaseSubjectList.module.scss';
 
 export interface CaseSubjectListProps {
-  caseId: string;
   items: CaseSubject[];
   selectedSubjectId: number | null;
   onSelect: (subjectId: number) => void;
@@ -16,7 +15,6 @@ export interface CaseSubjectListProps {
 }
 
 export function CaseSubjectList({
-  caseId,
   items,
   selectedSubjectId,
   onSelect,
@@ -61,7 +59,6 @@ export function CaseSubjectList({
             <CaseSubjectGroupHeader role={group.role} count={group.items.length} />
             {group.items.map((item) => (
               <CaseSubjectListRow
-                caseId={caseId}
                 key={item.id}
                 item={item}
                 materialLegalRoles={materialLegalRoles}
