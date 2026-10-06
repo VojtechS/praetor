@@ -1,5 +1,6 @@
 /// <reference types="vitest" />
-import react from '@vitejs/plugin-react';
+import babel from '@rolldown/plugin-babel';
+import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 import { defineConfig } from 'vitest/config';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -12,7 +13,7 @@ const scssOptions = {
 };
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), babel({ presets: [reactCompilerPreset()] })],
   test: {
     globals: true,
     testTimeout: 15000,
