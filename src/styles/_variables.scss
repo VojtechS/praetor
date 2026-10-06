@@ -1,24 +1,24 @@
 $font-family-base: 'Roboto', sans-serif;
 
-$color-text: #1f2430;
-$color-text-muted: #5b6478;
-$color-border: #e4e7ee;
-$color-border-strong: #cfd4de;
-$color-bg-page: #f7f8fb;
+$color-text: #1a1f2b;
+$color-text-muted: #5b6474;
+$color-border: #e1e5ec;
+$color-border-strong: #cdd3dd;
+$color-bg-page: #f5f7fa;
 $color-surface: #ffffff;
-$color-surface-muted: #fafbfd;
+$color-surface-muted: #fafbfc;
 
-$color-primary: #4c5fd5;
-$color-primary-hover: #3f4fb8;
-$color-primary-text: #3f4fb8;
-$color-primary-light: #eef0fd;
+$color-primary: #1e3a5f;
+$color-primary-hover: #2b4c7e;
+$color-primary-text: #2b4c7e;
+$color-primary-light: #e8eef6;
 $color-on-primary: #ffffff;
 
-$color-danger: #c8433a;
-$color-danger-hover: #a8362e;
+$color-danger: #c0392b;
+$color-danger-hover: #a12f24;
 $color-warning: #a16207;
-$color-success: #2f7d57;
-$color-success-hover: #256646;
+$color-success: #2e7d5b;
+$color-success-hover: #24644a;
 
 $color-role-client: $color-primary-text;
 $color-role-opposing: $color-danger;
@@ -36,21 +36,21 @@ $radius-control: 8px;
 $radius-card: 12px;
 $radius-pill: 999px;
 $shadow-card:
-  0 1px 2px rgba(16, 24, 40, 0.04),
-  0 4px 16px rgba(16, 24, 40, 0.06);
-$shadow-sticky-end: -6px 0 8px -4px rgba(16, 24, 40, 0.12);
-$shadow-dialog: 0 12px 40px rgba(16, 24, 40, 0.16);
-$focus-ring: 0 0 0 3px rgba(76, 95, 213, 0.25);
+  0 1px 2px rgba(17, 30, 48, 0.04),
+  0 4px 16px rgba(17, 30, 48, 0.06);
+$shadow-sticky-end: -6px 0 8px -4px rgba(17, 30, 48, 0.12);
+$shadow-dialog: 0 12px 40px rgba(17, 30, 48, 0.16);
+$focus-ring: 0 0 0 3px rgba($color-primary-hover, 0.3);
 
 $media-breakpoint-md: 768px;
 $media-breakpoint-lg: 1100px;
 $content-max-width: 1600px;
 
-$color-overlay: rgba(31, 36, 48, 0.4);
+$color-overlay: rgba($color-text, 0.4);
 $control-height: 36px;
 $control-height-small: 28px;
 $checkbox-size: 20px;
-$color-danger-light: #fdf0ef;
+$color-danger-light: #fbeeec;
 $transition-duration: 120ms;
 $dialog-width-sm: 440px;
 $dialog-width-md: 560px;
