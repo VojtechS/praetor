@@ -12,9 +12,10 @@ import styles from './SubjectBasicFields.module.scss';
 
 export interface SubjectBasicFieldsProps {
   form: SubjectForm;
+  isReadOnly: boolean;
 }
 
-export function SubjectBasicFields({ form }: Readonly<SubjectBasicFieldsProps>) {
+export function SubjectBasicFields({ form, isReadOnly }: Readonly<SubjectBasicFieldsProps>) {
   const { register, control, formState } = form;
 
   const countries = useCodelistQuery('countries').data;
@@ -64,6 +65,7 @@ export function SubjectBasicFields({ form }: Readonly<SubjectBasicFieldsProps>) 
             options={toSelectOptions(labels)}
             selectedValues={selectedLabels}
             error={formState.errors.labels?.message}
+            isDisabled={isReadOnly}
           />
         </div>
         <TextField label="Poznámka" registration={register('note')} />

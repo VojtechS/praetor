@@ -10,12 +10,15 @@ function toRelatedSubjectIds(value: string[] | string | false): number[] {
   return value ? [Number(value)] : [];
 }
 
+export const caseSubjectRoleSchema = z.enum(
+  ['CLIENT', 'OPPOSING_PARTY', 'PARTICIPANT', 'DECIDING_AUTHORITY'],
+  { error: 'Vyberte roli' },
+);
+
 export const caseSubjectFormSchema = z
   .object({
     subjectId: z.number({ error: 'Vyberte subjekt' }),
-    role: z.enum(['CLIENT', 'OPPOSING_PARTY', 'PARTICIPANT', 'DECIDING_AUTHORITY'], {
-      error: 'Vyberte roli',
-    }),
+    role: caseSubjectRoleSchema,
     proceduralRole: z.string(),
     materialLegalRole: z.string(),
     legalRepresentativeId: z.number().nullable(),

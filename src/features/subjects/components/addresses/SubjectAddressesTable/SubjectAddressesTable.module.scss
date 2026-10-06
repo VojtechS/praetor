@@ -21,15 +21,6 @@
     }
   }
 
-  &__row {
-    position: relative;
-
-    &:hover {
-      background-color: $color-surface-muted;
-    }
-  }
-
-  // Stretched button: a click anywhere on the row opens the address.
   &__edit {
     padding: 0;
 
@@ -46,17 +37,16 @@
       box-shadow: $focus-ring;
     }
 
-    &::after {
-      content: '';
-      position: absolute;
-      inset: 0;
+    &:disabled {
+      color: $color-text;
+      user-select: text;
+      cursor: text;
     }
   }
 
-  &__remove {
-    position: relative;
-    z-index: 1;
-
+  &__actions {
     width: 1%;
+
+    white-space: nowrap;
   }
 }

@@ -11,12 +11,14 @@ import styles from './SubjectContactsTable.module.scss';
 export interface SubjectContactsTableProps {
   form: SubjectForm;
   fields: UseFieldArrayReturn<SubjectFormInput, 'contacts'>['fields'];
+  isReadOnly: boolean;
   onRemove: (index: number) => void;
 }
 
 export function SubjectContactsTable({
   form,
   fields,
+  isReadOnly,
   onRemove,
 }: Readonly<SubjectContactsTableProps>) {
   const { register, formState } = form;
@@ -25,12 +27,16 @@ export function SubjectContactsTable({
     <table className={styles.subjectContactsTable}>
       <thead>
         <tr>
-          <th scope="col">Kontakt</th>
+          <th scope="col" className={styles.subjectContactsTable__required}>
+            Kontakt
+          </th>
           <th scope="col">Typ kontaktu</th>
           <th scope="col">Pref.</th>
-          <th scope="col">
-            <span className="visuallyHidden">Odebrat</span>
-          </th>
+          {!isReadOnly && (
+            <th scope="col">
+              <span className="visuallyHidden">Odebrat</span>
+            </th>
+          )}
         </tr>
       </thead>
       {fields.map((field, index) => (
@@ -59,19 +65,21 @@ export function SubjectContactsTable({
                 isLabelHidden
               />
             </td>
-            <td>
-              <Button
-                variant="danger"
-                size="small"
-                icon={Trash2}
-                aria-label="Odebrat kontakt"
-                title="Odebrat kontakt"
-                onClick={() => onRemove(index)}
-              />
-            </td>
+            {!isReadOnly && (
+              <td>
+                <Button
+                  variant="danger"
+                  size="small"
+                  icon={Trash2}
+                  aria-label="Odebrat kontakt"
+                  title="Odebrat kontakt"
+                  onClick={() => onRemove(index)}
+                />
+              </td>
+            )}
           </tr>
           <tr>
-            <td colSpan={4}>
+            <td colSpan={isReadOnly ? 3 : 4}>
               <TextField
                 label={`Poznámka ${index + 1}`}
                 registration={register(`contacts.${index}.note`)}

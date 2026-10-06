@@ -1,0 +1,7 @@
+@use '../../../../styles/variables' as *;
+
+.caseSubjectRoleEditForm {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}

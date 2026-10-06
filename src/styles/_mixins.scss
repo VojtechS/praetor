@@ -5,6 +5,13 @@
   font-size: 12px;
 }
 
+@mixin field-label-required {
+  &::after {
+    content: ' *';
+    color: $color-danger;
+  }
+}
+
 @mixin field-control {
   width: 100%;
   min-height: $control-height;

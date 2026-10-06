@@ -1,9 +1,10 @@
 import { Plus } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { CaseSubjectDetailPanel } from '../../features/caseSubjects/components/CaseSubjectDetailPanel/CaseSubjectDetailPanel.tsx';
 import { CaseSubjectList } from '../../features/caseSubjects/components/CaseSubjectList/CaseSubjectList.tsx';
 import { CaseSubjectRemoveDialog } from '../../features/caseSubjects/components/CaseSubjectRemoveDialog/CaseSubjectRemoveDialog.tsx';
+import { CaseSubjectRoleEditDialog } from '../../features/caseSubjects/components/CaseSubjectRoleEditDialog/CaseSubjectRoleEditDialog.tsx';
 import { CaseSubjectRoleDialog } from '../../features/caseSubjects/components/CaseSubjectRoleDialog/CaseSubjectRoleDialog.tsx';
 import {
   useCaseQuery,
@@ -29,6 +30,34 @@ export function CaseSubjectsPage() {
   const selectedItem = items.find((item) => item.subjectId === selectedSubjectId);
   const subjectQuery = useSubjectQuery(selectedSubjectId ?? 0, selectedItem !== undefined);
 
+  const detailRef = useRef<HTMLDivElement>(null);
+  const [closingSubjectId, setClosingSubjectId] = useState<number | null>(null);
+  const isDetailClosing = closingSubjectId !== null && closingSubjectId === selectedSubjectId;
+
+  const handleDetailClose = () => setClosingSubjectId(selectedSubjectId);
+
+  useEffect(() => {
+    if (!isDetailClosing) {
+      return;
+    }
+
+    let isCancelled = false;
+
+    const animations = detailRef.current?.getAnimations() ?? [];
+
+    Promise.allSettled(animations.map((animation) => animation.finished)).then(() => {
+      if (isCancelled) {
+        return;
+      }
+
+      setClosingSubjectId(null);
+      setSelectedSubjectId(null);
+    });
+    return () => {
+      isCancelled = true;
+    };
+  }, [isDetailClosing]);
+
   const caseHeader = caseQuery.data?.data;
   const isDetailOpen = selectedSubjectId !== null;
   const isDetailLoading = caseSubjectsQuery.isPending || subjectQuery.isLoading;
@@ -47,7 +76,7 @@ export function CaseSubjectsPage() {
           role="toolbar"
           aria-label="Akce nad subjekty"
         >
-          <Button variant="primary" icon={Plus} onClick={() => openRoleDialog('add')}>
+          <Button variant="primary" icon={Plus} onClick={openRoleDialog}>
             Přidat subjekt
           </Button>
         </div>
@@ -65,18 +94,23 @@ export function CaseSubjectsPage() {
           isError={caseSubjectsQuery.isError}
         />
 
-        <div className={styles.caseSubjectsPage__detail}>
+        <div
+          className={styles.caseSubjectsPage__detail}
+          ref={detailRef}
+          data-closing={isDetailClosing}
+        >
           <CaseSubjectDetailPanel
             caseSubject={selectedItem}
             subject={subjectQuery.data?.data}
-            onClose={() => setSelectedSubjectId(null)}
+            onClose={handleDetailClose}
             isOpen={isDetailOpen}
             isLoading={isDetailLoading}
           />
         </div>
       </div>
 
-      <CaseSubjectRoleDialog caseId={caseId} items={items} onSaved={setSelectedSubjectId} />
+      <CaseSubjectRoleDialog caseId={caseId} onSaved={setSelectedSubjectId} />
+      <CaseSubjectRoleEditDialog caseId={caseId} items={items} />
       <CaseSubjectRemoveDialog
         caseId={caseId}
         items={items}

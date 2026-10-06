@@ -6,9 +6,10 @@ import styles from './SubjectPersonFields.module.scss';
 
 export interface SubjectPersonFieldsProps {
   form: SubjectForm;
+  isReadOnly: boolean;
 }
 
-export function SubjectPersonFields({ form }: Readonly<SubjectPersonFieldsProps>) {
+export function SubjectPersonFields({ form, isReadOnly }: Readonly<SubjectPersonFieldsProps>) {
   const { register, formState } = form;
 
   const errors = 'physicalPerson' in formState.errors ? formState.errors.physicalPerson : undefined;
@@ -22,11 +23,13 @@ export function SubjectPersonFields({ form }: Readonly<SubjectPersonFieldsProps>
             label="Jméno"
             registration={register('physicalPerson.firstName')}
             error={errors?.firstName?.message}
+            isRequired
           />
           <TextField
             label="Příjmení"
             registration={register('physicalPerson.lastName')}
             error={errors?.lastName?.message}
+            isRequired
           />
           <TextField label="Titul za" registration={register('physicalPerson.titleAfter')} />
         </div>
@@ -45,7 +48,7 @@ export function SubjectPersonFields({ form }: Readonly<SubjectPersonFieldsProps>
             error={errors?.personalId?.message}
           />
         </div>
-        <SubjectDocumentRows form={form} />
+        <SubjectDocumentRows form={form} isReadOnly={isReadOnly} />
       </div>
     </SubjectFormSection>
   );

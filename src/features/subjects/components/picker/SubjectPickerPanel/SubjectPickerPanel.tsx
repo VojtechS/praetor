@@ -66,7 +66,6 @@ export function SubjectPickerPanel({ target }: Readonly<SubjectPickerPanelProps>
 
   function openCard(aresPrefill: string | null) {
     openSubjectCard({ mode: 'create', subjectId: null, aresPrefill, returnTarget: target });
-    closePicker();
   }
 
   function removeRepresentative() {

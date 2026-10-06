@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { ChevronDown } from 'lucide-react';
 import { useId } from 'react';
 import type { UseFormRegisterReturn } from 'react-hook-form';
@@ -12,6 +13,7 @@ export interface MultiSelectFieldProps {
   options: SelectOption[];
   selectedValues: string[];
   error?: string;
+  isDisabled?: boolean;
 }
 
 export function MultiSelectField({
@@ -20,6 +22,7 @@ export function MultiSelectField({
   options,
   selectedValues,
   error,
+  isDisabled = false,
 }: Readonly<MultiSelectFieldProps>) {
   const id = useId();
   const labelId = `${id}-label`;
@@ -35,8 +38,14 @@ export function MultiSelectField({
       </span>
       <details className={styles.multiSelectField__details}>
         <summary
-          className={styles.multiSelectField__summary}
+          className={clsx(
+            styles.multiSelectField__summary,
+            isDisabled && styles['multiSelectField__summary--disabled'],
+          )}
           aria-describedby={error ? errorId : undefined}
+          aria-disabled={isDisabled}
+          tabIndex={isDisabled ? -1 : undefined}
+          onClick={isDisabled ? (event) => event.preventDefault() : undefined}
         >
           <span className={styles.multiSelectField__selected}>{selectedLabels.join(', ')}</span>
           <ChevronDown className={styles.multiSelectField__icon} aria-hidden="true" />

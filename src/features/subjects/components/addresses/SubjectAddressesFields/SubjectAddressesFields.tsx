@@ -12,9 +12,13 @@ import { SubjectFormSection } from '../../card/SubjectFormSection/SubjectFormSec
 
 export interface SubjectAddressesFieldsProps {
   form: SubjectForm;
+  isReadOnly: boolean;
 }
 
-export function SubjectAddressesFields({ form }: Readonly<SubjectAddressesFieldsProps>) {
+export function SubjectAddressesFields({
+  form,
+  isReadOnly,
+}: Readonly<SubjectAddressesFieldsProps>) {
   const { fields, append, update, remove } = useFieldArray({
     control: form.control,
     name: 'addresses',
@@ -36,9 +40,11 @@ export function SubjectAddressesFields({ form }: Readonly<SubjectAddressesFields
     <SubjectFormSection
       title="Adresy"
       action={
-        <Button icon={Plus} onClick={() => setDialog({ index: null })}>
-          Přidat adresu
-        </Button>
+        isReadOnly ? undefined : (
+          <Button icon={Plus} onClick={() => setDialog({ index: null })}>
+            Přidat adresu
+          </Button>
+        )
       }
     >
       {fields.length === 0 ? (
@@ -47,6 +53,7 @@ export function SubjectAddressesFields({ form }: Readonly<SubjectAddressesFields
         <SubjectAddressesTable
           fields={fields}
           countries={countries}
+          isReadOnly={isReadOnly}
           onEdit={(index) => setDialog({ index })}
           onRemove={remove}
         />

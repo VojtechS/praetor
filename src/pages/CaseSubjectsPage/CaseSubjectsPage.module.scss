@@ -57,7 +57,13 @@
   }
 }
 
-// Below the breakpoint the detail covers the whole page.
+@media (max-width: $media-breakpoint-md) {
+  .caseSubjectsPage__header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
 @media (max-width: $media-breakpoint-lg - 1px) {
   .caseSubjectsPage {
     &__layout[data-detail-open='true'] {
@@ -66,13 +72,42 @@
 
     &__layout[data-detail-open='true'] &__detail {
       position: fixed;
-      inset: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
       z-index: 20;
 
+      width: min($detail-panel-width, 90vw);
       padding: $space-3;
       overflow-y: auto;
 
       background-color: $color-bg-page;
+      box-shadow: $shadow-sticky-end;
+
+      animation: caseSubjectsPage-slide-in $transition-duration ease-out;
+
+      &[data-closing='true'] {
+        animation: caseSubjectsPage-slide-out $transition-duration ease-in forwards;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        &,
+        &[data-closing='true'] {
+          animation-duration: 0.01ms;
+        }
+      }
     }
+  }
+}
+
+@keyframes caseSubjectsPage-slide-in {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes caseSubjectsPage-slide-out {
+  to {
+    transform: translateX(100%);
   }
 }

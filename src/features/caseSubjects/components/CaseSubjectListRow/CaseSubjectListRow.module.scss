@@ -8,20 +8,29 @@
 
     font-size: 14px;
     font-weight: 400;
+    text-align: left;
+    vertical-align: middle;
   }
 
-  // The name is indented under the group heading.
   &__nameCell {
     padding-left: $space-6;
 
     font-weight: 500;
   }
 
+  &__actions {
+    position: sticky;
+    right: 0;
+
+    background-color: $color-surface;
+    box-shadow: $shadow-sticky-end;
+    white-space: nowrap;
+  }
+
   &--selected > :first-child {
     box-shadow: inset 2px 0 0 $color-primary;
   }
 
-  // The representative is shown on a second line of the same subject.
   &--open {
     border-bottom: 0;
 
@@ -60,7 +69,6 @@
     color: $color-primary-text;
   }
 
-  // Only the name selects the subject.
   &__link {
     padding: 0;
     border: 0;

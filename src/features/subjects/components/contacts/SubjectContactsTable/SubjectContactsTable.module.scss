@@ -11,6 +11,10 @@
     padding: $space-2;
   }
 
+  &__required {
+    @include field-label-required;
+  }
+
   th:nth-child(2),
   td:nth-child(2) {
     width: 120px;
@@ -29,7 +33,6 @@
     vertical-align: top;
   }
 
-  // The note is on its own line under the contact, the pair is separated by a line.
   &__contact {
     border-bottom: 1px solid $color-border;
 

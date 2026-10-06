@@ -18,7 +18,6 @@ export interface CaseSubjectRoleFormProps {
   defaultValues: Partial<CaseSubjectFormInput>;
   proceduralRoleOptions: SelectOption[];
   materialLegalRoleOptions: SelectOption[];
-  isEdit: boolean;
   onSave: (values: CaseSubjectFormValues) => void;
 }
 
@@ -27,13 +26,13 @@ export function CaseSubjectRoleForm({
   defaultValues,
   proceduralRoleOptions,
   materialLegalRoleOptions,
-  isEdit,
   onSave,
 }: Readonly<CaseSubjectRoleFormProps>) {
   const picker = useCaseSubjectsUiStore((state) => state.picker);
   const togglePicker = useCaseSubjectsUiStore((state) => state.togglePicker);
   const pickedSubject = useCaseSubjectsUiStore((state) => state.pickedSubject);
   const clearPickedSubject = useCaseSubjectsUiStore((state) => state.clearPickedSubject);
+
   const { register, handleSubmit, setValue, getValues, control, formState } = useForm<
     CaseSubjectFormInput,
     unknown,
@@ -42,8 +41,10 @@ export function CaseSubjectRoleForm({
 
   const subjectId: number | undefined = useWatch({ control, name: 'subjectId' });
   const representativeId = useWatch({ control, name: 'legalRepresentativeId' });
+
   const subjectQuery = useSubjectQuery(subjectId ?? 0);
   const representativeQuery = useSubjectQuery(representativeId ?? 0);
+
   const subject = subjectQuery.data?.data;
   const representative = representativeQuery.data?.data;
 
@@ -74,7 +75,6 @@ export function CaseSubjectRoleForm({
         representativeName={representative && getSubjectDisplayName(representative)}
         proceduralRoleOptions={proceduralRoleOptions}
         materialLegalRoleOptions={materialLegalRoleOptions}
-        isEdit={isEdit}
         openPickerTarget={picker}
         onPickSubject={() => togglePicker('subject')}
         onPickRepresentative={() => togglePicker('representative')}

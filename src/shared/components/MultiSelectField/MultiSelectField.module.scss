@@ -26,6 +26,19 @@
     &::-webkit-details-marker {
       display: none;
     }
+
+    // Not expandable, but the selected labels stay legible and copyable.
+    &--disabled {
+      background-color: $color-surface-muted;
+      user-select: text;
+      cursor: text;
+
+      &:focus-visible,
+      &:focus-within {
+        border-color: $color-border-strong;
+        box-shadow: none;
+      }
+    }
   }
 
   &__selected {

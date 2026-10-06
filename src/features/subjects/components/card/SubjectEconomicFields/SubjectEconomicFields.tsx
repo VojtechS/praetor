@@ -32,6 +32,7 @@ export function SubjectEconomicFields({
               label="Název společnosti"
               registration={register('economicSubject.companyName')}
               error={errors?.companyName?.message}
+              isRequired
             />
           </div>
           <TextField

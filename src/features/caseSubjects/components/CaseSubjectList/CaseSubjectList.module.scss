@@ -16,10 +16,22 @@
   }
 
   &__table {
+    width: 100%;
     min-width: 790px;
+
+    border-collapse: collapse;
+    white-space: nowrap;
   }
 
-  &__header > * {
+  &__header th {
     @include table-heading;
+  }
+
+  &__actionsHeading {
+    position: sticky;
+    right: 0;
+
+    background-color: $color-surface;
+    box-shadow: $shadow-sticky-end;
   }
 }

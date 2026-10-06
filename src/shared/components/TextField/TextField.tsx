@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { useId } from 'react';
 import type { UseFormRegisterReturn } from 'react-hook-form';
 import { FieldError } from '../FieldError/FieldError.tsx';
@@ -10,6 +11,7 @@ export interface TextFieldProps {
   type?: 'text' | 'date';
   placeholder?: string;
   isLabelHidden?: boolean;
+  isRequired?: boolean;
   disabled?: boolean;
 }
 
@@ -20,6 +22,7 @@ export function TextField({
   type = 'text',
   placeholder,
   isLabelHidden = false,
+  isRequired = false,
   disabled = false,
 }: Readonly<TextFieldProps>) {
   const id = useId();
@@ -27,7 +30,14 @@ export function TextField({
 
   return (
     <div className={styles.textField}>
-      <label htmlFor={id} className={isLabelHidden ? 'visuallyHidden' : styles.textField__label}>
+      <label
+        htmlFor={id}
+        className={
+          isLabelHidden
+            ? 'visuallyHidden'
+            : clsx(styles.textField__label, isRequired && styles['textField__label--required'])
+        }
+      >
         {label}
       </label>
       <input
@@ -35,6 +45,7 @@ export function TextField({
         type={type}
         placeholder={placeholder}
         className={styles.textField__control}
+        aria-required={isRequired}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? errorId : undefined}
         disabled={disabled}

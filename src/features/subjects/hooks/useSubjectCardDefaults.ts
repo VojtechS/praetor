@@ -21,7 +21,7 @@ function getCardParams(
   const subjectId = subjectCard?.subjectId ?? 0;
 
   return {
-    isEdit: subjectCard?.mode === 'edit',
+    isEdit: subjectCard?.mode === 'edit' || subjectCard?.mode === 'view',
     subjectId,
     regNumber,
     formKey: `${subjectCard?.mode}-${subjectId}-${regNumber}`,

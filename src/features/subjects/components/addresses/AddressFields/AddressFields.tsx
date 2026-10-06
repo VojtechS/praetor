@@ -39,7 +39,12 @@ export function AddressFields({ form, countryOptions }: Readonly<AddressFieldsPr
         <TextField label="č.p." registration={register('houseNumber')} />
         <TextField label="č.o." registration={register('orientationNumber')} />
       </div>
-      <TextField label="Obec" registration={register('city')} error={errors.city?.message} />
+      <TextField
+        label="Obec"
+        registration={register('city')}
+        error={errors.city?.message}
+        isRequired
+      />
       <TextField label="PSČ" registration={register('zipCode')} error={errors.zipCode?.message} />
       <TextField label="Část obce" registration={register('cityPart')} />
       <TextField label="Kraj" registration={register('region')} />
@@ -49,6 +54,7 @@ export function AddressFields({ form, countryOptions }: Readonly<AddressFieldsPr
         options={countryOptions}
         error={errors.country?.message}
         hasEmptyOption
+        isRequired
       />
       <TextField label="Okres" registration={register('district')} />
       <div className={clsx(styles.addressFields__full, styles.addressFields__footer)}>

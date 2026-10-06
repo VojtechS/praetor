@@ -22,10 +22,10 @@ export function CaseSubjectGroupHeader({ role, count }: Readonly<CaseSubjectGrou
   const { icon: Icon, modifier } = GROUP_STYLES[role];
 
   return (
-    <div role="row">
-      <div
-        role="rowheader"
-        aria-colspan={6}
+    <tr>
+      <th
+        scope="colgroup"
+        colSpan={6}
         className={clsx(
           styles.caseSubjectGroupHeader,
           styles[`caseSubjectGroupHeader--${modifier}`],
@@ -36,7 +36,7 @@ export function CaseSubjectGroupHeader({ role, count }: Readonly<CaseSubjectGrou
           <span>{CASE_SUBJECT_ROLE_GROUP_LABELS[role]}</span>
           <Badge>{count}</Badge>
         </span>
-      </div>
-    </div>
+      </th>
+    </tr>
   );
 }

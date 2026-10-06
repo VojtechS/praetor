@@ -21,6 +21,7 @@ export function SubjectCardDialog() {
   const subjectCard = useCaseSubjectsUiStore((state) => state.subjectCard);
   const closeSubjectCard = useCaseSubjectsUiStore((state) => state.closeSubjectCard);
   const setPickedSubject = useCaseSubjectsUiStore((state) => state.setPickedSubject);
+  const closePicker = useCaseSubjectsUiStore((state) => state.closePicker);
 
   const [aresRegNumber, setAresRegNumber] = useState<string | null>(null);
 
@@ -30,8 +31,9 @@ export function SubjectCardDialog() {
   const { defaultValues, subject, formKey } = useSubjectCardDefaults(subjectCard, aresRegNumber);
 
   const isSaving = createMutation.isPending || updateMutation.isPending;
+  const isReadOnly = subjectCard?.mode === 'view';
   const title =
-    subject && subjectCard?.mode === 'edit' ? getSubjectDisplayName(subject) : 'Nový subjekt';
+    subject && subjectCard?.mode !== 'create' ? getSubjectDisplayName(subject) : 'Nový subjekt';
 
   function close() {
     setAresRegNumber(null);
@@ -41,6 +43,7 @@ export function SubjectCardDialog() {
   function handleCreated(subjectId: number) {
     if (subjectCard?.returnTarget) {
       setPickedSubject(subjectCard.returnTarget, subjectId);
+      closePicker();
     }
 
     close();
@@ -63,17 +66,19 @@ export function SubjectCardDialog() {
       size="xl"
       isFocusedOnOpen
       onClose={close}
-      headerExtra={<SubjectAresSearch onSelect={setAresRegNumber} />}
+      headerExtra={isReadOnly ? undefined : <SubjectAresSearch onSelect={setAresRegNumber} />}
       footer={
-        <Button
-          type="submit"
-          form={SUBJECT_FORM_ID}
-          variant="success"
-          icon={Save}
-          disabled={isSaving}
-        >
-          Uložit
-        </Button>
+        isReadOnly ? undefined : (
+          <Button
+            type="submit"
+            form={SUBJECT_FORM_ID}
+            variant="success"
+            icon={Save}
+            disabled={isSaving}
+          >
+            Uložit
+          </Button>
+        )
       }
     >
       {defaultValues ? (
@@ -81,6 +86,7 @@ export function SubjectCardDialog() {
           key={formKey}
           formId={SUBJECT_FORM_ID}
           defaultValues={defaultValues}
+          isReadOnly={isReadOnly}
           onSave={handleSave}
         />
       ) : (

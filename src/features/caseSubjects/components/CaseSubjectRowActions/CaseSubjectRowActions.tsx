@@ -13,20 +13,20 @@ export interface CaseSubjectRowActionsProps {
 }
 
 export function CaseSubjectRowActions({ caseId, item }: Readonly<CaseSubjectRowActionsProps>) {
-  const openRoleDialog = useCaseSubjectsUiStore((state) => state.openRoleDialog);
+  const openRoleEdit = useCaseSubjectsUiStore((state) => state.openRoleEdit);
   const openSubjectCard = useCaseSubjectsUiStore((state) => state.openSubjectCard);
   const requestRemove = useCaseSubjectsUiStore((state) => state.requestRemove);
 
   const updateMutation = useUpdateCaseSubjectMutation(caseId);
 
-  function openCard(subjectId: number) {
-    openSubjectCard({ mode: 'edit', subjectId, aresPrefill: null, returnTarget: null });
+  function openCard(subjectId: number, mode: 'edit' | 'view' = 'edit') {
+    openSubjectCard({ mode, subjectId, aresPrefill: null, returnTarget: null });
   }
 
   const menuItems: DropdownMenuItem[] = [
     {
       label: 'Nastavit role',
-      onSelect: () => openRoleDialog('edit', item.id),
+      onSelect: () => openRoleEdit(item.id),
     },
     {
       label: 'Nastavit jako hlavního plátce',
@@ -45,7 +45,7 @@ export function CaseSubjectRowActions({ caseId, item }: Readonly<CaseSubjectRowA
     {
       label: 'Zobrazit právního zástupce',
       disabled: !item.legalRepresentativeId,
-      onSelect: () => item.legalRepresentativeId && openCard(item.legalRepresentativeId),
+      onSelect: () => item.legalRepresentativeId && openCard(item.legalRepresentativeId, 'view'),
     },
   ];
 

@@ -11,9 +11,10 @@ import styles from './SubjectDocumentRows.module.scss';
 
 export interface SubjectDocumentRowsProps {
   form: SubjectForm;
+  isReadOnly: boolean;
 }
 
-export function SubjectDocumentRows({ form }: Readonly<SubjectDocumentRowsProps>) {
+export function SubjectDocumentRows({ form, isReadOnly }: Readonly<SubjectDocumentRowsProps>) {
   const { register, control, formState } = form;
 
   const documentTypes = useCodelistQuery('document-types').data;
@@ -35,6 +36,7 @@ export function SubjectDocumentRows({ form }: Readonly<SubjectDocumentRowsProps>
             label="Číslo dokladu"
             registration={register(`physicalPerson.documents.${index}.number`)}
             error={personErrors?.documents?.[index]?.number?.message}
+            isRequired
           />
           <SelectField
             label="Typ dokladu"
@@ -42,21 +44,25 @@ export function SubjectDocumentRows({ form }: Readonly<SubjectDocumentRowsProps>
             options={toSelectOptions(documentTypes)}
             hasEmptyOption
           />
-          <Button
-            variant="danger"
-            size="small"
-            icon={Trash2}
-            aria-label="Odebrat doklad"
-            title="Odebrat doklad"
-            onClick={() => remove(index)}
-          />
+          {!isReadOnly && (
+            <Button
+              variant="danger"
+              size="small"
+              icon={Trash2}
+              aria-label="Odebrat doklad"
+              title="Odebrat doklad"
+              onClick={() => remove(index)}
+            />
+          )}
         </div>
       ))}
-      <div>
-        <Button variant="ghost" icon={Plus} onClick={() => append({ number: '', type: '' })}>
-          Přidat doklad
-        </Button>
-      </div>
+      {!isReadOnly && (
+        <div>
+          <Button variant="ghost" icon={Plus} onClick={() => append({ number: '', type: '' })}>
+            Přidat doklad
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

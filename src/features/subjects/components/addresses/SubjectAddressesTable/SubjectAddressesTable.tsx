@@ -1,4 +1,4 @@
-import { Trash2 } from 'lucide-react';
+import { Pencil, Trash2 } from 'lucide-react';
 import type { FieldArrayWithId } from 'react-hook-form';
 import { Button } from '../../../../../shared/components/Button/Button.tsx';
 import type { CodelistItem } from '../../../../codelists/api/codelistApi/codelistApi.types.ts';
@@ -10,6 +10,7 @@ import styles from './SubjectAddressesTable.module.scss';
 export interface SubjectAddressesTableProps {
   fields: FieldArrayWithId<SubjectFormInput, 'addresses'>[];
   countries: CodelistItem[] | undefined;
+  isReadOnly: boolean;
   onEdit: (index: number) => void;
   onRemove: (index: number) => void;
 }
@@ -17,6 +18,7 @@ export interface SubjectAddressesTableProps {
 export function SubjectAddressesTable({
   fields,
   countries,
+  isReadOnly,
   onEdit,
   onRemove,
 }: Readonly<SubjectAddressesTableProps>) {
@@ -26,14 +28,16 @@ export function SubjectAddressesTable({
         <tr>
           <th scope="col">Adresa</th>
           <th scope="col">Poznámka</th>
-          <th scope="col">
-            <span className="visuallyHidden">Odebrat</span>
-          </th>
+          {!isReadOnly && (
+            <th scope="col">
+              <span className="visuallyHidden">Akce</span>
+            </th>
+          )}
         </tr>
       </thead>
       <tbody>
         {fields.map((field, index) => (
-          <tr key={field.id} className={styles.subjectAddressesTable__row}>
+          <tr key={field.id}>
             <td>
               <button
                 type="button"
@@ -44,16 +48,26 @@ export function SubjectAddressesTable({
               </button>
             </td>
             <td>{getAddressTypeNote(field)}</td>
-            <td className={styles.subjectAddressesTable__remove}>
-              <Button
-                variant="danger"
-                size="small"
-                icon={Trash2}
-                aria-label="Odebrat adresu"
-                title="Odebrat adresu"
-                onClick={() => onRemove(index)}
-              />
-            </td>
+            {!isReadOnly && (
+              <td className={styles.subjectAddressesTable__actions}>
+                <Button
+                  variant="ghost"
+                  size="small"
+                  icon={Pencil}
+                  aria-label="Upravit adresu"
+                  title="Upravit adresu"
+                  onClick={() => onEdit(index)}
+                />
+                <Button
+                  variant="danger"
+                  size="small"
+                  icon={Trash2}
+                  aria-label="Odebrat adresu"
+                  title="Odebrat adresu"
+                  onClick={() => onRemove(index)}
+                />
+              </td>
+            )}
           </tr>
         ))}
       </tbody>

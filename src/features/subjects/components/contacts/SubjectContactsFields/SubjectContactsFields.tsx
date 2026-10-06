@@ -12,9 +12,10 @@ import styles from './SubjectContactsFields.module.scss';
 
 export interface SubjectContactsFieldsProps {
   form: SubjectForm;
+  isReadOnly: boolean;
 }
 
-export function SubjectContactsFields({ form }: Readonly<SubjectContactsFieldsProps>) {
+export function SubjectContactsFields({ form, isReadOnly }: Readonly<SubjectContactsFieldsProps>) {
   const type = useWatch({ control: form.control, name: 'type' });
 
   const dataBoxId = useWatch({ control: form.control, name: 'dataBoxId' });
@@ -34,14 +35,7 @@ export function SubjectContactsFields({ form }: Readonly<SubjectContactsFieldsPr
   }
 
   return (
-    <SubjectFormSection
-      title="Kontakty"
-      action={
-        <Button icon={Plus} onClick={addContact}>
-          Přidat kontakt
-        </Button>
-      }
-    >
+    <SubjectFormSection title="Kontakty">
       <div className={styles.subjectContactsFields}>
         <div className={styles.subjectContactsFields__dataBox}>
           <TextField
@@ -49,7 +43,7 @@ export function SubjectContactsFields({ form }: Readonly<SubjectContactsFieldsPr
             registration={form.register('dataBoxId')}
             error={form.formState.errors.dataBoxId?.message}
           />
-          {hasEconomicSubject(type) && (
+          {hasEconomicSubject(type) && !isReadOnly && (
             <Button
               icon={Search}
               disabled={!canSearch}
@@ -62,7 +56,19 @@ export function SubjectContactsFields({ form }: Readonly<SubjectContactsFieldsPr
         {fields.length === 0 ? (
           <p className="emptyState">Žádné kontakty</p>
         ) : (
-          <SubjectContactsTable form={form} fields={fields} onRemove={remove} />
+          <SubjectContactsTable
+            form={form}
+            fields={fields}
+            isReadOnly={isReadOnly}
+            onRemove={remove}
+          />
+        )}
+        {!isReadOnly && (
+          <div>
+            <Button variant="ghost" icon={Plus} onClick={addContact}>
+              Přidat kontakt
+            </Button>
+          </div>
         )}
       </div>
     </SubjectFormSection>

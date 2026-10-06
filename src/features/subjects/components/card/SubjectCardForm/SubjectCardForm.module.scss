@@ -6,9 +6,26 @@
   align-items: start;
   gap: $space-4;
 
-  // The two columns of the card stack below the breakpoint.
   @media (max-width: $media-breakpoint-lg - 1px) {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  &__fieldset {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+
+    &:disabled {
+      input,
+      select,
+      textarea {
+        color: $color-text;
+        user-select: text;
+        cursor: text;
+      }
+    }
   }
 
   &__column {

@@ -12,6 +12,7 @@ export interface SubjectPickerFieldProps {
   error?: string;
   disabled?: boolean;
   isExpanded?: boolean;
+  isRequired?: boolean;
 }
 
 export function SubjectPickerField({
@@ -22,6 +23,7 @@ export function SubjectPickerField({
   error,
   disabled = false,
   isExpanded = false,
+  isRequired = false,
 }: Readonly<SubjectPickerFieldProps>) {
   const id = useId();
   const labelId = `${id}-label`;
@@ -30,7 +32,13 @@ export function SubjectPickerField({
 
   return (
     <div className={styles.subjectPickerField}>
-      <span id={labelId} className={styles.subjectPickerField__label}>
+      <span
+        id={labelId}
+        className={clsx(
+          styles.subjectPickerField__label,
+          isRequired && styles['subjectPickerField__label--required'],
+        )}
+      >
         {label}
       </span>
       <button

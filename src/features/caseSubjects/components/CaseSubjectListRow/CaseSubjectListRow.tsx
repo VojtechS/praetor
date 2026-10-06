@@ -1,7 +1,6 @@
 import { Building2, Landmark, Scale, Star, User, Wallet } from 'lucide-react';
 import clsx from 'clsx';
 import { memo } from 'react';
-import columnStyles from '../../../../styles/caseSubjectListColumns.module.scss';
 import { checkValue } from '../../../../shared/utils/checkValue.ts';
 import type { CodelistItem } from '../../../codelists/api/codelistApi/codelistApi.types.ts';
 import { getCodelistLabel } from '../../../codelists/utils/codelistUtils.ts';
@@ -51,15 +50,8 @@ export const CaseSubjectListRow = memo(function CaseSubjectListRowView({
 
   return (
     <>
-      <div
-        role="row"
-        className={clsx(
-          rowClass,
-          columnStyles.caseSubjectListGrid,
-          hasRepresentative && styles['caseSubjectListRow--open'],
-        )}
-      >
-        <div role="rowheader" className={styles.caseSubjectListRow__nameCell}>
+      <tr className={clsx(rowClass, hasRepresentative && styles['caseSubjectListRow--open'])}>
+        <th scope="row" className={styles.caseSubjectListRow__nameCell}>
           <span className={styles.caseSubjectListRow__name}>
             <TypeIcon item={item} />
             <button
@@ -85,26 +77,24 @@ export const CaseSubjectListRow = memo(function CaseSubjectListRowView({
               />
             )}
           </span>
-        </div>
-        <div role="cell">
-          {getSubjectIdentification(item.subjectRegNumber, item.subjectBirthDate)}
-        </div>
-        <div role="cell">{getCodelistLabel(materialLegalRoles, item.materialLegalRole)}</div>
-        <div role="cell">{getCodelistLabel(proceduralRoles, item.proceduralRole)}</div>
-        <div role="cell">{checkValue(item.caseFileNumber)}</div>
-        <div role="cell" className={styles.caseSubjectListRow__actions}>
+        </th>
+        <td>{getSubjectIdentification(item.subjectRegNumber, item.subjectBirthDate)}</td>
+        <td>{getCodelistLabel(materialLegalRoles, item.materialLegalRole)}</td>
+        <td>{getCodelistLabel(proceduralRoles, item.proceduralRole)}</td>
+        <td>{checkValue(item.caseFileNumber)}</td>
+        <td rowSpan={hasRepresentative ? 2 : 1} className={styles.caseSubjectListRow__actions}>
           <CaseSubjectRowActions caseId={caseId} item={item} />
-        </div>
-      </div>
+        </td>
+      </tr>
       {hasRepresentative && (
-        <div role="row" className={clsx(rowClass, styles.caseSubjectListRow__representativeRow)}>
-          <div role="cell" aria-colspan={6}>
+        <tr className={clsx(rowClass, styles.caseSubjectListRow__representativeRow)}>
+          <td colSpan={5}>
             <span className={styles.caseSubjectListRow__representative}>
               <Scale className={styles.caseSubjectListRow__icon} aria-hidden="true" />
               {formatLegalRepresentative(item)}
             </span>
-          </div>
-        </div>
+          </td>
+        </tr>
       )}
     </>
   );

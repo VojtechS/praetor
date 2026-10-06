@@ -15,7 +15,6 @@ export interface CaseSubjectRoleFieldsProps {
   representativeName?: string;
   proceduralRoleOptions: SelectOption[];
   materialLegalRoleOptions: SelectOption[];
-  isEdit: boolean;
   openPickerTarget: 'subject' | 'representative' | null;
   onPickSubject: () => void;
   onPickRepresentative: () => void;
@@ -28,7 +27,6 @@ export function CaseSubjectRoleFields({
   representativeName,
   proceduralRoleOptions,
   materialLegalRoleOptions,
-  isEdit,
   openPickerTarget,
   onPickSubject,
   onPickRepresentative,
@@ -42,8 +40,8 @@ export function CaseSubjectRoleFields({
           placeholder="Vyberte subjekt"
           onClick={onPickSubject}
           error={errors.subjectId?.message}
-          disabled={isEdit}
           isExpanded={openPickerTarget === 'subject'}
+          isRequired
         />
       </div>
       {openPickerTarget === 'subject' && (
@@ -56,6 +54,7 @@ export function CaseSubjectRoleFields({
         registration={register('role')}
         options={CASE_SUBJECT_ROLE_OPTIONS}
         error={errors.role?.message}
+        isRequired
       />
       <SelectField
         label="Procesní role"

@@ -17,10 +17,16 @@ import styles from './SubjectCardForm.module.scss';
 export interface SubjectCardFormProps {
   formId: string;
   defaultValues: SubjectFormInput;
+  isReadOnly: boolean;
   onSave: (values: SubjectFormValues) => void;
 }
 
-export function SubjectCardForm({ formId, defaultValues, onSave }: Readonly<SubjectCardFormProps>) {
+export function SubjectCardForm({
+  formId,
+  defaultValues,
+  isReadOnly,
+  onSave,
+}: Readonly<SubjectCardFormProps>) {
   const form = useForm<SubjectFormInput, unknown, SubjectFormValues>({
     resolver: zodResolver(subjectFormSchema),
     defaultValues,
@@ -29,19 +35,21 @@ export function SubjectCardForm({ formId, defaultValues, onSave }: Readonly<Subj
 
   return (
     <form id={formId} onSubmit={(event) => void form.handleSubmit(onSave)(event)} noValidate>
-      <div className={styles.subjectCardForm}>
-        <div className={styles.subjectCardForm__column}>
-          <SubjectBasicFields form={form} />
-          {hasEconomicSubject(type) && (
-            <SubjectEconomicFields form={form} hasLegalForm={hasLegalForm(type)} />
-          )}
-          {hasPhysicalPerson(type) && <SubjectPersonFields form={form} />}
+      <fieldset className={styles.subjectCardForm__fieldset} disabled={isReadOnly}>
+        <div className={styles.subjectCardForm}>
+          <div className={styles.subjectCardForm__column}>
+            <SubjectBasicFields form={form} isReadOnly={isReadOnly} />
+            {hasEconomicSubject(type) && (
+              <SubjectEconomicFields form={form} hasLegalForm={hasLegalForm(type)} />
+            )}
+            {hasPhysicalPerson(type) && <SubjectPersonFields form={form} isReadOnly={isReadOnly} />}
+          </div>
+          <div className={styles.subjectCardForm__column}>
+            <SubjectAddressesFields form={form} isReadOnly={isReadOnly} />
+            <SubjectContactsFields form={form} isReadOnly={isReadOnly} />
+          </div>
         </div>
-        <div className={styles.subjectCardForm__column}>
-          <SubjectAddressesFields form={form} />
-          <SubjectContactsFields form={form} />
-        </div>
-      </div>
+      </fieldset>
     </form>
   );
 }

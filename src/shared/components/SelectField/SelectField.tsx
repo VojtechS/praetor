@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { useId } from 'react';
 import type { UseFormRegisterReturn } from 'react-hook-form';
 import { FieldError } from '../FieldError/FieldError.tsx';
@@ -15,6 +16,7 @@ export interface SelectFieldProps {
   error?: string;
   hasEmptyOption?: boolean;
   isLabelHidden?: boolean;
+  isRequired?: boolean;
   disabled?: boolean;
 }
 
@@ -25,6 +27,7 @@ export function SelectField({
   error,
   hasEmptyOption = false,
   isLabelHidden = false,
+  isRequired = false,
   disabled = false,
 }: Readonly<SelectFieldProps>) {
   const id = useId();
@@ -32,12 +35,20 @@ export function SelectField({
 
   return (
     <div className={styles.selectField}>
-      <label htmlFor={id} className={isLabelHidden ? 'visuallyHidden' : styles.selectField__label}>
+      <label
+        htmlFor={id}
+        className={
+          isLabelHidden
+            ? 'visuallyHidden'
+            : clsx(styles.selectField__label, isRequired && styles['selectField__label--required'])
+        }
+      >
         {label}
       </label>
       <select
         id={id}
         className={styles.selectField__control}
+        aria-required={isRequired}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? errorId : undefined}
         disabled={disabled}

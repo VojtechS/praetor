@@ -8,6 +8,10 @@
 
   &__label {
     @include field-label;
+
+    &--required {
+      @include field-label-required;
+    }
   }
 
   &__control {
