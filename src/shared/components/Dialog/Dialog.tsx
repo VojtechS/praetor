@@ -57,6 +57,8 @@ export function Dialog({
   }
 
   return (
+    // Backdrop click is a mouse-only shortcut; keyboard users close the modal natively with Esc.
+    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <dialog
       ref={dialogRef}
       className={clsx(styles.dialog, styles[`dialog--${size}`])}
