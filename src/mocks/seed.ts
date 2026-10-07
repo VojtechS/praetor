@@ -2,7 +2,7 @@ import type {
   CaseSubject,
   CaseSubjectRole,
 } from '../features/caseSubjects/api/caseSubjectApi/caseSubjectApi.types.ts';
-import type { Case } from '../features/caseSubjects/api/caseApi/caseApi.types.ts';
+import type { Case, SubjectCase } from '../features/caseSubjects/api/caseApi/caseApi.types.ts';
 import type {
   CodelistItem,
   CodelistName,
@@ -111,6 +111,27 @@ export const seedCase: Case = {
   number: '2026/001',
   name: '[VZOR ODVOLÁNÍ] — INVESTIT Group',
 };
+
+export const seedOtherSubjectCases: (SubjectCase & { subjectId: number })[] = [
+  {
+    subjectId: 1,
+    id: '2025-087',
+    number: '2025/087',
+    name: '[VZOR SMLOUVA] — Kupní smlouva INVESTIT Group',
+    role: 'CLIENT',
+    proceduralRole: 'PLAINTIFF',
+    materialLegalRole: null,
+  },
+  {
+    subjectId: 3,
+    id: '2025-112',
+    number: '2025/112',
+    name: '[VZOR ŽALOBA] — Spor o dodávku',
+    role: 'OPPOSING_PARTY',
+    proceduralRole: 'DEFENDANT',
+    materialLegalRole: 'SELLER',
+  },
+];
 
 export const seedSubjects: Subject[] = [
   createSubject({
@@ -378,9 +399,23 @@ export const seedCodelists: Record<CodelistName, CodelistItem[]> = {
   ],
   'legal-forms': [
     { code: 'LLC', label: 'Společnost s ručením omezeným' },
-    { code: 'JSC', label: 'Akciová společnost' },
-    { code: 'GENERAL_PARTNERSHIP', label: 'Veřejná obchodní společnost' },
-    { code: 'ASSOCIATION', label: 'Spolek' },
+    { code: 'DOMESTIC_ENTREPRENEUR', label: 'Podnikající osoba tuzemská' },
+    {
+      code: 'TRADE_UNREGISTERED',
+      label: 'Fyzická osoba podnikající dle živnostenského zákona nezapsaná v obchodním rejstříku',
+    },
+    {
+      code: 'TRADE_REGISTERED',
+      label: 'Fyzická osoba podnikající dle živnostenského zákona zapsaná v obchodním rejstříku',
+    },
+    {
+      code: 'FARMER_UNREGISTERED',
+      label: 'Samostatně hospodařící rolník nezapsaný v obchodním rejstříku',
+    },
+    {
+      code: 'FARMER_REGISTERED',
+      label: 'Samostatně hospodařící rolník zapsaný v obchodním rejstříku',
+    },
   ],
   'document-types': [
     { code: 'ID_CARD', label: 'Občanský průkaz' },
@@ -388,9 +423,10 @@ export const seedCodelists: Record<CodelistName, CodelistItem[]> = {
     { code: 'DRIVING_LICENCE', label: 'Řidičský průkaz' },
   ],
   labels: [
+    { code: 'EMAIL_SUBJECT', label: 'Email subjekt' },
     { code: 'VIP', label: 'VIP' },
-    { code: 'LONG_TERM', label: 'Dlouhodobý klient' },
-    { code: 'PAYMENT_RISK', label: 'Platební riziko' },
+    { code: 'COURT', label: 'Soud' },
+    { code: 'STATE_ADMIN', label: 'Orgán státní správy' },
   ],
   groups: [
     { code: 'BUSINESS_PARTNERS', label: 'Obchodní partneři' },

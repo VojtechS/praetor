@@ -15,9 +15,9 @@ export function useSubjectSearch(onSearch: (term: string) => void) {
     setIsTooShort(false);
     clearTimeout(timer.current);
 
-    if (trimmed.length === 0 || trimmed.length >= MIN_SEARCH_LENGTH) {
-      timer.current = setTimeout(() => onSearch(trimmed), SEARCH_DEBOUNCE_MS);
-    }
+    const term = trimmed.length < MIN_SEARCH_LENGTH ? '' : trimmed;
+
+    timer.current = setTimeout(() => onSearch(term), SEARCH_DEBOUNCE_MS);
   }
 
   function searchNow() {

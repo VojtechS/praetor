@@ -30,7 +30,7 @@ export function SubjectContactsTable({
       <thead>
         <tr>
           <th scope="col" className={styles.subjectContactsTable__required}>
-            Kontakt
+            Spojení
           </th>
           <th scope="col">Typ</th>
           <th scope="col">Pref.</th>
@@ -46,7 +46,7 @@ export function SubjectContactsTable({
           <tr>
             <td>
               <TextField
-                label={`Kontakt ${index + 1}`}
+                label={`Spojení ${index + 1}`}
                 registration={register(`contacts.${index}.value`)}
                 error={errors.contacts?.[index]?.value?.message}
                 isLabelHidden
@@ -54,7 +54,7 @@ export function SubjectContactsTable({
             </td>
             <td>
               <SelectField
-                label={`Typ kontaktu ${index + 1}`}
+                label={`Typ spojení ${index + 1}`}
                 registration={register(`contacts.${index}.type`)}
                 options={CONTACT_TYPE_OPTIONS}
                 isLabelHidden
@@ -73,8 +73,8 @@ export function SubjectContactsTable({
                   variant="danger"
                   size="small"
                   icon={Trash2}
-                  aria-label="Odebrat kontakt"
-                  title="Odebrat kontakt"
+                  aria-label="Odebrat spojení"
+                  title="Odebrat spojení"
                   onClick={() => onRemove(index)}
                 />
               </td>

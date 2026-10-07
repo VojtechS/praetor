@@ -1,30 +1,24 @@
-import { Globe, Plus, Search } from 'lucide-react';
+import { Plus, Search, X } from 'lucide-react';
 import { useEffect, useId, useRef } from 'react';
 import type { SyntheticEvent } from 'react';
 import { Button } from '../../../../../shared/components/Button/Button.tsx';
-import { MIN_SEARCH_LENGTH } from '../../../constants/subjectSearch.ts';
 import styles from './SubjectPickerSearch.module.scss';
 
 export interface SubjectPickerSearchProps {
   value: string;
   onChange: (value: string) => void;
   onSearch: () => void;
-  onAresSearch?: () => void;
   onCreate: () => void;
-  isAresTooShort?: boolean;
 }
 
 export function SubjectPickerSearch({
   value,
   onChange,
   onSearch,
-  onAresSearch,
   onCreate,
-  isAresTooShort = false,
 }: Readonly<SubjectPickerSearchProps>) {
   const id = useId();
   const inputRef = useRef<HTMLInputElement>(null);
-  const validationMessageId = `${id}-validation-message`;
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -33,6 +27,11 @@ export function SubjectPickerSearch({
   function handleSubmit(event: SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
     onSearch();
+  }
+
+  function handleClear() {
+    onChange('');
+    inputRef.current?.focus();
   }
 
   return (
@@ -52,24 +51,22 @@ export function SubjectPickerSearch({
             onChange={(event) => onChange(event.target.value)}
             placeholder="Hledat..."
             autoComplete="off"
-            aria-invalid={isAresTooShort}
-            aria-describedby={isAresTooShort ? validationMessageId : undefined}
           />
+          {value && (
+            <button
+              type="button"
+              className={styles.subjectPickerSearch__clear}
+              aria-label="Vymazat hledání"
+              onClick={handleClear}
+            >
+              <X aria-hidden="true" />
+            </button>
+          )}
         </div>
-        {onAresSearch && (
-          <Button icon={Globe} onClick={onAresSearch}>
-            Vyhledat v ARES
-          </Button>
-        )}
         <Button icon={Plus} onClick={onCreate}>
           Založit nový
         </Button>
       </form>
-      {isAresTooShort && (
-        <p id={validationMessageId} className={styles.subjectPickerSearch__validation} role="alert">
-          Zadejte alespoň {MIN_SEARCH_LENGTH} znaky
-        </p>
-      )}
     </search>
   );
 }

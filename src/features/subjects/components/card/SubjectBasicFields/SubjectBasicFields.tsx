@@ -1,7 +1,9 @@
+import clsx from 'clsx';
 import { useFormState, useWatch } from 'react-hook-form';
 import { LoadingOverlay } from '../../../../../shared/components/LoadingOverlay/LoadingOverlay.tsx';
 import { MultiSelectField } from '../../../../../shared/components/MultiSelectField/MultiSelectField.tsx';
 import { SelectField } from '../../../../../shared/components/SelectField/SelectField.tsx';
+import { TextAreaField } from '../../../../../shared/components/TextAreaField/TextAreaField.tsx';
 import { TextField } from '../../../../../shared/components/TextField/TextField.tsx';
 import { useCodelistQuery } from '../../../../codelists/hooks/useCodelistQuery.ts';
 import { toSelectOptions } from '../../../../codelists/utils/codelistUtils.ts';
@@ -16,7 +18,7 @@ export interface SubjectBasicFieldsProps {
 }
 
 export function SubjectBasicFields({ form, isReadOnly }: Readonly<SubjectBasicFieldsProps>) {
-  const { register, control } = form;
+  const { register, control, setValue } = form;
   const { errors } = useFormState({ control });
 
   const countries = useCodelistQuery('countries').data;
@@ -34,6 +36,12 @@ export function SubjectBasicFields({ form, isReadOnly }: Readonly<SubjectBasicFi
       </SubjectFormSection>
     );
   }
+
+  const handleToggleAllLabels = (isSelected: boolean) => {
+    setValue('labels', isSelected ? labels.map((label) => label.code) : [], {
+      shouldDirty: true,
+    });
+  };
 
   return (
     <SubjectFormSection title="Základní údaje">
@@ -65,29 +73,34 @@ export function SubjectBasicFields({ form, isReadOnly }: Readonly<SubjectBasicFi
             registration={register('labels')}
             options={toSelectOptions(labels)}
             selectedValues={selectedLabels}
+            onToggleAll={handleToggleAllLabels}
             error={errors.labels?.message}
             isDisabled={isReadOnly}
           />
         </div>
-        <TextField label="Poznámka" registration={register('note')} />
-        <SelectField
-          label="Kategorie"
-          registration={register('category')}
-          options={toSelectOptions(categories)}
-          hasEmptyOption
-        />
-        <SelectField
-          label="Skupina"
-          registration={register('group')}
-          options={toSelectOptions(groups)}
-          hasEmptyOption
-        />
-        <SelectField
-          label="Odpovědný pracovník"
-          registration={register('responsibleEmployee')}
-          options={toSelectOptions(employees)}
-          hasEmptyOption
-        />
+        <div className={clsx(styles.subjectBasicFields__full, styles.subjectBasicFields__triple)}>
+          <SelectField
+            label="Kategorie"
+            registration={register('category')}
+            options={toSelectOptions(categories)}
+            hasEmptyOption
+          />
+          <SelectField
+            label="Skupina"
+            registration={register('group')}
+            options={toSelectOptions(groups)}
+            hasEmptyOption
+          />
+          <SelectField
+            label="Odpovědný pracovník"
+            registration={register('responsibleEmployee')}
+            options={toSelectOptions(employees)}
+            hasEmptyOption
+          />
+        </div>
+        <div className={styles.subjectBasicFields__full}>
+          <TextAreaField label="Poznámka" registration={register('note')} />
+        </div>
       </div>
     </SubjectFormSection>
   );

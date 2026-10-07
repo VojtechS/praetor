@@ -4,7 +4,7 @@ import { Button } from '../../../../../shared/components/Button/Button.tsx';
 import type { CodelistItem } from '../../../../codelists/api/codelistApi/codelistApi.types.ts';
 import { getCodelistLabel } from '../../../../codelists/utils/codelistUtils.ts';
 import type { SubjectFormInput } from '../../../schemas/subjectForm.schema.ts';
-import { formatAddress, getAddressTypeNote } from '../../../utils/addressUtils.ts';
+import { formatAddress } from '../../../utils/addressUtils.ts';
 import styles from './SubjectAddressesTable.module.scss';
 
 export interface SubjectAddressesTableProps {
@@ -27,7 +27,6 @@ export function SubjectAddressesTable({
       <thead>
         <tr>
           <th scope="col">Adresa</th>
-          <th scope="col">Poznámka</th>
           {!isReadOnly && (
             <th scope="col">
               <span className="visuallyHidden">Akce</span>
@@ -47,7 +46,6 @@ export function SubjectAddressesTable({
                 {formatAddress({ ...field, country: getCodelistLabel(countries, field.country) })}
               </button>
             </td>
-            <td>{getAddressTypeNote(field)}</td>
             {!isReadOnly && (
               <td className={styles.subjectAddressesTable__actions}>
                 <Button

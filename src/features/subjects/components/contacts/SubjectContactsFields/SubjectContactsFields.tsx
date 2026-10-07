@@ -1,12 +1,12 @@
-import { Plus, Search } from 'lucide-react';
-import { useFieldArray, useFormState, useWatch } from 'react-hook-form';
+import { Plus } from 'lucide-react';
+import { useState } from 'react';
+import { useFieldArray, useWatch } from 'react-hook-form';
+import { ConfirmDialog } from '../../../../../shared/components/ConfirmDialog/ConfirmDialog.tsx';
 import { Button } from '../../../../../shared/components/Button/Button.tsx';
-import { TextField } from '../../../../../shared/components/TextField/TextField.tsx';
-import { useDataBoxLookupMutation } from '../../../hooks/queries/useAresQueries.ts';
-import { DATA_BOX_ID_PATTERN } from '../../../schemas/subjectForm.schema.ts';
 import type { SubjectForm } from '../../../schemas/subjectForm.schema.ts';
 import { hasEconomicSubject } from '../../../utils/subjectUtils.ts';
 import { SubjectFormSection } from '../../card/SubjectFormSection/SubjectFormSection.tsx';
+import { SubjectDataBoxField } from '../SubjectDataBoxField/SubjectDataBoxField.tsx';
 import { SubjectContactsTable } from '../SubjectContactsTable/SubjectContactsTable.tsx';
 import styles from './SubjectContactsFields.module.scss';
 
@@ -18,16 +18,11 @@ export interface SubjectContactsFieldsProps {
 export function SubjectContactsFields({ form, isReadOnly }: Readonly<SubjectContactsFieldsProps>) {
   const type = useWatch({ control: form.control, name: 'type' });
 
-  const { errors } = useFormState({ control: form.control });
-
-  const dataBoxId = useWatch({ control: form.control, name: 'dataBoxId' });
-
   const { fields, append, remove } = useFieldArray({ control: form.control, name: 'contacts' });
 
-  const lookupMutation = useDataBoxLookupMutation();
+  const [removeIndex, setRemoveIndex] = useState<number | null>(null);
 
-  const canSearch =
-    dataBoxId !== '' && DATA_BOX_ID_PATTERN.test(dataBoxId) && !lookupMutation.isPending;
+  const canLookup = hasEconomicSubject(type) && !isReadOnly;
 
   function addContact() {
     append(
@@ -36,43 +31,44 @@ export function SubjectContactsFields({ form, isReadOnly }: Readonly<SubjectCont
     );
   }
 
+  function handleConfirmRemove() {
+    if (removeIndex !== null) {
+      remove(removeIndex);
+    }
+
+    setRemoveIndex(null);
+  }
+
   return (
-    <SubjectFormSection title="Kontakty">
+    <SubjectFormSection title="Spojení">
       <div className={styles.subjectContactsFields}>
-        <div className={styles.subjectContactsFields__dataBox}>
-          <TextField
-            label="ID datové schránky"
-            registration={form.register('dataBoxId')}
-            error={errors.dataBoxId?.message}
-          />
-          {hasEconomicSubject(type) && !isReadOnly && (
-            <Button
-              icon={Search}
-              disabled={!canSearch}
-              onClick={() => lookupMutation.mutate(dataBoxId)}
-            >
-              Vyhledat
-            </Button>
-          )}
-        </div>
+        {canLookup && <SubjectDataBoxField form={form} />}
         {fields.length === 0 ? (
-          <p className="emptyState">Žádné kontakty</p>
+          <p className="emptyState">Žádná spojení</p>
         ) : (
           <SubjectContactsTable
             form={form}
             fields={fields}
             isReadOnly={isReadOnly}
-            onRemove={remove}
+            onRemove={setRemoveIndex}
           />
         )}
         {!isReadOnly && (
           <div>
             <Button variant="ghost" icon={Plus} onClick={addContact}>
-              Přidat kontakt
+              Přidat spojení
             </Button>
           </div>
         )}
       </div>
+      <ConfirmDialog
+        isOpen={removeIndex !== null}
+        title="Smazání spojení"
+        message="Opravdu chcete smazat spojení?"
+        confirmLabel="Smazat"
+        onConfirm={handleConfirmRemove}
+        onCancel={() => setRemoveIndex(null)}
+      />
     </SubjectFormSection>
   );
 }

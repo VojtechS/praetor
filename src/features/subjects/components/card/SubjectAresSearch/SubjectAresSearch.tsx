@@ -1,7 +1,10 @@
-import { Globe, Search, X } from 'lucide-react';
+import { ChevronDown, Globe, Search, X } from 'lucide-react';
 import { useId, useRef, useState } from 'react';
 import type { FocusEvent, KeyboardEvent, SyntheticEvent } from 'react';
 import { Button } from '../../../../../shared/components/Button/Button.tsx';
+import { DropdownMenu } from '../../../../../shared/components/DropdownMenu/DropdownMenu.tsx';
+import { ARES_SOURCES } from '../../../constants/aresSources.ts';
+import type { AresSource } from '../../../constants/aresSources.ts';
 import { MIN_SEARCH_LENGTH } from '../../../constants/subjectSearch.ts';
 import { useSubjectSearch } from '../../../hooks/useSubjectSearch.ts';
 import { SubjectPickerAresResults } from '../../picker/SubjectPickerAresResults/SubjectPickerAresResults.tsx';
@@ -18,6 +21,9 @@ export function SubjectAresSearch({ onSelect }: Readonly<SubjectAresSearchProps>
   const [submittedSearch, setSubmittedSearch] = useState<string | null>(null);
   const search = useSubjectSearch((term) => setSubmittedSearch(term === '' ? null : term));
   const { value, isTooShort } = search;
+
+  const [source, setSource] = useState<AresSource>('ARES');
+  const sourceLabel = ARES_SOURCES.find((item) => item.value === source)?.label;
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -37,6 +43,11 @@ export function SubjectAresSearch({ onSelect }: Readonly<SubjectAresSearchProps>
     }
   }
 
+  function handleSourceSelect(nextSource: AresSource) {
+    setSource(nextSource);
+    setSubmittedSearch(null);
+  }
+
   function handleSelect(regNumber: string) {
     setSubmittedSearch(null);
     onSelect(regNumber);
@@ -54,6 +65,11 @@ export function SubjectAresSearch({ onSelect }: Readonly<SubjectAresSearchProps>
       setSubmittedSearch(null);
     }
   }
+
+  const sourceMenuItems = ARES_SOURCES.map((item) => ({
+    label: `Vyhledat v ${item.label}`,
+    onSelect: () => handleSourceSelect(item.value),
+  }));
 
   return (
     <search className={styles.subjectAresSearch} onKeyDown={handleKeyDown} onBlur={handleBlur}>
@@ -89,9 +105,16 @@ export function SubjectAresSearch({ onSelect }: Readonly<SubjectAresSearchProps>
             </button>
           )}
         </div>
-        <Button type="submit" icon={Globe}>
-          Vyhledat v ARES
-        </Button>
+        <div className={styles.subjectAresSearch__source}>
+          <Button type="submit" icon={Globe}>
+            Vyhledat v {sourceLabel}
+          </Button>
+          <DropdownMenu
+            label="Vybrat zdroj vyhledávání"
+            icon={ChevronDown}
+            items={sourceMenuItems}
+          />
+        </div>
       </form>
 
       {isTooShort && (
@@ -102,7 +125,11 @@ export function SubjectAresSearch({ onSelect }: Readonly<SubjectAresSearchProps>
 
       {submittedSearch !== null && (
         <div className={styles.subjectAresSearch__results} tabIndex={-1}>
-          <SubjectPickerAresResults submittedSearch={submittedSearch} onChoose={handleSelect} />
+          <SubjectPickerAresResults
+            submittedSearch={submittedSearch}
+            source={source}
+            onChoose={handleSelect}
+          />
         </div>
       )}
     </search>

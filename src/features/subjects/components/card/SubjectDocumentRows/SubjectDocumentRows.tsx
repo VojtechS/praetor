@@ -45,14 +45,16 @@ export function SubjectDocumentRows({ form, isReadOnly }: Readonly<SubjectDocume
             hasEmptyOption
           />
           {!isReadOnly && (
-            <Button
-              variant="danger"
-              size="small"
-              icon={Trash2}
-              aria-label="Odebrat doklad"
-              title="Odebrat doklad"
-              onClick={() => remove(index)}
-            />
+            <div className={styles.subjectDocumentRows__remove}>
+              <Button
+                variant="danger"
+                size="small"
+                icon={Trash2}
+                aria-label="Odebrat doklad"
+                title="Odebrat doklad"
+                onClick={() => remove(index)}
+              />
+            </div>
           )}
         </div>
       ))}

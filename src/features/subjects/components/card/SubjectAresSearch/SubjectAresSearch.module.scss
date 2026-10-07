@@ -11,6 +11,12 @@
     gap: $space-2;
   }
 
+  &__source {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+  }
+
   &__field {
     position: relative;
 

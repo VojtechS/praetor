@@ -1,11 +1,14 @@
 import { useId } from 'react';
+import type { ChangeEvent } from 'react';
 import type { UseFormRegisterReturn } from 'react-hook-form';
 import styles from './CheckboxField.module.scss';
 
 export interface CheckboxFieldProps {
   label: string;
-  registration: UseFormRegisterReturn;
+  registration?: UseFormRegisterReturn;
   value?: string;
+  isChecked?: boolean;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   isLabelHidden?: boolean;
 }
 
@@ -13,6 +16,8 @@ export function CheckboxField({
   label,
   registration,
   value,
+  isChecked,
+  onChange,
   isLabelHidden = false,
 }: Readonly<CheckboxFieldProps>) {
   const id = useId();
@@ -24,6 +29,8 @@ export function CheckboxField({
         type="checkbox"
         className={styles.checkboxField__control}
         value={value}
+        checked={isChecked}
+        onChange={onChange}
         {...registration}
       />
       <label

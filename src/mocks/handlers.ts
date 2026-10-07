@@ -66,6 +66,8 @@ export const handlers = [
     ok(db.listSubjects(new URL(request.url).searchParams.get('fulltext') ?? '')),
   ),
 
+  http.get(url('/subjects/:id/cases'), ({ params }) => ok(db.listSubjectCases(Number(params.id)))),
+
   http.get(url('/subjects/:id'), ({ params }) =>
     found(db.getSubject(Number(params.id)), SUBJECT_NOT_FOUND),
   ),

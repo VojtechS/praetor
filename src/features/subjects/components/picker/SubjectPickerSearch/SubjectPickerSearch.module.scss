@@ -33,13 +33,22 @@
   &__input {
     @include field-control;
 
+    padding-right: $space-6;
     padding-left: $space-6;
   }
 
-  &__validation {
-    margin-top: $space-1;
+  &__clear {
+    @include icon-button;
 
-    color: $color-danger;
-    font-size: 12px;
+    position: absolute;
+    top: 50%;
+    right: $space-1;
+
+    transform: translateY(-50%);
+
+    svg {
+      width: $icon-size;
+      height: $icon-size;
+    }
   }
 }

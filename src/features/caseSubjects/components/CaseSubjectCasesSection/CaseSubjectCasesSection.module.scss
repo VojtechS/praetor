@@ -1,0 +1,27 @@
+@use '../../../../styles/variables' as *;
+
+.caseSubjectCasesSection {
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+
+    padding: 0;
+
+    list-style: none;
+  }
+
+  &__item {
+    padding-bottom: $space-3;
+
+    border-bottom: 1px solid $color-border;
+  }
+
+  &__number {
+    font-weight: 600;
+  }
+
+  &__detail {
+    color: $color-text-muted;
+  }
+}

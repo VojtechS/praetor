@@ -14,7 +14,28 @@
     }
   }
 
+  &__wrapper {
+    position: relative;
+  }
+
   &__control {
     @include field-control;
+
+    padding-right: $space-3 + $icon-size + $space-2;
+
+    appearance: none;
+  }
+
+  &__icon {
+    position: absolute;
+    top: 50%;
+    right: $space-3;
+    transform: translateY(-50%);
+
+    width: $icon-size;
+    height: $icon-size;
+
+    color: $color-text;
+    pointer-events: none;
   }
 }

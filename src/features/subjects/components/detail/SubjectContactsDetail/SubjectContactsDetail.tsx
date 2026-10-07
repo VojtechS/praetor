@@ -10,8 +10,8 @@ export interface SubjectContactsDetailProps {
 
 export function SubjectContactsDetail({ contacts }: Readonly<SubjectContactsDetailProps>) {
   return (
-    <DetailSection title="Kontakty" count={contacts.length}>
-      {contacts.length === 0 && <p className="emptyState">Žádné kontakty</p>}
+    <DetailSection title="Spojení" count={contacts.length}>
+      {contacts.length === 0 && <p className="emptyState">Žádná spojení</p>}
       <ul className={styles.subjectContactsDetail__list}>
         {contacts.map((contact) => (
           <li key={contact.id}>

@@ -44,4 +44,33 @@
       padding-bottom: 0;
     }
   }
+
+  // Narrow: value on its own line, then type, preferred and remove, then note.
+  // The header is hidden because it no longer lines up with the fields.
+  @container (max-width: #{$container-breakpoint-sm}) {
+    thead {
+      display: none;
+    }
+
+    &__contact,
+    &__contact tr,
+    &__contact td:nth-child(n) {
+      display: block;
+      width: auto;
+    }
+
+    &__contact tr:first-child {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      align-items: start;
+
+      td:first-child {
+        grid-column: 1 / -1;
+      }
+
+      td:nth-child(2) {
+        grid-row: 2;
+      }
+    }
+  }
 }

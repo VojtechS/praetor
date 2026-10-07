@@ -28,7 +28,9 @@
     }
   }
 
+  // Lets the fields inside react to the column width, not the viewport.
   &__column {
+    container-type: inline-size;
     display: flex;
     flex-direction: column;
     gap: $space-4;

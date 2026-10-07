@@ -4,6 +4,7 @@ import type {
   EconomicSubject,
   PhysicalPersonRequest,
   SubjectRequest,
+  SubjectType,
 } from '../api/subjectApi/subjectApi.types.ts';
 import type { SubjectFormInput } from '../schemas/subjectForm.schema.ts';
 import { CZECH_COUNTRY_CODE } from '../constants/addressLabels.ts';
@@ -67,7 +68,7 @@ function toContactInput(contact: ContactRequest): ContactInput {
 
 export function getNewSubjectFormDefaults(): SubjectFormInput {
   return {
-    type: 'LEGAL',
+    type: 'PHYSICAL_NON_ENTREPRENEUR' as SubjectType,
     country: CZECH_COUNTRY_CODE,
     language: CZECH_LANGUAGE_CODE,
     clientNumber: '',
@@ -81,6 +82,7 @@ export function getNewSubjectFormDefaults(): SubjectFormInput {
     addresses: [],
     contacts: [],
     economicSubject: toEconomicSubjectInput(null),
+    physicalPerson: toPhysicalPersonInput(null),
   };
 }
 

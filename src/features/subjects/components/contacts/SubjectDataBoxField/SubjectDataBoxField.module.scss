@@ -1,0 +1,22 @@
+@use '../../../../../styles/variables' as *;
+
+.subjectDataBoxField {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-3;
+
+  & > :first-child {
+    flex: 1;
+  }
+
+  & > button {
+    margin-top: $field-label-height + $space-1;
+  }
+
+  &__hint {
+    margin: $space-1 0 0;
+
+    color: $color-text-muted;
+    font-size: 12px;
+  }
+}

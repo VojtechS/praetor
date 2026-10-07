@@ -39,12 +39,7 @@ export function AddressFields({ form, countryOptions }: Readonly<AddressFieldsPr
         <TextField label="č.p." registration={register('houseNumber')} />
         <TextField label="č.o." registration={register('orientationNumber')} />
       </div>
-      <TextField
-        label="Obec"
-        registration={register('city')}
-        error={errors.city?.message}
-        isRequired
-      />
+      <TextField label="Obec" registration={register('city')} />
       <TextField label="PSČ" registration={register('zipCode')} error={errors.zipCode?.message} />
       <TextField label="Část obce" registration={register('cityPart')} />
       <TextField label="Kraj" registration={register('region')} />

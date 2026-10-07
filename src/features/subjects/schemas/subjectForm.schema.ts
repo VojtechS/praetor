@@ -45,7 +45,7 @@ export const addressRowSchema = z
     street: z.string(),
     houseNumber: z.string(),
     orientationNumber: z.string(),
-    city: z.string().trim().min(1, 'Zadejte obec'),
+    city: z.string(),
     cityPart: z.string(),
     zipCode: z.string(),
     region: z.string(),

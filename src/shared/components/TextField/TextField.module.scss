@@ -14,7 +14,30 @@
     }
   }
 
+  &__wrapper {
+    position: relative;
+  }
+
   &__control {
     @include field-control;
+
+    &:has(+ .textField__clear) {
+      padding-right: $space-6;
+    }
+  }
+
+  &__clear {
+    @include icon-button;
+
+    position: absolute;
+    top: 50%;
+    right: $space-1;
+
+    transform: translateY(-50%);
+
+    svg {
+      width: $icon-size;
+      height: $icon-size;
+    }
   }
 }

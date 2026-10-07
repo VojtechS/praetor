@@ -23,6 +23,14 @@ export function useCaseQuery(caseId: string) {
   });
 }
 
+export function useSubjectCasesQuery(subjectId: number) {
+  return useQuery({
+    queryKey: [...CASE_SUBJECTS_QUERY_KEY, 'bySubject', subjectId],
+    queryFn: () => caseApi.getBySubject(subjectId),
+    meta: { errorMessage: 'Nepodařilo se načíst spisy subjektu.' },
+  });
+}
+
 export function useCaseSubjectsQuery(caseId: string) {
   return useQuery({
     queryKey: CASE_SUBJECTS_BY_CASE_QUERY_KEY(caseId),

@@ -7,6 +7,7 @@ import {
   getSubjectIdentification,
 } from '../../../subjects/utils/subjectUtils.ts';
 import type { CaseSubject } from '../../api/caseSubjectApi/caseSubjectApi.types.ts';
+import { CaseSubjectCasesSection } from '../CaseSubjectCasesSection/CaseSubjectCasesSection.tsx';
 import { CaseSubjectOnCaseSection } from '../CaseSubjectOnCaseSection/CaseSubjectOnCaseSection.tsx';
 import { SubjectAddressesDetail } from '../../../subjects/components/detail/SubjectAddressesDetail/SubjectAddressesDetail.tsx';
 import { SubjectBasicInfoDetail } from '../../../subjects/components/detail/SubjectBasicInfoDetail/SubjectBasicInfoDetail.tsx';
@@ -69,6 +70,7 @@ export function CaseSubjectDetailPanel({
         <SubjectBasicInfoDetail subject={subject} />
         <SubjectAddressesDetail addresses={subject.addresses} />
         <SubjectContactsDetail contacts={subject.contacts} />
+        <CaseSubjectCasesSection subjectId={subject.id} />
       </div>
     );
   } else if (!isLoading) {

@@ -41,14 +41,14 @@ export function SubjectPersonFields({ form, isReadOnly }: Readonly<SubjectPerson
             type="date"
             registration={register('physicalPerson.birthDate')}
           />
-          <TextField label="Oslovení" registration={register('physicalPerson.salutation')} />
-        </div>
-        <div className={styles.subjectPersonFields__pair}>
           <TextField
             label="Rodné číslo"
             registration={register('physicalPerson.personalId')}
             error={errors?.personalId?.message}
           />
+        </div>
+        <div className={styles.subjectPersonFields__pair}>
+          <TextField label="Oslovení" registration={register('physicalPerson.salutation')} />
         </div>
         <SubjectDocumentRows form={form} isReadOnly={isReadOnly} />
       </div>

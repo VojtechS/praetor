@@ -3,7 +3,7 @@ import type {
   CaseSubjectCreateRequest,
   CaseSubjectUpdateRequest,
 } from '../features/caseSubjects/api/caseSubjectApi/caseSubjectApi.types.ts';
-import type { Case } from '../features/caseSubjects/api/caseApi/caseApi.types.ts';
+import type { Case, SubjectCase } from '../features/caseSubjects/api/caseApi/caseApi.types.ts';
 import type {
   CodelistItem,
   CodelistName,
@@ -24,6 +24,7 @@ import {
   seedCase,
   seedCaseSubjects,
   seedCodelists,
+  seedOtherSubjectCases,
   seedSubjects,
 } from './seed.ts';
 import type { CaseSubjectRecord } from './seed.ts';
@@ -69,6 +70,14 @@ function toCaseSubject(record: CaseSubjectRecord): CaseSubject {
   };
 }
 
+function pickRoles({
+  role,
+  proceduralRole,
+  materialLegalRole,
+}: CaseSubjectRecord): Pick<SubjectCase, 'role' | 'proceduralRole' | 'materialLegalRole'> {
+  return { role, proceduralRole, materialLegalRole };
+}
+
 function withNewIds(request: SubjectRequest): Omit<Subject, 'id'> {
   const { physicalPerson } = request;
 
@@ -85,6 +94,17 @@ function withNewIds(request: SubjectRequest): Omit<Subject, 'id'> {
 
 export function getCase(): Case {
   return seedCase;
+}
+
+export function listSubjectCases(subjectId: number): SubjectCase[] {
+  const currentCases = caseSubjects
+    .filter((item) => item.subjectId === subjectId)
+    .map((item) => ({ ...seedCase, ...pickRoles(item) }));
+  const otherCases = seedOtherSubjectCases
+    .filter((item) => item.subjectId === subjectId)
+    .map(({ subjectId: _subjectId, ...item }) => item);
+
+  return [...currentCases, ...otherCases];
 }
 
 export function listCaseSubjects(): CaseSubject[] {

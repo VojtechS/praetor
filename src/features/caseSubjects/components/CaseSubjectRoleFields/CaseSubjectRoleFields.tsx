@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { UserMinus } from 'lucide-react';
 import { useState } from 'react';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { Button } from '../../../../shared/components/Button/Button.tsx';
@@ -106,7 +107,13 @@ export function CaseSubjectRoleFields({
           isExpanded={openPickerTarget === 'representative'}
         />
         {representativeName && (
-          <Button onClick={() => handleChooseRepresentative(null)}>Odebrat zástupce</Button>
+          <Button
+            variant="dangerSolid"
+            icon={UserMinus}
+            onClick={() => handleChooseRepresentative(null)}
+          >
+            Odebrat
+          </Button>
         )}
       </div>
       {openPickerTarget === 'representative' && (

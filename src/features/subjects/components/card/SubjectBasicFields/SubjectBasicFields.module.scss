@@ -8,4 +8,14 @@
   &__full {
     grid-column: 1 / -1;
   }
+
+  &__triple {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: $space-4;
+
+    @container (max-width: #{$container-breakpoint-sm}) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
 }

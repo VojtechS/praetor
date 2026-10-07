@@ -17,38 +17,40 @@ export function CaseSubjectClientZoneTable({
   onEdit,
 }: Readonly<CaseSubjectClientZoneTableProps>) {
   return (
-    <table className={styles.caseSubjectClientZoneTable}>
-      <thead>
-        <tr>
-          <th scope="col">E-mail</th>
-          <th scope="col">Název oprávnění</th>
-          <th scope="col">Subjekt</th>
-          <th scope="col">Poznámka</th>
-          <th scope="col">
-            <span className="visuallyHidden">Akce</span>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {users.map((user) => (
-          <tr key={user.id}>
-            <td>{user.email}</td>
-            <td>{CLIENT_ZONE_PERMISSION_LABELS[user.permission]}</td>
-            <td>{checkValue(subjectName)}</td>
-            <td>{user.note || '-'}</td>
-            <td className={styles.caseSubjectClientZoneTable__actions}>
-              <Button
-                variant="ghost"
-                size="small"
-                icon={Pencil}
-                aria-label="Upravit uživatele"
-                title="Upravit uživatele"
-                onClick={() => onEdit(user)}
-              />
-            </td>
+    <div className={styles.caseSubjectClientZoneTable}>
+      <table className={styles.caseSubjectClientZoneTable__table}>
+        <thead>
+          <tr>
+            <th scope="col">E-mail</th>
+            <th scope="col">Název oprávnění</th>
+            <th scope="col">Subjekt</th>
+            <th scope="col">Poznámka</th>
+            <th scope="col">
+              <span className="visuallyHidden">Akce</span>
+            </th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <tr key={user.id}>
+              <td>{user.email}</td>
+              <td>{CLIENT_ZONE_PERMISSION_LABELS[user.permission]}</td>
+              <td>{checkValue(subjectName)}</td>
+              <td>{user.note || '-'}</td>
+              <td className={styles.caseSubjectClientZoneTable__actions}>
+                <Button
+                  variant="ghost"
+                  size="small"
+                  icon={Pencil}
+                  aria-label="Upravit uživatele"
+                  title="Upravit uživatele"
+                  onClick={() => onEdit(user)}
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }

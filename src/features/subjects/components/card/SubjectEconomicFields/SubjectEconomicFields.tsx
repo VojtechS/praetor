@@ -1,6 +1,7 @@
 import { useFormState } from 'react-hook-form';
 import { LoadingOverlay } from '../../../../../shared/components/LoadingOverlay/LoadingOverlay.tsx';
 import { SelectField } from '../../../../../shared/components/SelectField/SelectField.tsx';
+import { TextAreaField } from '../../../../../shared/components/TextAreaField/TextAreaField.tsx';
 import { TextField } from '../../../../../shared/components/TextField/TextField.tsx';
 import { useCodelistQuery } from '../../../../codelists/hooks/useCodelistQuery.ts';
 import { toSelectOptions } from '../../../../codelists/utils/codelistUtils.ts';
@@ -55,7 +56,7 @@ export function SubjectEconomicFields({
             error={errors?.vatNumber?.message}
           />
           <div className={styles.subjectEconomicFields__full}>
-            <TextField
+            <TextAreaField
               label="Zápis v rejstříku"
               registration={register('economicSubject.registryNote')}
             />

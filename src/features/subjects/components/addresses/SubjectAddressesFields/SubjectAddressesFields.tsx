@@ -1,6 +1,7 @@
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
 import { useFieldArray } from 'react-hook-form';
+import { ConfirmDialog } from '../../../../../shared/components/ConfirmDialog/ConfirmDialog.tsx';
 import { Button } from '../../../../../shared/components/Button/Button.tsx';
 import { useCodelistQuery } from '../../../../codelists/hooks/useCodelistQuery.ts';
 import type { AddressFormValues, SubjectForm } from '../../../schemas/subjectForm.schema.ts';
@@ -24,6 +25,7 @@ export function SubjectAddressesFields({
   });
   const countries = useCodelistQuery('countries').data;
   const [dialog, setDialog] = useState<{ index: number | null } | null>(null);
+  const [removeIndex, setRemoveIndex] = useState<number | null>(null);
 
   function handleSave(index: number | null, values: AddressFormValues) {
     if (index === null) {
@@ -33,6 +35,14 @@ export function SubjectAddressesFields({
     }
 
     setDialog(null);
+  }
+
+  function handleConfirmRemove() {
+    if (removeIndex !== null) {
+      remove(removeIndex);
+    }
+
+    setRemoveIndex(null);
   }
 
   return (
@@ -54,7 +64,7 @@ export function SubjectAddressesFields({
           countries={countries}
           isReadOnly={isReadOnly}
           onEdit={(index) => setDialog({ index })}
-          onRemove={remove}
+          onRemove={setRemoveIndex}
         />
       )}
 
@@ -66,6 +76,15 @@ export function SubjectAddressesFields({
           onClose={() => setDialog(null)}
         />
       )}
+
+      <ConfirmDialog
+        isOpen={removeIndex !== null}
+        title="Smazání adresy"
+        message="Opravdu chcete smazat adresu?"
+        confirmLabel="Smazat"
+        onConfirm={handleConfirmRemove}
+        onCancel={() => setRemoveIndex(null)}
+      />
     </SubjectFormSection>
   );
 }

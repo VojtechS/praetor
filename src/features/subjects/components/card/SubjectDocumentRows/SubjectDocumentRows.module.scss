@@ -13,4 +13,11 @@
     align-items: end;
     gap: $space-4;
   }
+
+  // Centers the small button on the input row (label sits above the input).
+  &__remove {
+    display: flex;
+    align-items: center;
+    height: $control-height;
+  }
 }

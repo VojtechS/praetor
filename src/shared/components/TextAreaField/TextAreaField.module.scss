@@ -1,0 +1,20 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.textAreaField {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+
+  &__label {
+    @include field-label;
+  }
+
+  &__control {
+    @include field-control;
+
+    padding: $space-2 $space-3;
+
+    resize: vertical;
+  }
+}

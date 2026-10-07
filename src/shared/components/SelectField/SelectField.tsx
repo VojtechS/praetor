@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { ChevronDown } from 'lucide-react';
 import { useId } from 'react';
 import type { UseFormRegisterReturn } from 'react-hook-form';
 import { FieldError } from '../FieldError/FieldError.tsx';
@@ -43,21 +44,24 @@ export function SelectField({
       >
         {label}
       </label>
-      <select
-        id={id}
-        className={styles.selectField__control}
-        aria-required={isRequired}
-        aria-invalid={error ? true : undefined}
-        aria-describedby={error ? errorId : undefined}
-        {...registration}
-      >
-        {hasEmptyOption && <option value="">Nevybráno</option>}
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+      <div className={styles.selectField__wrapper}>
+        <select
+          id={id}
+          className={styles.selectField__control}
+          aria-required={isRequired}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error ? errorId : undefined}
+          {...registration}
+        >
+          {hasEmptyOption && <option value="">Nevybráno</option>}
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+        <ChevronDown className={styles.selectField__icon} aria-hidden="true" />
+      </div>
       <FieldError id={errorId} message={error} />
     </div>
   );

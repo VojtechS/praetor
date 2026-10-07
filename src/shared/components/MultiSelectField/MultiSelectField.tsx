@@ -12,6 +12,7 @@ export interface MultiSelectFieldProps {
   registration: UseFormRegisterReturn;
   options: SelectOption[];
   selectedValues: string[];
+  onToggleAll: (isSelected: boolean) => void;
   error?: string;
   isDisabled?: boolean;
 }
@@ -21,12 +22,14 @@ export function MultiSelectField({
   registration,
   options,
   selectedValues,
+  onToggleAll,
   error,
   isDisabled = false,
 }: Readonly<MultiSelectFieldProps>) {
   const id = useId();
   const labelId = `${id}-label`;
   const errorId = `${id}-error`;
+  const isAllSelected = options.length > 0 && selectedValues.length === options.length;
   const selectedLabels = options
     .filter((option) => selectedValues.includes(option.value))
     .map((option) => option.label);
@@ -51,6 +54,11 @@ export function MultiSelectField({
           <ChevronDown className={styles.multiSelectField__icon} aria-hidden="true" />
         </summary>
         <div className={styles.multiSelectField__options}>
+          <CheckboxField
+            label="Vybrat vše"
+            isChecked={isAllSelected}
+            onChange={(event) => onToggleAll(event.target.checked)}
+          />
           {options.map((option) => (
             <CheckboxField
               key={option.value}

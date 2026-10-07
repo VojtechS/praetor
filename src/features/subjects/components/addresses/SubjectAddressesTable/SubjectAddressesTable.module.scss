@@ -31,6 +31,10 @@
     border: 0;
     cursor: pointer;
 
+    &:hover:not(:disabled) {
+      text-decoration: underline;
+    }
+
     &:focus-visible {
       outline: none;
       border-radius: $radius-control;

@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { X } from 'lucide-react';
 import { useId } from 'react';
 import type { UseFormRegisterReturn } from 'react-hook-form';
 import { FieldError } from '../FieldError/FieldError.tsx';
@@ -13,6 +14,7 @@ export interface TextFieldProps {
   isLabelHidden?: boolean;
   isRequired?: boolean;
   disabled?: boolean;
+  onClear?: () => void;
 }
 
 export function TextField({
@@ -24,6 +26,7 @@ export function TextField({
   isLabelHidden = false,
   isRequired = false,
   disabled = false,
+  onClear,
 }: Readonly<TextFieldProps>) {
   const id = useId();
   const errorId = `${id}-error`;
@@ -40,17 +43,29 @@ export function TextField({
       >
         {label}
       </label>
-      <input
-        id={id}
-        type={type}
-        placeholder={placeholder}
-        className={styles.textField__control}
-        aria-required={isRequired}
-        aria-invalid={error ? true : undefined}
-        aria-describedby={error ? errorId : undefined}
-        disabled={disabled}
-        {...registration}
-      />
+      <div className={styles.textField__wrapper}>
+        <input
+          id={id}
+          type={type}
+          placeholder={placeholder}
+          className={styles.textField__control}
+          aria-required={isRequired}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error ? errorId : undefined}
+          disabled={disabled}
+          {...registration}
+        />
+        {onClear && (
+          <button
+            type="button"
+            className={styles.textField__clear}
+            aria-label={`Vymazat: ${label}`}
+            onClick={onClear}
+          >
+            <X aria-hidden="true" />
+          </button>
+        )}
+      </div>
       <FieldError id={errorId} message={error} />
     </div>
   );

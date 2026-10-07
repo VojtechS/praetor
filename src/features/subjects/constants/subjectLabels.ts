@@ -2,9 +2,9 @@ import type { ContactType, SubjectType } from '../api/subjectApi/subjectApi.type
 
 export const SUBJECT_TYPE_LABELS: Record<SubjectType, string> = {
   UNDETERMINED: 'Neurčeno',
-  LEGAL: 'Právnická osoba',
-  PHYSICAL_ENTREPRENEUR: 'Fyzická osoba – podnikatel',
   PHYSICAL_NON_ENTREPRENEUR: 'Fyzická osoba – nepodnikatel',
+  PHYSICAL_ENTREPRENEUR: 'Fyzická osoba – podnikatel',
+  LEGAL: 'Právnická osoba',
 };
 
 export const CONTACT_TYPE_LABELS: Record<ContactType, string> = {
