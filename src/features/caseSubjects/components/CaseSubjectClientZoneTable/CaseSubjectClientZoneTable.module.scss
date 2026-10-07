@@ -1,0 +1,31 @@
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
+
+.caseSubjectClientZoneTable {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    @include table-heading;
+
+    padding: $space-2 $space-3;
+  }
+
+  td {
+    padding: $space-3;
+
+    vertical-align: middle;
+
+    border-bottom: 1px solid $color-border;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  &__actions {
+    width: 1%;
+
+    white-space: nowrap;
+  }
+}

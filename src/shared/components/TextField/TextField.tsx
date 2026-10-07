@@ -8,7 +8,7 @@ export interface TextFieldProps {
   label: string;
   registration: UseFormRegisterReturn;
   error?: string;
-  type?: 'text' | 'date';
+  type?: 'text' | 'date' | 'password';
   placeholder?: string;
   isLabelHidden?: boolean;
   isRequired?: boolean;

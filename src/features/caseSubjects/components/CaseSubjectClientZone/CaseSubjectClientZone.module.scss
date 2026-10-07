@@ -1,0 +1,9 @@
+@use '../../../../styles/variables' as *;
+
+.caseSubjectClientZone {
+  &__header {
+    display: flex;
+    justify-content: flex-end;
+    padding: $space-3 0;
+  }
+}

@@ -49,6 +49,7 @@ export function CaseSubjectRoleForm({
 
   const subject = subjectQuery.data?.data;
   const representative = representativeQuery.data?.data;
+  const subjectName = subject && getSubjectDisplayName(subject);
 
   function handleChooseSubject(chosenId: number) {
     if (chosenId !== getValues('subjectId')) {
@@ -75,7 +76,7 @@ export function CaseSubjectRoleForm({
       <CaseSubjectRoleFields
         register={register}
         errors={formState.errors}
-        subjectName={subject && getSubjectDisplayName(subject)}
+        subjectName={subjectName}
         representativeName={representative && getSubjectDisplayName(representative)}
         proceduralRoleOptions={proceduralRoleOptions}
         materialLegalRoleOptions={materialLegalRoleOptions}
@@ -87,6 +88,7 @@ export function CaseSubjectRoleForm({
         relatedSubjects={subject?.relatedSubjects ?? []}
         registration={register('preferredRelatedSubjectIds')}
         hasSubject={!!subjectId}
+        subjectName={subjectName}
       />
     </form>
   );

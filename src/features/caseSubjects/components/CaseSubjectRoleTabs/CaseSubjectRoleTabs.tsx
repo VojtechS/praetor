@@ -16,12 +16,14 @@ export interface CaseSubjectRoleTabsProps {
   relatedSubjects: RelatedSubject[];
   registration: UseFormRegisterReturn;
   hasSubject: boolean;
+  subjectName: string | undefined;
 }
 
 export function CaseSubjectRoleTabs({
   relatedSubjects,
   registration,
   hasSubject,
+  subjectName,
 }: Readonly<CaseSubjectRoleTabsProps>) {
   const [activeTab, setActiveTab] = useState<RoleTab>('relatedSubjects');
 
@@ -60,7 +62,7 @@ export function CaseSubjectRoleTabs({
               hasSubject={hasSubject}
             />
           )}
-          {tab.id === 'clientZone' && <CaseSubjectClientZone />}
+          {tab.id === 'clientZone' && <CaseSubjectClientZone subjectName={subjectName} />}
         </div>
       ))}
     </section>
