@@ -32,6 +32,9 @@
     right: 0;
 
     background-color: $color-surface;
-    box-shadow: $shadow-sticky-end;
+
+    @media (max-width: $media-breakpoint-md) {
+      box-shadow: $shadow-sticky-end;
+    }
   }
 }
